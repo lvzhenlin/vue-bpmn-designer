@@ -45,18 +45,18 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
     replaceOptions.START_EVENT.splice(5, 1)
     replaceOptions.TASK.splice(0, 1)
     replaceOptions.TASK.splice(2, 1)
-    replaceOptions.GATEWAY.splice(3, 1)
+    replaceOptions.GATEWAY.splice(3, 2)
     replaceOptions.INTERMEDIATE_EVENT.splice(4, 1)
     replaceOptions.INTERMEDIATE_EVENT.splice(7, 2)
-    /*replaceOptions.START_EVENT.push({
-      label: 'Variable start event',
-      actionName: 'replace-with-variable-start',
-      className: 'bpmn-icon-start-event-multiple',
-      target: {
-        type: 'bpmn:StartEvent',
-        eventDefinitionType: 'flowable:VariableListenerEventDefinition',
-      },
-    })*/
+    // replaceOptions.START_EVENT.push({
+    //   label: 'Variable start event',
+    //   actionName: 'replace-with-variable-start',
+    //   className: 'bpmn-icon-start-event-multiple',
+    //   target: {
+    //     type: 'bpmn:StartEvent',
+    //     eventDefinitionType: 'flowable:VariableListenerEventDefinition',
+    //   },
+    // })
     replaceOptions.INTERMEDIATE_EVENT.push({
       label: 'Variable intermediate event',
       actionName: 'replace-with-variable-intermediate-catch',
