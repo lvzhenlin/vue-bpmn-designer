@@ -1,24 +1,24 @@
+import AppendPreview from 'bpmn-js/lib/features/append-preview/AppendPreview'
 import ContextPadProvider, {
   type ContextPadConfig,
 } from 'bpmn-js/lib/features/context-pad/ContextPadProvider'
 import type ElementFactory from 'bpmn-js/lib/features/modeling/ElementFactory'
-import Create from 'diagram-js/lib/features/create/Create'
-import type AutoPlace from 'diagram-js/lib/features/auto-place/AutoPlace'
-import type { Injector } from 'didi'
-import type { ContextPadEntries } from 'diagram-js/lib/features/context-pad/ContextPadProvider'
-import type EventBus from 'diagram-js/lib/core/EventBus'
 import type Modeling from 'bpmn-js/lib/features/modeling/Modeling'
-import type Connect from 'diagram-js/lib/features/connect/Connect'
-import PopupMenu from 'diagram-js/lib/features/popup-menu/PopupMenu'
-import type Rules from 'diagram-js/lib/features/rules/Rules'
 import type { Translate } from 'bpmn-js/lib/features/palette/PaletteProvider'
-import AppendPreview from 'bpmn-js/lib/features/append-preview/AppendPreview'
-import type Canvas from 'diagram-js/lib/core/Canvas'
 import type { Element, Shape } from 'bpmn-js/lib/model/Types'
-import { assign } from 'min-dash'
-import type { ContextPadEntryAction } from 'diagram-js/lib/features/context-pad/ContextPadProvider.ts'
+import type Canvas from 'diagram-js/lib/core/Canvas'
+import type EventBus from 'diagram-js/lib/core/EventBus'
+import type AutoPlace from 'diagram-js/lib/features/auto-place/AutoPlace'
+import type Connect from 'diagram-js/lib/features/connect/Connect'
 import type ContextPad from 'diagram-js/lib/features/context-pad/ContextPad'
 import type { ContextPadTarget } from 'diagram-js/lib/features/context-pad/ContextPad'
+import type { ContextPadEntries } from 'diagram-js/lib/features/context-pad/ContextPadProvider'
+import type { ContextPadEntryAction } from 'diagram-js/lib/features/context-pad/ContextPadProvider.ts'
+import Create from 'diagram-js/lib/features/create/Create'
+import PopupMenu from 'diagram-js/lib/features/popup-menu/PopupMenu'
+import type Rules from 'diagram-js/lib/features/rules/Rules'
+import type { Injector } from 'didi'
+import { assign } from 'min-dash'
 
 export default class CustomContextPadProvider extends ContextPadProvider {
   private readonly elementFactory: ElementFactory
@@ -127,6 +127,11 @@ export default class CustomContextPadProvider extends ContextPadProvider {
           },
         },
       })
+    }
+    delete actions['append.compensation-activity']
+    delete actions['append.intermediate-event']
+    if (!element.type?.includes('Gateway')) {
+      delete actions['replace'] // 移除扳手
     }
     return actions
   }
