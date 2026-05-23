@@ -23,7 +23,7 @@ const editAttribute = (properties?: Properties) => {
 const removeAttribute = (properties: Properties) => {
   const { element } = properties
   if (element) {
-    const properties = getExtensionElement(selectedElement, 'flowable:Properties')
+    const properties = getExtensionElement(selectedElement, 'activiti:Properties')
     if (properties) {
       let values: Element[] = properties.get('values') ?? []
       values = values.filter((v) => v !== element)
@@ -54,12 +54,12 @@ const propertiesConfirm = (properties?: Properties) => {
       )
     } else {
       if (bpmnFactory) {
-        let properties = getExtensionElement(selectedElement, 'flowable:Properties')
+        let properties = getExtensionElement(selectedElement, 'activiti:Properties')
         if (!properties) {
-          properties = createElement('flowable:Properties', bpmnFactory)
+          properties = createElement('activiti:Properties', bpmnFactory)
           addExtensionElements(selectedElement, properties)
         }
-        const property = createElement('flowable:Property', bpmnFactory, {
+        const property = createElement('activiti:Property', bpmnFactory, {
           id: id,
           name: name,
           value: value,
@@ -77,7 +77,7 @@ const propertiesConfirm = (properties?: Properties) => {
 }
 const loadProperties = () => {
   if (selectedElement) {
-    const propertiesElement = getExtensionElement(selectedElement, 'flowable:Properties')
+    const propertiesElement = getExtensionElement(selectedElement, 'activiti:Properties')
     const values: Element[] = propertiesElement?.get('values') ?? []
     propertiesData.value = values.map((p) => {
       return {

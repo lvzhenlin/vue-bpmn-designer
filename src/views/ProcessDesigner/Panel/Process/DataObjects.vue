@@ -27,10 +27,10 @@ const createDataObject = (dataObject: DataObject) => {
   const properties: Record<string, any> = {
     id: dataObject.id,
     name: dataObject.name,
-    'flowable:itemSubjectRef': dataObject.type,
+    'activiti:itemSubjectRef': dataObject.type,
   }
   const dataObjectElement = bpmnFactory?.create('bpmn:DataObject', properties)
-  const valueElement = bpmnFactory?.create('flowable:Value', { value: dataObject.value })
+  const valueElement = bpmnFactory?.create('activiti:Value', { value: dataObject.value })
   addExtensionElements(dataObjectElement, valueElement)
   return dataObjectElement
 }
@@ -41,9 +41,9 @@ const confirmDataObject = (dataObject: DataObject) => {
     const properties: Record<string, any> = {
       id: dataObject.id,
       name: dataObject.name,
-      'flowable:itemSubjectRef': dataObject.type,
+      'activiti:itemSubjectRef': dataObject.type,
     }
-    const valueElement = bpmnFactory?.create('flowable:Value', { value: dataObject.value })
+    const valueElement = bpmnFactory?.create('activiti:Value', { value: dataObject.value })
     const extensionElements = element.get('extensionElements')
     extensionElements.values = [valueElement]
     updateProperties(
@@ -71,11 +71,11 @@ const loadDataObjects = () => {
     is(e, 'bpmn:DataObject'),
   )
   dataObjects.value = dataObjectElements.map((item) => {
-    const valueElement = getExtensionElement(item, 'flowable:Value')
+    const valueElement = getExtensionElement(item, 'activiti:Value')
     return {
       id: item.get('id'),
       name: item.get('name'),
-      type: item.get('flowable:itemSubjectRef'),
+      type: item.get('activiti:itemSubjectRef'),
       value: valueElement?.get('value'),
       element: item,
     }

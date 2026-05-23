@@ -66,7 +66,7 @@ export default class ConnectorMenuProvider {
   _isConnectorApplied(element: Element, template: Connector) {
     const businessObject = getBusinessObject(element)
     if (businessObject) {
-      const connectorId = businessObject.get('flowable:connectorId')
+      const connectorId = businessObject.get('activiti:connectorId')
       return connectorId !== template.id
     }
     return false

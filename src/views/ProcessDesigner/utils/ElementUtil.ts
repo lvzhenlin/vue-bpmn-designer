@@ -136,12 +136,12 @@ export const useFieldRef = <T = string>(key: string) => {
     return {
       get() {
         track()
-        const fields = getExtensionElementsList(selectedElement, 'flowable:Field')
+        const fields = getExtensionElementsList(selectedElement, 'activiti:Field')
         const field = fields.find((field) => field.get('name') === key)
         return field?.get('stringValue') || field?.get('expression') || field?.get('string')
       },
       set(newValue: T) {
-        const fields = getExtensionElementsList(selectedElement, 'flowable:Field')
+        const fields = getExtensionElementsList(selectedElement, 'activiti:Field')
         const field = fields.find((field) => field.get('name') === key)
         const properties: Record<string, any> = {
           name: key,
@@ -158,7 +158,7 @@ export const useFieldRef = <T = string>(key: string) => {
         }
         if (!field) {
           const businessObject = getBusinessObject(selectedElement)
-          const fieldElement = businessObject.$model.create('flowable:Field', properties)
+          const fieldElement = businessObject.$model.create('activiti:Field', properties)
           addExtensionElements(selectedElement, fieldElement)
         } else {
           updateProperties(properties, field)

@@ -32,7 +32,7 @@ const updateModelValue = (val: string, index: number) => {
 }
 const delArg = (index: number) => {
   args.value.splice(index, 1)
-  const fields = getExtensionElementsList(selectedElement, 'flowable:Field')
+  const fields = getExtensionElementsList(selectedElement, 'activiti:Field')
   const arg = fields.find((field) => field.get('name') === `arg${index}`)
   if (arg) {
     removeExtensionElements(selectedElement, arg)
@@ -40,7 +40,7 @@ const delArg = (index: number) => {
   }
 }
 const loadArgs = () => {
-  const fields = getExtensionElementsList(selectedElement, 'flowable:Field')
+  const fields = getExtensionElementsList(selectedElement, 'activiti:Field')
   const argElements = fields.filter((field) => field.get('name').startsWith('arg'))
   args.value = argElements.map((arg) => arg.get('string'))
 }

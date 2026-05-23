@@ -53,10 +53,10 @@ export default defineComponent({
           BpmnColorPickerModule,
         ],
         moddleExtensions: {
-          flowable: flowableModdleDescriptors,
+          activiti: flowableModdleDescriptors,
         },
         connectorIconRenderer: {
-          iconProperty: 'flowable:connectorIcon',
+          iconProperty: 'activiti:connectorIcon',
         },
         gridLine: {
           smallGridSpacing: 10,

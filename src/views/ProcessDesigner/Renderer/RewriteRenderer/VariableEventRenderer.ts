@@ -31,7 +31,7 @@ export default class VariableEventRenderer extends BaseRenderer {
       if (
         isAny(element, ['bpmn:StartEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])
       ) {
-        return isEventDefinition(element, 'flowable:VariableListenerEventDefinition')
+        return isEventDefinition(element, 'activiti:VariableListenerEventDefinition')
       }
     }
     return false

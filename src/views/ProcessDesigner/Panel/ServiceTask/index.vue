@@ -65,7 +65,7 @@ const mapExceptionSize = customRef<number>((track, trigger) => {
   return {
     get() {
       track()
-      return getExtensionElementsList(selectedElement, 'flowable:MapException').length
+      return getExtensionElementsList(selectedElement, 'activiti:MapException').length
     },
     set(newValue: number) {
       trigger()
@@ -84,7 +84,7 @@ const removeField = (field: Field) => {
 }
 const confirmField = (field: Field) => {
   if (bpmnFactory && selectedElement) {
-    const fieldElements = getExtensionElementsList(selectedElement, 'flowable:Field')
+    const fieldElements = getExtensionElementsList(selectedElement, 'activiti:Field')
     const element = fieldElements.find((e) => e.name === field.name)
     if (element) {
       updateProperties(
@@ -94,7 +94,7 @@ const confirmField = (field: Field) => {
         toRaw(element),
       )
     } else {
-      const fieldInjection = createElement('flowable:Field', bpmnFactory, {
+      const fieldInjection = createElement('activiti:Field', bpmnFactory, {
         name: field.name,
         [field.type]: field.value,
       })
@@ -105,7 +105,7 @@ const confirmField = (field: Field) => {
 }
 const loadInjectFields = () => {
   if (selectedElement) {
-    const fieldInjections = getExtensionElementsList(selectedElement, 'flowable:Field')
+    const fieldInjections = getExtensionElementsList(selectedElement, 'activiti:Field')
     injectFields.value = fieldInjections.map((e) => {
       return {
         name: e.name,
@@ -121,19 +121,19 @@ const changeExecuteType = () => {
 }
 const mapExceptionConfirm = (exceptions: MapException[]) => {
   const exceptionElements = exceptions.map((e) => {
-    return bpmnFactory?.create('flowable:MapException', {
+    return bpmnFactory?.create('activiti:MapException', {
       errorCode: e.errorCode,
       exceptionClass: e.exceptionClass,
       includeChildExceptions: e.includeChildExceptions,
     })
   })
-  const removes = getExtensionElementsList(selectedElement, 'flowable:MapException')
+  const removes = getExtensionElementsList(selectedElement, 'activiti:MapException')
   removes.length && removeExtensionElements(selectedElement, removes)
   exceptionElements.length && addExtensionElements(selectedElement, exceptionElements)
   mapExceptionSize.value = exceptionElements.length
 }
 const editException = () => {
-  const exceptionElements = getExtensionElementsList(selectedElement, 'flowable:MapException')
+  const exceptionElements = getExtensionElementsList(selectedElement, 'activiti:MapException')
   const list = exceptionElements.map((e) => {
     return {
       errorCode: e.get('errorCode'),

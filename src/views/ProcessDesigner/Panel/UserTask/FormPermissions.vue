@@ -78,7 +78,7 @@ const parseBoolean = (value: unknown, defaultValue = false) => {
 }
 
 const loadFormPropertyList = () => {
-  const formPropertyList = getExtensionElementsList(selectedElement, 'flowable:FormProperty')
+  const formPropertyList = getExtensionElementsList(selectedElement, 'activiti:FormProperty')
   formPropertyData.value = formPropertyList.map((e) => {
     return {
       element: e,
@@ -96,7 +96,7 @@ const loadFormPropertyList = () => {
 }
 
 const loadOperationList = () => {
-  const operationList = getExtensionElementsList(selectedElement, 'flowable:Button')
+  const operationList = getExtensionElementsList(selectedElement, 'activiti:Button')
   const buttonCodeMap = new Map<string, Element>()
   operationList.forEach((button) => {
     const code = button.get('code')
@@ -148,7 +148,7 @@ const confirmFormProperty = (formProperty: FormProperty) => {
     updateProperties(formPropertyProps, formProperty.element)
   } else if (bpmnFactory) {
     const formPropertyElement = createElement(
-      'flowable:FormProperty',
+      'activiti:FormProperty',
       bpmnFactory,
       formPropertyProps,
     )
@@ -159,7 +159,7 @@ const confirmFormProperty = (formProperty: FormProperty) => {
 }
 
 const delFormProperty = (index: number) => {
-  const formPropertyList = getExtensionElementsList(selectedElement, 'flowable:FormProperty')
+  const formPropertyList = getExtensionElementsList(selectedElement, 'activiti:FormProperty')
   const target = formPropertyList[index]
   if (!target) {
     return
@@ -183,7 +183,7 @@ const handleOperationChange = (operation: OperationItem) => {
   if (!bpmnFactory) {
     return
   }
-  const operationElement = createElement('flowable:Button', bpmnFactory, {
+  const operationElement = createElement('activiti:Button', bpmnFactory, {
     name: operation.label,
     code: operation.value,
     isHide: operation.enable ? 'false' : 'true',

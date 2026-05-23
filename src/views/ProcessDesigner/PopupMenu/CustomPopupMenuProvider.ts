@@ -54,7 +54,7 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
     //   className: 'bpmn-icon-start-event-multiple',
     //   target: {
     //     type: 'bpmn:StartEvent',
-    //     eventDefinitionType: 'flowable:VariableListenerEventDefinition',
+    //     eventDefinitionType: 'activiti:VariableListenerEventDefinition',
     //   },
     // })
     replaceOptions.INTERMEDIATE_EVENT.push({
@@ -63,7 +63,7 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
       className: 'bpmn-icon-intermediate-event-catch-multiple',
       target: {
         type: 'bpmn:IntermediateCatchEvent',
-        eventDefinitionType: 'flowable:VariableListenerEventDefinition',
+        eventDefinitionType: 'activiti:VariableListenerEventDefinition',
         eventDefinitionAttrs: {
           variableChangeType: 'all',
         },
@@ -75,7 +75,7 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
       className: 'bpmn-icon-start-event-multiple',
       target: {
         type: 'bpmn:StartEvent',
-        eventDefinitionType: 'flowable:VariableListenerEventDefinition',
+        eventDefinitionType: 'activiti:VariableListenerEventDefinition',
         isInterrupting: true,
       },
     })
@@ -85,7 +85,7 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
       className: 'bpmn-icon-start-event-non-interrupting-multiple',
       target: {
         type: 'bpmn:StartEvent',
-        eventDefinitionType: 'flowable:VariableListenerEventDefinition',
+        eventDefinitionType: 'activiti:VariableListenerEventDefinition',
         isInterrupting: false,
       },
     })
@@ -95,7 +95,7 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
       className: 'bpmn-icon-intermediate-event-catch-multiple',
       target: {
         type: 'bpmn:BoundaryEvent',
-        eventDefinitionType: 'flowable:VariableListenerEventDefinition',
+        eventDefinitionType: 'activiti:VariableListenerEventDefinition',
         eventDefinitionAttrs: {
           variableChangeType: 'all',
         },
@@ -108,7 +108,7 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
       className: 'bpmn-icon-intermediate-event-catch-non-interrupting-multiple',
       target: {
         type: 'bpmn:BoundaryEvent',
-        eventDefinitionType: 'flowable:VariableListenerEventDefinition',
+        eventDefinitionType: 'activiti:VariableListenerEventDefinition',
         eventDefinitionAttrs: {
           variableChangeType: 'all',
         },
@@ -129,7 +129,7 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
     const isStartEventInSubProcess =
       is(businessObject, 'bpmn:StartEvent') && isEventSubProcess(businessObject.$parent)
     if (isBoundaryEvent || isStartEventInSubProcess) {
-      if (isEventDefinition(target as Element, 'flowable:VariableListenerEventDefinition')) {
+      if (isEventDefinition(target as Element, 'activiti:VariableListenerEventDefinition')) {
         return {
           ...headerEntries,
           ...super._getNonInterruptingHeaderEntries(target),

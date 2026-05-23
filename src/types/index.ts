@@ -9,7 +9,7 @@ export interface Event {
 export type MessageEvent = Event
 
 export interface SignalEvent extends Event {
-  'flowable:scope': string
+  'activiti:scope': string
 }
 
 export interface EscalationEvent extends Event {

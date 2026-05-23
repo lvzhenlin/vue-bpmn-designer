@@ -9,7 +9,7 @@ Vue3(SFC `<script setup lang="ts">`), Vite6, TS, Pinia, Vue Router, Element Plus
 
 - **自动引入**: **严禁**手动import Vue核心API(ref/computed等)及Element Plus组件, 已全局配置自动引入。
 - **状态管理**: 必须使用Pinia组合式(Setup Store)。
-- **Bpmn-js(Flowable)**: 遵循Flowable XML前缀(`flowable:`). 操作DOM/业务对象**必须走**`modeling.updateProperties`等核心API记录撤销栈，**严禁**直接赋业务对象数据或改DOM。
+- **Bpmn-js(Flowable)**: 遵循Flowable XML前缀(`activiti:`). 操作DOM/业务对象**必须走**`modeling.updateProperties`等核心API记录撤销栈，**严禁**直接赋业务对象数据或改DOM。
 
 ## 3. 强制规范 (⚠️)
 

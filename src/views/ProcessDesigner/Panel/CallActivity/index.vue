@@ -56,7 +56,7 @@ const confirmParams = (params: Params, type: 'In' | 'Out') => {
         toRaw(element),
       )
     } else {
-      const inElement = createElement(`flowable:${type}`, bpmnFactory, {
+      const inElement = createElement(`activiti:${type}`, bpmnFactory, {
         source: params.source,
         target: params.target,
       })
@@ -67,8 +67,8 @@ const confirmParams = (params: Params, type: 'In' | 'Out') => {
 }
 const loadParams = () => {
   if (selectedElement) {
-    const inElements = getExtensionElementsList(selectedElement, 'flowable:In')
-    const outElements = getExtensionElementsList(selectedElement, 'flowable:Out')
+    const inElements = getExtensionElementsList(selectedElement, 'activiti:In')
+    const outElements = getExtensionElementsList(selectedElement, 'activiti:Out')
     inData.value = inElements.map((e) => {
       return {
         source: e.source,

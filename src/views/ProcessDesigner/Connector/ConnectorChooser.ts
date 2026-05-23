@@ -22,9 +22,9 @@ export default class ConnectorChooser {
   private readonly _modeling: Modeling
   static $inject: string[]
   private readonly CAMUNDA_SERVICE_TASK_LIKE = [
-    'flowable:class',
-    'flowable:delegateExpression',
-    'flowable:expression',
+    'activiti:class',
+    'activiti:delegateExpression',
+    'activiti:expression',
   ]
 
   constructor(
@@ -76,9 +76,9 @@ export default class ConnectorChooser {
     const newVersion = newTemplate && newTemplate.version
     const newIcon = newTemplate && newTemplate.icon?.contents
     this._modeling.updateProperties(element, {
-      'flowable:connectorId': newId,
-      'flowable:connectorVersion': newVersion,
-      'flowable:connectorIcon': newIcon,
+      'activiti:connectorId': newId,
+      'activiti:connectorVersion': newVersion,
+      'activiti:connectorIcon': newIcon,
     })
   }
 
@@ -113,10 +113,10 @@ export default class ConnectorChooser {
     })
   }
 
-  // 更新 flowable:Field 属性
+  // 更新 activiti:Field 属性
   _updateFieldProperties(element: Element, newTemplate: Connector, businessObject?: ModdleElement) {
     const newProperties = newTemplate.properties?.filter(
-      (newProperty) => newProperty.binding.type === 'flowable:field',
+      (newProperty) => newProperty.binding.type === 'activiti:field',
     )
     if (!newProperties?.length) {
       return
@@ -125,12 +125,12 @@ export default class ConnectorChooser {
       businessObject = getOrCreateExtensionElements(element)
     }
     const propertyName = isAny(businessObject, [
-      'flowable:ExecutionListener',
-      'flowable:TaskListener',
+      'activiti:ExecutionListener',
+      'activiti:TaskListener',
     ])
       ? 'fields'
       : 'values'
-    const oldFields = getExtensionElementsList(element, 'flowable:Field')
+    const oldFields = getExtensionElementsList(element, 'activiti:Field')
     newProperties.forEach((newProperty) => {
       const newBinding = newProperty.binding
       // 添加新字段
@@ -161,14 +161,14 @@ export default class ConnectorChooser {
     }
   }
 
-  // 更新 flowable:Property 属性
+  // 更新 activiti:Property 属性
   _updatePropertyProperties(
     element: Element,
     newTemplate: Connector,
     businessObject?: ModdleElement,
   ) {
     const newProperties = newTemplate.properties?.filter(
-      (newProperty) => newProperty.binding.type === 'flowable:property',
+      (newProperty) => newProperty.binding.type === 'activiti:property',
     )
     if (!newProperties?.length) {
       return
@@ -178,9 +178,9 @@ export default class ConnectorChooser {
     } else {
       businessObject = getOrCreateExtensionElements(element)
     }
-    let flowableProperties = getExtensionElement(element, 'flowable:Properties')
+    let flowableProperties = getExtensionElement(element, 'activiti:Properties')
     if (!flowableProperties) {
-      flowableProperties = this._bpmnFactory.create('flowable:Properties')
+      flowableProperties = this._bpmnFactory.create('activiti:Properties')
       this._commandStack.execute('element.updateModdleProperties', {
         element,
         moddleElement: businessObject,
@@ -189,8 +189,8 @@ export default class ConnectorChooser {
         },
       })
     }
-    const oldFlowableProperties = flowableProperties?.get('flowable:values')
-      ? flowableProperties?.get('flowable:values').slice()
+    const oldFlowableProperties = flowableProperties?.get('activiti:values')
+      ? flowableProperties?.get('activiti:values').slice()
       : []
     newProperties.forEach((newProperty) => {
       const newPropertyValue = newProperty.value
@@ -221,16 +221,16 @@ export default class ConnectorChooser {
     }
   }
 
-  // 更新 flowable:ExecutionListener 属性
+  // 更新 activiti:ExecutionListener 属性
   _updateExecutionListenerProperties(element: Element, newTemplate: Connector) {
     const newProperties = newTemplate.properties?.filter(
-      (newProperty) => newProperty.binding.type === 'flowable:executionListener',
+      (newProperty) => newProperty.binding.type === 'activiti:executionListener',
     )
     if (!newProperties?.length) {
       return
     }
     const extensionElements = getOrCreateExtensionElements(element)
-    const oldExecutionListeners = getExtensionElementsList(element, 'flowable:ExecutionListener')
+    const oldExecutionListeners = getExtensionElementsList(element, 'activiti:ExecutionListener')
     const newExecutionListeners = newProperties.map((newProperty) => {
       const newBinding = newProperty.binding
       const propertyValue = newProperty.value
@@ -256,7 +256,7 @@ export default class ConnectorChooser {
     value?: string | boolean,
   ) {
     const { name } = binding
-    return bpmnFactory.create('flowable:Property', {
+    return bpmnFactory.create('activiti:Property', {
       name,
       value,
     })
@@ -269,9 +269,9 @@ export default class ConnectorChooser {
   ) {
     const { event, implementationType, scriptFormat } = binding
     if (implementationType === 'script' || scriptFormat) {
-      return bpmnFactory.create('flowable:ExecutionListener', {
+      return bpmnFactory.create('activiti:ExecutionListener', {
         event,
-        script: bpmnFactory.create('flowable:Script', {
+        script: bpmnFactory.create('activiti:Script', {
           scriptFormat,
           value,
         }),
@@ -297,7 +297,7 @@ export default class ConnectorChooser {
       props.expression = value
     }
     props.name = name
-    return bpmnFactory.create('flowable:Field', props)
+    return bpmnFactory.create('activiti:Field', props)
   }
 }
 ConnectorChooser.$inject = ['eventBus', 'bpmnReplace', 'commandStack', 'bpmnFactory', 'modeling']

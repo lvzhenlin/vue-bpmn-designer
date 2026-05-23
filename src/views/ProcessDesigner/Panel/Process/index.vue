@@ -19,17 +19,17 @@ const historyLevel = customRef((track, trigger) => {
   return {
     get() {
       track()
-      const historyLevel = getExtensionElement(selectedElement, 'flowable:HistoryLevel')
+      const historyLevel = getExtensionElement(selectedElement, 'activiti:HistoryLevel')
       return historyLevel?.get('body')
     },
     set(newValue: string) {
-      let historyLevel = getExtensionElement(selectedElement, 'flowable:HistoryLevel')
+      let historyLevel = getExtensionElement(selectedElement, 'activiti:HistoryLevel')
       if (newValue) {
         if (historyLevel) {
           updateProperties({ body: newValue }, historyLevel)
         } else {
           const businessObject = getBusinessObject(selectedElement)
-          historyLevel = businessObject.$model.create('flowable:HistoryLevel', {
+          historyLevel = businessObject.$model.create('activiti:HistoryLevel', {
             body: newValue,
           })
           historyLevel && addExtensionElements(selectedElement, historyLevel)

@@ -15,13 +15,13 @@ const useCustomRef = (key: string) => {
     return {
       get() {
         track()
-        const element = getExtensionElement(selectedElement, 'flowable:FailedJobRetryTimeCycle')
+        const element = getExtensionElement(selectedElement, 'activiti:FailedJobRetryTimeCycle')
         return element?.get(key)
       },
       set(newValue: string) {
-        let element = getExtensionElement(selectedElement, 'flowable:FailedJobRetryTimeCycle')
+        let element = getExtensionElement(selectedElement, 'activiti:FailedJobRetryTimeCycle')
         if (!element && bpmnFactory) {
-          const ele = createElement('flowable:FailedJobRetryTimeCycle', bpmnFactory)
+          const ele = createElement('activiti:FailedJobRetryTimeCycle', bpmnFactory)
           addExtensionElements(selectedElement, ele)
           element = ele
         }

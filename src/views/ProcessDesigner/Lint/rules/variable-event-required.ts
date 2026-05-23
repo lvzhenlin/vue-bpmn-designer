@@ -5,7 +5,7 @@ import { getEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitio
 const variableEventRequired = (): RuleDefinition => {
   return {
     check: (node: ModdleElement, reporter: Reporter) => {
-      const variableEvent = getEventDefinition(node, 'flowable:VariableListenerEventDefinition')
+      const variableEvent = getEventDefinition(node, 'activiti:VariableListenerEventDefinition')
       if (variableEvent) {
         const variableChangeType = variableEvent.get('variableChangeType')
         const variableName = variableEvent.get('variableName')

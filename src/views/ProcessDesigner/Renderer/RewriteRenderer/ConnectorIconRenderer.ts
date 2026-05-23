@@ -24,7 +24,7 @@ export default class ConnectorIconRenderer extends BaseRenderer {
     super(eventBus, 1500)
     this._bpmnRenderer = bpmnRenderer
     this._config = config
-    this._iconProperty = config.connectorIconRenderer.iconProperty || 'flowable:connectorIcon'
+    this._iconProperty = config.connectorIconRenderer.iconProperty || 'activiti:connectorIcon'
   }
 
   canRender(element: Shape): boolean {

@@ -9,7 +9,7 @@ const httpTaskRequired = (): RuleDefinition => {
       if (is(node, 'bpmn:ServiceTask')) {
         const type = node.get('type')
         if (type === 'http') {
-          const fields = getExtensionElementsList(node, 'flowable:Field')
+          const fields = getExtensionElementsList(node, 'activiti:Field')
           const requestMethod = fields.find((field) => field.get('name') === 'requestMethod')
           if (!requestMethod?.get('string')) {
             reporter.report(node.id, 'Missing requestMethod')

@@ -25,20 +25,20 @@ const retryTimeCycle = customRef((track, trigger) => {
       track()
       const failedJobRetryTimeCycle = getExtensionElement(
         selectedElement,
-        'flowable:FailedJobRetryTimeCycle',
+        'activiti:FailedJobRetryTimeCycle',
       )
       return failedJobRetryTimeCycle?.get('body')
     },
     set(newValue: string) {
       const failedJobRetryTimeCycle = getExtensionElement(
         selectedElement,
-        'flowable:FailedJobRetryTimeCycle',
+        'activiti:FailedJobRetryTimeCycle',
       )
       if (newValue) {
         if (!failedJobRetryTimeCycle) {
           const businessObject = getBusinessObject(selectedElement)
           const failedJobRetryTimeCycleElement = businessObject.$model.create(
-            'flowable:FailedJobRetryTimeCycle',
+            'activiti:FailedJobRetryTimeCycle',
             {
               body: newValue,
             },

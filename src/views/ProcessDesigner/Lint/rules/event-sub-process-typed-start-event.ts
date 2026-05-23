@@ -16,7 +16,7 @@ const eventSubProcessTypedStartEvent = (): RuleDefinition => {
         }
         const eventDefinitions = flowElement.eventDefinitions || []
         if (eventDefinitions.length === 0) {
-          if (!isEventDefinition(flowElement, 'flowable:VariableListenerEventDefinition')) {
+          if (!isEventDefinition(flowElement, 'activiti:VariableListenerEventDefinition')) {
             reporter.report(flowElement.id, 'Start event is missing event definition', [
               'eventDefinitions',
             ])

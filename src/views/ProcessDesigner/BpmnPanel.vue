@@ -190,7 +190,7 @@ const setCurrentComponents = (element: Element) => {
     slots.basic.push('CompensateEvent')
   } else if (isEventDefinition(element, 'bpmn:MessageEventDefinition')) {
     slots.basic.push('MessageEvent')
-  } else if (isEventDefinition(element, 'flowable:VariableListenerEventDefinition')) {
+  } else if (isEventDefinition(element, 'activiti:VariableListenerEventDefinition')) {
     slots.basic.push('VariableEvent')
   } else if (isEventDefinition(element, 'bpmn:ConditionalEventDefinition')) {
     slots.basic.push('ConditionalEvent')

@@ -111,7 +111,7 @@ const loadEvents = () => {
     return {
       id: item.get('id'),
       name: item.get('name'),
-      'flowable:scope': item.get('flowable:scope'),
+      'activiti:scope': item.get('activiti:scope'),
       element: item,
     }
   })

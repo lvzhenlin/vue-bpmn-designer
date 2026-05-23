@@ -14,12 +14,12 @@ const formSize = useFormSize()
 const { cloned, sync } = useCloned<SignalEvent>({
   id: '',
   name: '',
-  'flowable:scope': 'global',
+  'activiti:scope': 'global',
 })
 const formRules = ref<FormRules>({
   id: [{ required: true, message: '请输入id', trigger: 'blur' }],
   name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-  'flowable:scope': [{ required: true, message: '请输入作用域', trigger: 'blur' }],
+  'activiti:scope': [{ required: true, message: '请输入作用域', trigger: 'blur' }],
 })
 const formRef = ref<FormInstance>()
 const drawerVisible = ref(false)
@@ -75,8 +75,8 @@ defineExpose({
       <el-form-item label="名称" prop="name">
         <el-input v-model="cloned.name" placeholder="请输入名称" />
       </el-form-item>
-      <el-form-item label="作用域" prop="flowable:scope">
-        <el-radio-group v-model="cloned['flowable:scope']">
+      <el-form-item label="作用域" prop="activiti:scope">
+        <el-radio-group v-model="cloned['activiti:scope']">
           <el-radio-button label="global">全局</el-radio-button>
           <el-radio-button label="processInstance">当前实例</el-radio-button>
         </el-radio-group>

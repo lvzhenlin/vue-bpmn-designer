@@ -1,7 +1,7 @@
 export default (key: string, name: string): string => {
   return `<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
 <bpmn:process id="${key}" name="${name}" isExecutable="true">
-<bpmn:startEvent id="StartEvent_1" flowable:initiator="initiator"/>
+<bpmn:startEvent id="StartEvent_1" activiti:initiator="initiator"/>
 </bpmn:process>
 <bpmndi:BPMNDiagram id="BPMNDiagram_1">
 <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="${key}">

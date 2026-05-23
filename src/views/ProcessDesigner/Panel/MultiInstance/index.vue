@@ -89,16 +89,16 @@ const collectionHandler = customRef<string>((track, trigger) => {
     get() {
       track()
       const loopCharacteristics = getLoopCharacteristics(selectedElement)
-      const collectionElement = getExtensionElement(loopCharacteristics, 'flowable:Collection')
+      const collectionElement = getExtensionElement(loopCharacteristics, 'activiti:Collection')
       if (collectionElement) {
         return collectionElement.get('class') || collectionElement.get('delegateExpression')
       }
     },
     set(newValue: string) {
       const loopCharacteristics = getLoopCharacteristics(selectedElement)
-      let collectionElement = getExtensionElement(loopCharacteristics, 'flowable:Collection')
+      let collectionElement = getExtensionElement(loopCharacteristics, 'activiti:Collection')
       if (!collectionElement) {
-        collectionElement = bpmnFactory?.create('flowable:Collection', {
+        collectionElement = bpmnFactory?.create('activiti:Collection', {
           class: undefined,
           delegateExpression: undefined,
         })
@@ -195,13 +195,13 @@ const confirmVariableAggregation = (variableAggregation: VariableAggregation) =>
     } else {
       properties.target = target
     }
-    return bpmnFactory?.create('flowable:Variable', properties)
+    return bpmnFactory?.create('activiti:Variable', properties)
   })
   const { element } = variableAggregation
   if (element) {
     updateProperties(properties, element)
   } else {
-    const aggregation = bpmnFactory?.create('flowable:VariableAggregation', properties)
+    const aggregation = bpmnFactory?.create('activiti:VariableAggregation', properties)
     aggregation && addExtensionElements(loopCharacteristics, aggregation)
   }
   loadVariableAggregations()
@@ -209,7 +209,7 @@ const confirmVariableAggregation = (variableAggregation: VariableAggregation) =>
 const loadVariableAggregations = () => {
   const loopCharacteristics = getLoopCharacteristics(selectedElement)
   if (loopCharacteristics) {
-    const values = getExtensionElementsList(loopCharacteristics, 'flowable:VariableAggregation')
+    const values = getExtensionElementsList(loopCharacteristics, 'activiti:VariableAggregation')
     variableAggregations.value = values.map((aggregation) => {
       return {
         target: aggregation.target || aggregation.targetExpression,

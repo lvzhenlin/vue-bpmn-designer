@@ -32,12 +32,12 @@ export default class CustomBpmnReplace extends Replace {
           resultVariableName: undefined,
         })
       }
-      const fields = getExtensionElementsList(attrs, 'flowable:Field')
+      const fields = getExtensionElementsList(attrs, 'activiti:Field')
       if (fields.length > 0) {
         removeExtensionElements(attrs, fields)
       }
     }
-    if (attrs.eventDefinitionType === 'flowable:VariableListenerEventDefinition') {
+    if (attrs.eventDefinitionType === 'activiti:VariableListenerEventDefinition') {
       const businessObject = getBusinessObject(attrs)
       let extensionElements = businessObject.get('extensionElements')
       if (!extensionElements) {
@@ -56,7 +56,7 @@ export default class CustomBpmnReplace extends Replace {
     } else {
       const variableEventDefinition = getExtensionElement(
         attrs,
-        'flowable:VariableListenerEventDefinition',
+        'activiti:VariableListenerEventDefinition',
       )
       if (variableEventDefinition) {
         removeExtensionElements(attrs, variableEventDefinition)

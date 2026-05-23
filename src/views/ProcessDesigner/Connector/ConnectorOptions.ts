@@ -39,7 +39,7 @@ export const TASK_CONNECTOR: Connector[] = [
           { name: 'DELETE', value: 'DELETE' },
         ],
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'requestMethod',
         },
       },
@@ -48,7 +48,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Specify the url of the REST API to talk to.',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'requestUrl',
         },
         constraints: {
@@ -66,7 +66,7 @@ export const TASK_CONNECTOR: Connector[] = [
         type: 'String',
         optional: true,
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'requestHeaders',
         },
       },
@@ -77,7 +77,7 @@ export const TASK_CONNECTOR: Connector[] = [
         type: 'String',
         optional: true,
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'requestBody',
         },
       },
@@ -87,7 +87,7 @@ export const TASK_CONNECTOR: Connector[] = [
         type: 'Boolean',
         value: false,
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'ignoreException',
         },
       },
@@ -97,7 +97,7 @@ export const TASK_CONNECTOR: Connector[] = [
         type: 'Boolean',
         value: false,
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'disallowRedirects',
         },
       },
@@ -107,7 +107,7 @@ export const TASK_CONNECTOR: Connector[] = [
         type: 'Boolean',
         value: false,
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'saveResponseVariableAsJson',
         },
       },
@@ -117,7 +117,7 @@ export const TASK_CONNECTOR: Connector[] = [
         type: 'Boolean',
         value: false,
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'saveResponseParametersTransient',
         },
       },
@@ -128,7 +128,7 @@ export const TASK_CONNECTOR: Connector[] = [
         type: 'String',
         optional: true,
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'resultVariablePrefix',
         },
       },
@@ -165,7 +165,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'assignee',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'assignee',
         },
         constraints: {
@@ -205,7 +205,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Camel Content',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'camelContext',
         },
         constraints: {
@@ -245,7 +245,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'command',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'command',
         },
         constraints: {
@@ -257,7 +257,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Output Variable',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'outputVariable',
         },
       },
@@ -267,7 +267,7 @@ export const TASK_CONNECTOR: Connector[] = [
         value: 'true',
         type: 'Boolean',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'wait',
         },
       },
@@ -276,7 +276,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Redirect Error',
         type: 'Boolean',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'redirectError',
         },
       },
@@ -285,7 +285,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Clean Env',
         type: 'Boolean',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'cleanEnv',
         },
       },
@@ -294,7 +294,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'directory',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'directory',
         },
       },
@@ -303,7 +303,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Error Code Variable',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'errorCodeVariable',
         },
       },
@@ -340,7 +340,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'to',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'to',
         },
         constraints: {
@@ -352,7 +352,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Cc',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'cc',
         },
       },
@@ -361,7 +361,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Bcc',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'bcc',
         },
       },
@@ -370,7 +370,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Subject',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'subject',
         },
       },
@@ -379,7 +379,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Text',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'text',
         },
       },
@@ -416,7 +416,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Topic',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'topic',
         },
         constraints: {
@@ -456,7 +456,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Decision Table',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'decisionTableReferenceKey',
         },
       },
@@ -465,7 +465,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Throw Error On No Hits',
         type: 'Boolean',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'decisionTaskThrowErrorOnNoHits',
         },
       },
@@ -475,7 +475,7 @@ export const TASK_CONNECTOR: Connector[] = [
         type: 'Boolean',
         value: 'false',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'sameDeployment',
         },
       },
@@ -512,7 +512,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Endpoint Url',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'endpointUrl',
         },
       },
@@ -522,7 +522,7 @@ export const TASK_CONNECTOR: Connector[] = [
         type: 'String',
         value: 'juel',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'language',
         },
       },
@@ -531,7 +531,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Payload Expression',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'payloadExpression',
         },
       },
@@ -540,7 +540,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Result Variable',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'resultVariable',
         },
       },
@@ -577,7 +577,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Target Node',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'targetNodeId',
         },
       },
@@ -586,7 +586,7 @@ export const TASK_CONNECTOR: Connector[] = [
         description: 'Condition Expression',
         type: 'String',
         binding: {
-          type: 'flowable:field',
+          type: 'activiti:field',
           name: 'conditionExpression',
         },
       },

@@ -59,7 +59,7 @@ export const getEventDefinition = (element: Element, eventType: string) => {
 }
 
 export const getVariableEventDefinition = (element: Element): any => {
-  return getEventDefinition(element, 'flowable:VariableListenerEventDefinition')
+  return getEventDefinition(element, 'activiti:VariableListenerEventDefinition')
 }
 
 export const getSignalEventDefinition = (element: Element): any => {

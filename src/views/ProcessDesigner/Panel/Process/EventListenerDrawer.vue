@@ -101,11 +101,11 @@ const loadEventOptions = (val: string) => {
   } else if (val === 'signal') {
     const events = getSignalEvents(selectedElement)
     throwEvents.value = toOptions(
-      events.filter((e) => e.get('flowable:scope') === 'processInstance'),
+      events.filter((e) => e.get('activiti:scope') === 'processInstance'),
     )
   } else if (val === 'globalSignal') {
     const events = getSignalEvents(selectedElement)
-    throwEvents.value = toOptions(events.filter((e) => e.get('flowable:scope') === 'global'))
+    throwEvents.value = toOptions(events.filter((e) => e.get('activiti:scope') === 'global'))
   } else {
     throwEvents.value = []
   }

@@ -47,13 +47,13 @@ const confirmEventListener = (eventListener: AnyEventListener) => {
   if (element) {
     updateProperties(properties, element)
   } else {
-    const eventListenerElement = bpmnFactory?.create('flowable:EventListener', properties)
+    const eventListenerElement = bpmnFactory?.create('activiti:EventListener', properties)
     addExtensionElements(selectedElement, eventListenerElement)
   }
   loadEventListeners()
 }
 const loadEventListeners = () => {
-  const listenerElements = getExtensionElementsList(selectedElement, 'flowable:EventListener')
+  const listenerElements = getExtensionElementsList(selectedElement, 'activiti:EventListener')
   events.value = listenerElements.map((e) => {
     const throwEvent = e.get('throwEvent')
     if (throwEvent) {

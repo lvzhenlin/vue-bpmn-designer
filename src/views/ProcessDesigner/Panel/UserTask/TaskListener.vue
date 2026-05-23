@@ -37,7 +37,7 @@ const confirmListener = (listener: ExecutionListener) => {
   const { element, type, impl, event, fields } = listener
   const fieldElements =
     fields?.map((field: Field) => {
-      return bpmnFactory?.create('flowable:Field', {
+      return bpmnFactory?.create('activiti:Field', {
         name: field.name,
         [field.type]: field.value,
       })
@@ -53,7 +53,7 @@ const confirmListener = (listener: ExecutionListener) => {
     listenerProps[type] = impl
     updateProperties(listenerProps, element)
   } else {
-    const listenerElement = bpmnFactory?.create('flowable:TaskListener', {
+    const listenerElement = bpmnFactory?.create('activiti:TaskListener', {
       event: event,
       [type]: impl,
       fields: fieldElements,
@@ -74,7 +74,7 @@ const removeListener = (listener: ExecutionListener) => {
 }
 const loadExecutionListeners = () => {
   if (selectedElement) {
-    const listenerElements = getExtensionElementsList(selectedElement, 'flowable:TaskListener')
+    const listenerElements = getExtensionElementsList(selectedElement, 'activiti:TaskListener')
     listeners.value = listenerElements.map((e) => {
       return {
         event: e.event,
