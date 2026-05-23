@@ -207,7 +207,7 @@ watch(
 </script>
 
 <template>
-  <el-tab-pane label="表单权限" name="form">
+  <el-tab-pane label="表单配置" name="form">
     <el-scrollbar>
       <div class="form-permissions">
         <el-form-item label="表单标识">
@@ -271,7 +271,7 @@ watch(
 
         <FormPropertyDialog ref="formPropertyDialogRef" @confirm="confirmFormProperty" />
 
-        <el-form-item label="操作权限" label-position="top" v-if="isUserTask">
+        <!-- <el-form-item label="操作权限" label-position="top" v-if="isUserTask">
           <el-table :data="operationData" height="200px">
             <el-table-column label="按钮" prop="label"></el-table-column>
             <el-table-column label="属性" prop="value"></el-table-column>
@@ -281,7 +281,7 @@ watch(
               </template>
             </el-table-column>
           </el-table>
-        </el-form-item>
+        </el-form-item> -->
       </div>
     </el-scrollbar>
   </el-tab-pane>
