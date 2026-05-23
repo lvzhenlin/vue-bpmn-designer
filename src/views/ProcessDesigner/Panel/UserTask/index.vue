@@ -50,9 +50,9 @@ onMounted(() => {
         <el-option label="部门E" value="deptE" />
       </el-select>
     </el-form-item>
-    <el-form-item prop="priority" label="优先级">
+    <!-- <el-form-item prop="priority" label="优先级">
       <el-input-number v-model="priority" placeholder="优先级" :min="0" :max="10" />
-    </el-form-item>
+    </el-form-item> -->
     <el-form-item prop="dueDate" label="到期时间">
       <el-input v-model="dueDate" placeholder="请输入到期时间" />
     </el-form-item>
