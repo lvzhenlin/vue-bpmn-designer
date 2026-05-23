@@ -250,8 +250,8 @@ const setCurrentComponents = (element: Element) => {
       slots.basic.push('ServiceTask')
     }
   } else if (is(element, 'bpmn:Process')) {
-    slots.default.push('GlobalEvents')
-    slots.basic.push('Process')
+    // slots.default.push('GlobalEvents')
+    // slots.basic.push('Process')  // 注释：不显示流程启动人、流程启动角色、历史级别
     slots.other.push('EventListener')
     slots.other.push('DataObjects')
   } else if (is(element, 'bpmn:SubProcess')) {
