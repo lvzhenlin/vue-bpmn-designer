@@ -71,11 +71,11 @@ export default defineComponent({
           // defaultLabelColor: 'var(--el-text-color-primary)'
         },
         linting: {
-          active: true,
+          active: false,
           bpmnlint: bpmnlint,
         },
         minimap: {
-          open: true,
+          open: false,
         },
         ...props.options,
       })
