@@ -16,7 +16,7 @@ const { selectedElement } = useBpmnContextService()
 const activeTabName = ref('basic')
 const actives = ref<string[]>(['general', 'arg1', 'arg2', 'arg3', 'arg4'])
 const id = useCustomRef('id')
-const isExecutable = useCustomRef('isExecutable')
+// const isExecutable = useCustomRef('isExecutable')
 const name = useCustomRef('name')
 const text = useCustomRef('text')
 const propertiesByName = computed(() => {
@@ -51,9 +51,9 @@ const updateId = (val: string) => {
             <el-form-item label="名称" v-else-if="propertiesByName['text']">
               <el-input v-model="text" placeholder="请输入节点名称" />
             </el-form-item>
-            <el-form-item label="可执行" v-if="propertiesByName['isExecutable']">
+            <!-- <el-form-item label="可执行" v-if="propertiesByName['isExecutable']">
               <el-switch v-model="isExecutable" />
-            </el-form-item>
+            </el-form-item> -->
             <slot name="general"></slot>
           </el-collapse-item>
           <slot name="basic"></slot>
