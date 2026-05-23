@@ -23,8 +23,8 @@ onMounted(() => {
 
 <template>
   <el-collapse-item name="arg1" title="处理人">
-    <el-form-item prop="assignee" label="受让人">
-      <el-select v-model="assignee" filterable allow-create clearable placeholder="请选择受让人">
+    <el-form-item prop="assignee" label="办理人">
+      <el-select v-model="assignee" filterable allow-create clearable placeholder="请选择办理人">
         <el-option label="张三" value="zhangsan" />
         <el-option label="李四" value="lisi" />
         <el-option label="王五" value="wangwu" />

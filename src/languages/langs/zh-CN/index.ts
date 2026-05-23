@@ -65,7 +65,7 @@ export default {
     'Element overlaps with other element': '元素与其他元素重叠',
     'Element is missing bpmndi': '元素缺少bpmndi',
     'Element is unused': '元素未使用',
-    'Missing assignee or candidate/group': '缺少受让人或候选人/组',
+    'Missing assignee or candidate/group': '缺少办理人或候选人/组',
     'Missing class or expression/delegateExpression': '缺少类或表达式/委托表达式',
     'RequestHeaders should be an object, not an array': '请求头应该是对象，而不是数组',
     'Invalid JSON format in requestHeaders': '请求头是个无效的JSON格式',
