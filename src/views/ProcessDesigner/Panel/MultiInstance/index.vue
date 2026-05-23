@@ -243,13 +243,13 @@ onMounted(() => {
 
 <template>
   <div>
-    <el-form-item label="实例类型">
+    <!-- <el-form-item label="实例类型">
       <el-radio-group v-model="loopCharacteristicsType">
         <el-radio-button label="无" value="" />
         <el-radio-button label="并行" value="Parallel" />
         <el-radio-button label="串行" value="Sequential" />
       </el-radio-group>
-    </el-form-item>
+    </el-form-item> -->
     <div v-if="loopCharacteristicsType">
       <el-form-item label="基数">
         <el-input v-model="loopCardinality" placeholder="请输入基数" />
@@ -294,7 +294,7 @@ onMounted(() => {
           :extensions="[juelExtension]"
           v-model="completionCondition"
         />
-        <!--        <el-input v-model="completionCondition" placeholder="请输入完成条件" />-->
+        <!-- <el-input v-model="completionCondition" placeholder="请输入完成条件" />-->
       </el-form-item>
       <el-form-item label-position="top">
         <template #label>
