@@ -119,8 +119,8 @@ const issuesList = ref<ElementIssue[]>([])
 const modeler = ref<BpmnModeler>()
 const injector = ref<Injector>()
 const fileRef = ref<HTMLInputElement>()
-const labelPosition = ref('left')
-const formSize = ref('small')
+const labelPosition = ref('top')
+const formSize = ref('default')
 const importXml = () => {
   const file = fileRef.value?.files?.[0]
   if (file) {
@@ -224,19 +224,7 @@ provide('ProcessDesigner', {
   modeler: modeler,
 })
 onMounted(() => {
-  setTimeout(() => {
-    ElNotification({
-      type: 'info',
-      position: 'bottom-left',
-      duration: 10000,
-      title: '求职信息',
-      message: h('div', [
-        h('p', '96年失业（全栈开发）求收留'),
-        h('p', '地点：杭州'),
-        h('p', '微信：xfcai1216'),
-      ]),
-    })
-  }, 2000)
+
 })
 defineExpose({
   loadXml,
@@ -255,9 +243,9 @@ defineExpose({
       type="file"
     />
     <el-header class="design-header">
-      <el-text tag="b" :size="'large'">vue-bpmn-designer 流程设计器（flowable版）</el-text>
+      <el-text tag="b" :size="'large'">流程设计器</el-text>
       <el-space>
-        <el-switch
+        <!-- <el-switch
           inline-prompt
           active-text="顶部标签"
           inactive-text="左侧标签"
@@ -272,9 +260,9 @@ defineExpose({
           active-value="default"
           inactive-value="small"
           v-model="formSize"
-        />
+        /> -->
         <el-switch inline-prompt :active-icon="Moon" :inactive-icon="Sunny" v-model="isDark" />
-        <el-link
+        <!-- <el-link
           underline="never"
           target="_blank"
           href="https://github.com/tsai996/vue-bpmn-designer"
@@ -287,7 +275,7 @@ defineExpose({
           href="https://gitee.com/cai_xiao_feng/vue-bpmn-designer"
         >
           <Iconify class="el-icon--left" icon="ri:gitee-fill" width="25px" />
-        </el-link>
+        </el-link> -->
       </el-space>
     </el-header>
     <el-container style="overflow-y: auto">
@@ -329,24 +317,24 @@ defineExpose({
             </el-button-group>
 
             <el-button-group size="small">
-              <!--              <el-tooltip placement="top" content="自动布局">
+              <el-tooltip placement="top" content="自动布局">
                 <el-button @click="layout">
                   <iconify icon="tabler:layout-filled" :size="3" />
                 </el-button>
-              </el-tooltip>-->
+              </el-tooltip>
               <el-tooltip placement="top" content="重做">
                 <el-button @click="restart">
                   <iconify icon="solar:eraser-outline" :size="3" />
                 </el-button>
               </el-tooltip>
-              <el-tooltip placement="top" content="流程模拟">
+              <!-- <el-tooltip placement="top" content="流程模拟">
                 <el-button
                   :icon="mockVisible ? VideoPause : VideoPlay"
                   @click="mockVisible = !mockVisible"
                 >
                   {{ mockVisible ? '退出模拟' : '开启模拟' }}
                 </el-button>
-              </el-tooltip>
+              </el-tooltip> -->
               <el-tooltip placement="top" content="流程校验">
                 <el-button
                   :icon="lintVisible ? VideoPause : VideoPlay"
@@ -400,7 +388,8 @@ defineExpose({
   align-items: center;
   justify-content: center;
   padding: 2px;
-  height: 50px;
+  height: 36px;
+  width: 6px;
   border-radius: 10px 0 0 10px;
   cursor: pointer;
   box-shadow: -7px 0px 7px -5px rgba(0, 0, 0, 0.1);
