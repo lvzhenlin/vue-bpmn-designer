@@ -65,6 +65,20 @@ export default class CustomPaletteProvider extends PaletteProvider {
     delete actions['create.group']
     delete actions['create.data-object']
     delete actions['create.data-store']
+    delete actions['create.intermediate-event']
+    delete actions['create.participant-expanded']
+    delete actions['create.service-task']
+    delete actions['create.subprocess-expanded']
+    // delete actions['global-connect-tool']
+    // delete actions['hand-tool']
+    // delete actions['lasso-tool']
+    delete actions['space-tool']
+    delete actions['tool-separator']
+
+    actions['global-connect-tool']['title'] = '连接工具'
+    actions['hand-tool']['title'] = '抓手工具'
+    actions['lasso-tool']['title'] = '套索工具'
+
     return actions
   }
 }
