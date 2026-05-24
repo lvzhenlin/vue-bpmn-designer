@@ -748,14 +748,6 @@
       },
       "properties": [
         {
-          "name": "inputOutput",
-          "type": "InputOutput"
-        },
-        {
-          "name": "connectorId",
-          "type": "String"
-        },
-        {
           "name": "inputParameters",
           "isMany": true,
           "type": "InputParameter"
