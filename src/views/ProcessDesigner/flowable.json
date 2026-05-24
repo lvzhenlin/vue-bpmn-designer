@@ -1,7 +1,7 @@
 {
-  "name": "Flowable",
-  "uri": "http://flowable.org/bpmn",
-  "prefix": "flowable",
+  "name": "Activiti",
+  "uri": "http://activiti.org/bpmn",
+  "prefix": "activiti",
   "xml": {
     "tagAlias": "lowerCase"
   },
