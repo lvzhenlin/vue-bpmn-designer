@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { customRef, provide, ref } from 'vue'
+import { customRef, provide, nextTick, ref } from 'vue'
 import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import 'bpmn-js/dist/assets/bpmn-js.css'
@@ -149,6 +149,10 @@ const importXml = () => {
           // 设置待加载的 XML（使用原始格式，因为要切换到检测到的版本）
           pendingXml.value = result
 
+          // 先清空 modeler，触发 BpmnPanel 卸载
+          modeler.value = undefined
+          await nextTick()
+
           // 切换版本
           currentVersion.value = detectedVersion
           versionStore.setVersion(detectedVersion)
@@ -259,12 +263,14 @@ const modelerReady = async (bpmnModeler: BpmnModeler) => {
     issuesList.value = Object.values(issues).flat()
   })
 
-  // 如果有待加载的 XML（版本切换时），加载并跳过 restart
-  if (pendingXml.value) {
+  // 检查是否是版本切换（有待加载的 XML）
+  const isVersionSwitch = !!pendingXml.value
+
+  // 如果有待加载的 XML（版本切换时），跳过 restart
+  if (isVersionSwitch) {
     skipRestart.value = true
-    const xmlToLoad = pendingXml.value
+    // 清空 pendingXml
     pendingXml.value = ''
-    await modeler.value?.importXML(xmlToLoad)
   }
 
   restart()
@@ -301,6 +307,12 @@ const switchVersion = async (version: BpmnVersion) => {
     if (convertedXml) {
       pendingXml.value = convertedXml
     }
+
+    // 先清空 modeler，触发 BpmnPanel 卸载
+    modeler.value = undefined
+
+    // 等待下一个 tick，让 v-if 生效
+    await nextTick()
 
     // 更新版本（会触发 BpmnModeler 重新初始化）
     currentVersion.value = version

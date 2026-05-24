@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, watch, type PropType, ref } from 'vue'
+import { defineComponent, onMounted, watch, nextTick, type PropType, ref } from 'vue'
 import BpmnModeler from 'bpmn-js/lib/Modeler'
 import GridLineModule from 'diagram-js-grid-bg'
 import MinimapModule from 'diagram-js-minimap'
@@ -106,11 +106,11 @@ export default defineComponent({
         ...props.options,
       })
 
-      // 如果有待加载的初始 XML，加载它
-      const xmlToLoad = xml || props.initialXml
-      if (xmlToLoad && modeler.value) {
-        await modeler.value.importXML(xmlToLoad)
-      }
+      // 如果有待加载的初始 XML 或待切换的 XML，加载它
+    const xmlToLoad = xml || props.initialXml || props.pendingXml
+    if (xmlToLoad && modeler.value) {
+      await modeler.value.importXML(xmlToLoad)
+    }
 
       // 确保 XML 加载完成后再通知父组件
       emit('modeler-ready', modeler.value)
@@ -130,6 +130,8 @@ export default defineComponent({
         }
         isInitializing = true
         try {
+          // 等待下一个 tick，确保 props.pendingXml 已更新
+          await nextTick()
           await initModeler(newVersion)
         } finally {
           isInitializing = false

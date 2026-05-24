@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Component, h, nextTick, ref, shallowRef, type VNode } from 'vue'
+import { type Component, h, nextTick, onMounted, ref, shallowRef, type VNode } from 'vue'
 import BpmnModeler from 'bpmn-js/lib/Modeler'
 import type { Element } from 'bpmn-js/lib/model/Types'
 import type ElementRegistry from 'diagram-js/lib/core/ElementRegistry'
@@ -290,6 +290,16 @@ const findElement = (elements: Element[], element: Element) => {
 const elementExists = (element: Element, elementRegistry: ElementRegistry) => {
   return element && elementRegistry.get(element.id)
 }
+
+onMounted(() => {
+  // 组件挂载时，初始化显示根元素
+  nextTick(() => {
+    const rootElement = canvas.getRootElement()
+    if (!isImplicitRoot(rootElement)) {
+      _update(rootElement)
+    }
+  })
+})
 </script>
 
 <template>
