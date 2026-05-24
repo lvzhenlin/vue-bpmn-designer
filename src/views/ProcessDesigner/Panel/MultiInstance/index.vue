@@ -243,25 +243,51 @@ onMounted(() => {
 
 <template>
   <div>
-    <!-- <el-form-item label="实例类型">
+    <el-form-item>
+      <template #label>
+        <span>多实例（会签）</span>
+        <HelpTooltip content="定义多实例（会签）任务的执行方式
+
+多实例任务默认所有审批人完成审批后，流程才会继续向下流转，可配置【完成条件】提前完成任务
+• 并行：审批人同时收到代办任务，适用于需要多人同时审批的场景
+• 串行：审批人依次按顺序收到代办任务，适用于需要多人按顺序审批的场景
+• 无：非多实例，审批人同时收到代办任务，但只需要其中任意一人处理即可
+
+使用多实例时，还需要配置：
+• 基数 ：总共要执行的实例数量，适用于固定人数审批场景。非必须，默认【集合变量】的长度
+• 集合变量 ：告诉引擎从哪个列表中获取审批人名单数据
+• 元素变量 ：每次迭代时，给当前审批人赋给哪个流程变量" />
+      </template>
       <el-radio-group v-model="loopCharacteristicsType">
         <el-radio-button label="无" value="" />
         <el-radio-button label="并行" value="Parallel" />
         <el-radio-button label="串行" value="Sequential" />
       </el-radio-group>
-    </el-form-item> -->
+    </el-form-item>
     <div v-if="loopCharacteristicsType">
-      <el-form-item label="基数">
+      <el-form-item>
+        <template #label>
+          <span>基数</span>
+          <HelpTooltip content="总共要执行的实例数量，适用于固定人数审批场景。非必须，默认【集合变量】的长度" />
+        </template>
         <el-input v-model="loopCardinality" placeholder="请输入基数" />
       </el-form-item>
       <el-row :gutter="10">
         <el-col :span="form?.labelPosition === 'top' ? 12 : 24">
-          <el-form-item label="集合变量">
+          <el-form-item>
+            <template #label>
+              <span>集合变量</span>
+              <HelpTooltip content="告诉引擎从哪个列表中获取审批人名单数据" />
+            </template>
             <el-input v-model="collection" placeholder="请输入集合变量" />
           </el-form-item>
         </el-col>
         <el-col :span="form?.labelPosition === 'top' ? 12 : 24">
-          <el-form-item label="元素变量">
+          <el-form-item>
+            <template #label>
+              <span>元素变量</span>
+              <HelpTooltip content="每次迭代时，给当前审批人赋给哪个流程变量" />
+            </template>
             <el-input
               v-model="elementVariable"
               @change="changeElementVariable"
@@ -285,7 +311,21 @@ onMounted(() => {
       <el-form-item label="集合处理器" v-show="false">
         <el-input v-model="collectionHandler" placeholder="请输入集合处理器" />
       </el-form-item>
-      <el-form-item label="完成条件">
+      <el-form-item>
+        <template #label>
+          <span>完成条件</span>
+          <HelpTooltip content="支持JUEL表达式，返回boolean值，当表达式为true时，多实例任务提前完成
+
+常用变量：
+• nrOfCompletedInstances - 已完成实例数
+• nrOfActiveInstances - 活跃实例数
+• nrOfTotalInstances - 总实例数
+• loopCounter - 当前循环计数器
+
+示例：
+• ${nrOfCompletedInstances >= 2}
+• ${nrOfCompletedInstances / nrOfTotalInstances * 100 >= 50}" />
+        </template>
         <Codemirror
           autosize
           :max-rows="5"
@@ -296,7 +336,7 @@ onMounted(() => {
         />
         <!-- <el-input v-model="completionCondition" placeholder="请输入完成条件" />-->
       </el-form-item>
-      <el-form-item label-position="top">
+      <!-- <el-form-item label-position="top">
         <template #label>
           变量聚合
           <el-button type="primary" :icon="Plus" link @click="addVariableAggregation()">
@@ -335,7 +375,7 @@ onMounted(() => {
           ref="variableAggregationDrawerRef"
           @confirm="confirmVariableAggregation"
         />
-      </el-form-item>
+      </el-form-item> -->
     </div>
   </div>
 </template>
