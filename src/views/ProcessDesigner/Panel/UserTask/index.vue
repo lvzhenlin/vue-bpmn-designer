@@ -54,27 +54,17 @@ onMounted(() => {
       <el-input-number v-model="priority" placeholder="优先级" :min="0" :max="10" />
     </el-form-item> -->
     <el-form-item prop="dueDate" label="到期时间">
+      <template #label>
+        <span>到期时间</span>
+        <el-tooltip content="支持ISO8601时间格式，以P开头，T时间分隔符如：P5D（5天后）、PT2H30M（2小时30分后）等" placement="top">
+          <el-icon class="el-icon--center" style="margin-left: 4px; cursor: pointer; color: #909399; top: 2px;"><el-icon-question-filled /></el-icon>
+        </el-tooltip>
+      </template>
       <el-input v-model="dueDate" placeholder="请输入到期时间" />
     </el-form-item>
   </el-collapse-item>
 </template>
 
 <style scoped lang="scss">
-:deep(.el-collapse-item__header) {
-  padding-left: 10px;
-  box-sizing: border-box;
-  position: relative;
-  gap: 8px;
-
-  &:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0;
-    width: 3px;
-    height: 15px;
-    background-color: var(--el-color-primary);
-  }
-}
+// 到期时间问号图标样式
 </style>
