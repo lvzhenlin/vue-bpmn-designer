@@ -428,7 +428,7 @@
     },
     {
       "name": "Assignee",
-      "supperClass": "Element",
+      "superClass": ["Element"],
       "meta": {
         "allowedIn": ["*"]
       },
@@ -1458,5 +1458,5 @@
       ]
     }
   ],
-  "emumerations": []
+  "enumerations": []
 }
