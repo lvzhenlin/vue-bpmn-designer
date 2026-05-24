@@ -133,6 +133,10 @@ export default class CustomContextPadProvider extends ContextPadProvider {
     if (!element.type?.includes('Gateway')) {
       delete actions['replace'] // 移除扳手
     }
+    // 将文本注释合并到连接工具的分组
+    if (actions['connect'] && actions['append.text-annotation']) {
+      actions['append.text-annotation'].group = actions['connect'].group
+    }
     return actions
   }
 }

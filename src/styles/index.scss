@@ -80,6 +80,15 @@ th.el-table__cell {
   right: 5px !important;
 }
 
+// ContextPad 图标间距调整
+.djs-context-pad {
+  width: auto !important;  // 宽度自适应
+  .entry {
+    margin: 2px !important;  // 增加图标间距
+    padding: 2px;           // 增加图标内部间距
+  }
+}
+
 .bpmn-icon-participant {
   &.is-vertical {
     &:before {
