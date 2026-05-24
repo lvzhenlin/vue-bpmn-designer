@@ -253,7 +253,7 @@ const setCurrentComponents = (element: Element) => {
     // slots.default.push('GlobalEvents')
     // slots.basic.push('Process')  // 注释：不显示流程启动人、流程启动角色、历史级别
     slots.other.push('EventListener')
-    slots.other.push('DataObjects')
+    // slots.other.push('DataObjects') // 隐藏数据对象配置
   } else if (is(element, 'bpmn:SubProcess')) {
     slots.other.push('DataObjects')
   } else if (is(element, 'bpmn:SequenceFlow') && isConditionalSource(businessObject.sourceRef)) {
