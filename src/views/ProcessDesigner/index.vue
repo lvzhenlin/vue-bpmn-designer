@@ -34,6 +34,7 @@ import type Canvas from 'diagram-js/lib/core/Canvas'
 import type { Minimap } from 'diagram-js-minimap'
 import { layoutProcess } from 'bpmn-auto-layout'
 import { ElMessage } from 'element-plus'
+import { useBpmnVersionStore, type BpmnVersion } from '@/stores/bpmnVersion'
 
 defineOptions({
   name: 'ProcessDesigner',
@@ -44,6 +45,9 @@ const props = defineProps<{
   xml?: string
   idPrefix?: string
 }>()
+
+const versionStore = useBpmnVersionStore()
+const currentVersion = ref<BpmnVersion>(versionStore.version)
 const mockVisible = customRef<boolean>((track, trigger) => {
   return {
     get() {
@@ -119,6 +123,9 @@ const issuesList = ref<ElementIssue[]>([])
 const modeler = ref<BpmnModeler>()
 const injector = ref<Injector>()
 const fileRef = ref<HTMLInputElement>()
+const bpmnDesignerRef = ref()
+const pendingXml = ref('')
+const skipRestart = ref(false) // 标志：版本切换时跳过 restart
 const labelPosition = ref('top')
 const formSize = ref('default')
 const importXml = () => {
@@ -129,11 +136,33 @@ const importXml = () => {
     reader.onload = async () => {
       const result = reader.result
       if (result && typeof result === 'string') {
-        const xmlResult = await modeler.value?.importXML(result)
-        if (xmlResult) {
-          const { warnings } = xmlResult
-          console.log('警告：', warnings)
+        // 使用命名空间转换器检测 XML 的版本
+        const { namespaceConverter } = await import('./utils/namespaceConverter')
+        const detectedVersion = namespaceConverter.detectVersion(result)
+
+        console.log('检测到的版本:', detectedVersion)
+
+        // 如果检测到版本且与当前版本不同，先切换版本
+        if (detectedVersion !== 'unknown' && detectedVersion !== currentVersion.value) {
+          console.log(`需要切换版本: ${currentVersion.value} -> ${detectedVersion}`)
+
+          // 设置待加载的 XML（使用原始格式，因为要切换到检测到的版本）
+          pendingXml.value = result
+
+          // 切换版本
+          currentVersion.value = detectedVersion
+          versionStore.setVersion(detectedVersion)
+
+          ElMessage.success(`已自动切换到${detectedVersion === 'flowable' ? 'Flowable' : 'Activiti'}版本`)
+        } else {
+          // 版本相同或无法检测，直接导入
+          const xmlResult = await modeler.value?.importXML(result)
+          if (xmlResult) {
+            const { warnings } = xmlResult
+            console.log('警告：', warnings)
+          }
         }
+
         if (fileRef.value) {
           fileRef.value.value = ''
         }
@@ -142,18 +171,31 @@ const importXml = () => {
   }
 }
 const exportXml = async () => {
-  const xml = await getXml()
-  if (xml) {
-    const rootElement = getRootElement()
+  try {
+    const xml = await getXml()
+    if (!xml) {
+      ElMessage.warning('画布内容为空，无法导出')
+      return
+    }
+
+    // 直接从 XML 中提取流程名称，避免使用可能出错的 getRootElement
+    const nameMatch = xml.match(/<bpmn:process[^>]*name="([^"]+)"/)
+    const fileName = nameMatch ? nameMatch[1] : '匿名流程'
+
     const blob = new Blob([xml], { type: 'text/xml' })
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `${rootElement?.businessObject.get('name') || '匿名流程'}.bpmn20.xml`
+    a.download = `${fileName}.bpmn20.xml`
     a.click()
     window.URL.revokeObjectURL(url)
+    ElMessage.success('导出成功')
+  } catch (error) {
+    console.error('导出失败:', error)
+    ElMessage.error('导出失败，请重试')
   }
 }
+
 const exportSvg = () => {
   modeler.value?.saveSVG().then(({ svg }) => {
     const replacedSvg = svg
@@ -182,6 +224,13 @@ const layout = async () => {
   }
 }
 const restart = () => {
+  // 如果 skipRestart 为 true（版本切换时），不执行 restart
+  if (skipRestart.value) {
+    skipRestart.value = false
+    modeler.value?.get<Canvas>('canvas')?.zoom('fit-viewport')
+    return
+  }
+
   modeler.value?.get<CommandStack>('commandStack').clear()
   const xml = EmptyXML(props.id || nextId('Process_'), props.name || '新建流程')
   modeler.value?.importXML(props.xml || xml)
@@ -191,8 +240,17 @@ const loadXml = (xml: string) => {
   modeler.value?.importXML(xml)
 }
 const getXml = async () => {
-  const res = await modeler.value?.saveXML({ format: true, preamble: true })
-  return res?.xml
+  try {
+    if (!modeler.value) {
+      return null
+    }
+
+    const res = await modeler.value.saveXML({ format: true, preamble: true })
+    return res?.xml || null
+  } catch (error) {
+    console.error('获取 XML 失败:', error)
+    return null
+  }
 }
 const modelerReady = async (bpmnModeler: BpmnModeler) => {
   modeler.value = bpmnModeler
@@ -200,8 +258,16 @@ const modelerReady = async (bpmnModeler: BpmnModeler) => {
   modeler.value?.on<{ issues: Issues }>('linting.completed', ({ issues }) => {
     issuesList.value = Object.values(issues).flat()
   })
+
+  // 如果有待加载的 XML（版本切换时），加载并跳过 restart
+  if (pendingXml.value) {
+    skipRestart.value = true
+    const xmlToLoad = pendingXml.value
+    pendingXml.value = ''
+    await modeler.value?.importXML(xmlToLoad)
+  }
+
   restart()
-  // await bpmnModeler.createDiagram()
 }
 const validate = async () => {
   const errors = issuesList.value.filter((issue) => issue.category === 'error')
@@ -220,6 +286,33 @@ const toggleRightArrow = () => {
   }
   rightArrow.value = !rightArrow.value
 }
+
+const switchVersion = async (version: BpmnVersion) => {
+  if (mockVisible.value) {
+    return ElMessage.warning('请先退出模拟模式')
+  }
+
+  try {
+    // 获取当前 XML 并转换命名空间
+    const currentXml = await getXml()
+    const { namespaceConverter } = await import('./utils/namespaceConverter')
+    const convertedXml = currentXml ? namespaceConverter.convert(currentXml, version) : null
+
+    if (convertedXml) {
+      pendingXml.value = convertedXml
+    }
+
+    // 更新版本（会触发 BpmnModeler 重新初始化）
+    currentVersion.value = version
+    versionStore.setVersion(version)
+
+    ElMessage.success(`已切换到${version === 'flowable' ? 'Flowable' : 'Activiti'}版本`)
+  } catch (error) {
+    console.error('版本切换失败:', error)
+    ElMessage.error('版本切换失败，请重试')
+  }
+}
+
 provide('ProcessDesigner', {
   modeler: modeler,
 })
@@ -352,10 +445,34 @@ defineExpose({
                 </el-button>
               </el-tooltip>
             </el-button-group>
+
+            <el-button-group size="small">
+              <el-tooltip placement="top" content="切换到 Activiti 版本">
+                <el-button
+                  :type="currentVersion === 'activiti' ? 'primary' : 'default'"
+                  @click="switchVersion('activiti')"
+                >
+                  Activiti
+                </el-button>
+              </el-tooltip>
+              <el-tooltip placement="top" content="切换到 Flowable 版本">
+                <el-button
+                  :type="currentVersion === 'flowable' ? 'primary' : 'default'"
+                  @click="switchVersion('flowable')"
+                >
+                  Flowable
+                </el-button>
+              </el-tooltip>
+            </el-button-group>
           </el-space>
         </el-header>
         <el-main class="design-inner__main">
-          <bpmn-designer @modeler-ready="modelerReady" />
+          <bpmn-designer
+            ref="bpmnDesignerRef"
+            :version="currentVersion"
+            :pending-xml="pendingXml"
+            @modeler-ready="modelerReady"
+          />
         </el-main>
         <div class="right-panel-arrow" @click="toggleRightArrow">
           <el-icon :size="15">

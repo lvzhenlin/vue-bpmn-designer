@@ -1,7 +1,7 @@
 {
-  "name": "Flowable",
-  "uri": "http://flowable.org/bpmn",
-  "prefix": "flowable",
+  "name": "Activiti",
+  "uri": "http://activiti.org/bpmn",
+  "prefix": "activiti",
   "xml": {
     "tagAlias": "lowerCase"
   },
@@ -60,7 +60,7 @@
       "name": "MapException",
       "superClass": ["Element"],
       "meta": {
-        "allowedIn": ["flowable:ServiceTaskLike", "bpmn:ServiceTask"]
+        "allowedIn": ["activiti:ServiceTaskLike", "bpmn:ServiceTask"]
       },
       "properties": [
         {
@@ -167,7 +167,7 @@
     {
       "name": "JobPriorized",
       "isAbstract": true,
-      "extends": ["bpmn:Process", "flowable:AsyncCapable"],
+      "extends": ["bpmn:Process", "activiti:AsyncCapable"],
       "properties": [
         {
           "name": "jobPriority",
@@ -212,7 +212,7 @@
       "extends": ["bpmn:Error"],
       "properties": [
         {
-          "name": "flowable:errorMessage",
+          "name": "activiti:errorMessage",
           "isAttr": true,
           "type": "String"
         }
@@ -585,7 +585,7 @@
     },
     {
       "name": "ExternalCapable",
-      "extends": ["flowable:ServiceTaskLike"],
+      "extends": ["activiti:ServiceTaskLike"],
       "properties": [
         {
           "name": "type",
@@ -601,7 +601,7 @@
     },
     {
       "name": "TaskPriorized",
-      "extends": ["bpmn:Process", "flowable:ExternalCapable"],
+      "extends": ["bpmn:Process", "activiti:ExternalCapable"],
       "properties": [
         {
           "name": "taskPriority",
@@ -727,7 +727,7 @@
       "name": "Connector",
       "superClass": ["Element"],
       "meta": {
-        "allowedIn": ["flowable:ServiceTaskLike"]
+        "allowedIn": ["activiti:ServiceTaskLike"]
       },
       "properties": [
         {
@@ -744,7 +744,7 @@
       "name": "InputOutput",
       "superClass": ["Element"],
       "meta": {
-        "allowedIn": ["bpmn:FlowNode", "flowable:Connector"]
+        "allowedIn": ["bpmn:FlowNode", "activiti:Connector"]
       },
       "properties": [
         {
@@ -870,9 +870,9 @@
       "superClass": ["Element"],
       "meta": {
         "allowedIn": [
-          "flowable:ServiceTaskLike",
-          "flowable:ExecutionListener",
-          "flowable:TaskListener",
+          "activiti:ServiceTaskLike",
+          "activiti:ExecutionListener",
+          "activiti:TaskListener",
           "bpmn:ServiceTask"
         ]
       },
@@ -998,7 +998,7 @@
       "name": "Collectable",
       "isAbstract": true,
       "extends": ["bpmn:MultiInstanceLoopCharacteristics"],
-      "superClass": ["flowable:AsyncCapable"],
+      "superClass": ["activiti:AsyncCapable"],
       "properties": [
         {
           "name": "collection",
@@ -1049,7 +1049,7 @@
       "name": "FailedJobRetryTimeCycle",
       "superClass": ["Element"],
       "meta": {
-        "allowedIn": ["flowable:AsyncCapable", "bpmn:MultiInstanceLoopCharacteristics"]
+        "allowedIn": ["activiti:AsyncCapable", "bpmn:MultiInstanceLoopCharacteristics"]
       },
       "properties": [
         {
@@ -1107,7 +1107,7 @@
       "name": "Variable",
       "superClass": ["Element"],
       "meta": {
-        "allowedIn": ["flowable:VariableAggregation"]
+        "allowedIn": ["activiti:VariableAggregation"]
       },
       "properties": [
         {

@@ -89,6 +89,17 @@ th.el-table__cell {
   }
 }
 
+// Element Plus MessageBox 弹窗居中样式
+.el-message-box {
+  text-align: left;
+}
+
+.el-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .bpmn-icon-participant {
   &.is-vertical {
     &:before {
