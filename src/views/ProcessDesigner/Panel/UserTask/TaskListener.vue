@@ -93,7 +93,26 @@ onMounted(() => {
 <template>
   <div class="listener-container">
     <div class="listener-header">
-      <el-text>任务监听器</el-text>
+      <span style="display: inline-flex; align-items: center;">
+        <el-text>任务监听器</el-text>
+        <HelpTooltip content="在用户任务各个生命周期事件（如任务创建、分配、完成或删除时）触发并执行自定义的 Java 代码，只能配置在用户任务节点上。
+
+触发事件：
+• create（创建事件）：任务被创建且所有任务属性设置完成后触发。这是动态指定任务审批人最常用的时机。
+• assignment（指派事件）：任务被分配给某个办理人（Assignee）或候选人/组时触发。
+• complete（完成事件）：任务审批完成，且尚未从运行时数据中删除时触发。适合用来做审批后的业务数据更新或通知。
+• delete（删除事件）：任务被删除时触发（例如流程被驳回、终止或跳过该节点）
+
+支持类型：
+• Java类 - 指定完整类名
+• 表达式 - JUEL表达式
+• 脚本 - Groovy/Javascript脚本
+
+自定义任务监听器类：
+• 实现 org.activiti.engine.delegate.TaskListener 接口
+• 重写 notify 方法，根据需要执行自定义逻辑
+" />
+      </span>
       <el-button type="primary" link :icon="Plus" @click="editListener()">添加</el-button>
     </div>
     <el-table :data="listeners" height="200px">

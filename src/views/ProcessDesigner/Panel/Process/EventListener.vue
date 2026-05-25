@@ -91,7 +91,23 @@ onMounted(() => {
 <template>
   <div class="event-container">
     <div class="event-header">
-      <el-text>事件监听器</el-text>
+      <span style="display: inline-flex; align-items: center;">
+        <el-text>事件监听器</el-text>
+        <HelpTooltip content="全局监听器，它可以监听流程中发生的几乎所有事件，包括节点开始、结束、连线执行、任务创建、分配、完成或删除等。
+
+它配置在流程的根标签上，或直接注册到流程引擎（Process Engine）中，而不是在具体的节点或连线线上
+• 配置在流程根标签 - 仅限当前这一个流程定义，它只能监听到这个特定流程（比如【请假流程】）内发生的事件
+• 注册到流程引擎中 - 生效范围为整个流程引擎，它监听到的所有流程（比如【请假流程】、【报销流程】），内发生的事件
+
+支持类型：
+• Java类 - 指定完整类名
+• 表达式 - JUEL表达式
+
+自定义事件监听器类：
+• 实现 org.activiti.engine.delegate.event.ActivitiEventListener 接口
+• 重写 onEvent 方法，根据需要执行自定义逻辑
+" />
+      </span>
       <el-button type="primary" link :icon="Plus" @click="editEventListener()">添加</el-button>
     </div>
     <el-table :data="events" height="200px">

@@ -91,7 +91,26 @@ onMounted(() => {
 <template>
   <div class="listener-container">
     <div class="listener-header">
-      <el-text>执行监听器</el-text>
+      <span style="display: inline-flex; align-items: center;">
+        <el-text>执行监听器</el-text>
+        <HelpTooltip content="在流程节点的各个生命周期事件（如节点开始、结束，或流程连线被经过时）触发并执行自定义的 Java 代码，
+        可以配置在流程的任何节点（如开始节点、用户任务、服务任务、结束节点等）以及连线上。
+
+触发事件：
+• start - 节点开始执行时
+• end - 节点执行完成时
+• take - 当流程沿着某条顺序流（连线）执行时触发（只能配置在连线上）
+
+支持类型：
+• Java类 - 指定完整类名
+• 表达式 - JUEL表达式
+• 脚本 - Groovy/Javascript脚本
+
+自定义执行监听器类：
+• 实现 org.activiti.engine.delegate.ExecutionListener 接口
+• 重写 notify 方法，根据需要执行自定义逻辑
+" />
+      </span>
       <el-button type="primary" link :icon="Plus" @click="editListener()">添加</el-button>
     </div>
     <el-table :data="listeners" height="200px">
