@@ -140,7 +140,12 @@ onMounted(() => {
       <div class="events-list">
         <div class="events-container">
           <div class="events-header">
-            <el-text> 消息定义</el-text>
+            <span style="display: inline-flex; align-items: center;">
+              <el-text>消息定义</el-text>
+              <HelpTooltip content="消息定义用于定义流程中传递的消息。
+              • 消息可以在流程实例之间、流程实例与外部系统之间传递信息。
+              • 消息通常用于启动事件、中间事件或结束事件中。" />
+            </span>
             <el-button type="primary" link :icon="Plus" @click="addMessageEvent()">添加</el-button>
           </div>
           <el-table :data="messages" height="200px">
@@ -163,7 +168,12 @@ onMounted(() => {
 
         <div class="events-container">
           <div class="events-header">
-            <el-text> 错误定义</el-text>
+            <span style="display: inline-flex; align-items: center;">
+              <el-text>错误定义</el-text>
+              <HelpTooltip content="错误定义用于定义流程中可能发生的错误。
+              • 错误可以由任务抛出，并由错误边界事件捕获处理。
+              • 错误定义包含错误代码和错误名称，用于标识特定类型的错误。" />
+            </span>
             <el-button type="primary" link :icon="Plus" @click="addErrorEvent()">添加</el-button>
           </div>
           <el-table :data="errors" height="200px">
@@ -191,7 +201,12 @@ onMounted(() => {
 
         <div class="events-container">
           <div class="events-header">
-            <el-text> 信号定义</el-text>
+            <span style="display: inline-flex; align-items: center;">
+              <el-text>信号定义</el-text>
+              <HelpTooltip content="信号定义用于定义流程中广播的信号。
+              • 信号可以广播到多个流程实例，用于触发多个流程实例的事件。
+              • 信号可以是全局的或流程级别的，由 activiti:scope 属性控制。" />
+            </span>
             <el-button type="primary" link :icon="Plus" @click="addSignalEvent()">添加</el-button>
           </div>
           <el-table :data="signals" height="200px">
@@ -219,10 +234,13 @@ onMounted(() => {
 
         <div class="events-container">
           <div class="events-header">
-            <el-text> 升级定义</el-text>
-            <el-button type="primary" link :icon="Plus" @click="addEscalationEvent()"
-              >添加
-            </el-button>
+            <span style="display: inline-flex; align-items: center;">
+              <el-text>升级定义</el-text>
+              <HelpTooltip content="升级定义用于定义流程中的升级事件。
+              • 升级是一种特殊的错误事件，通常用于将问题升级到更高层级的处理者。
+              • 升级定义包含升级代码和名称，用于标识特定类型的升级。" />
+            </span>
+            <el-button type="primary" link :icon="Plus" @click="addEscalationEvent()">添加</el-button>
           </div>
           <el-table :data="escalations" height="200px">
             <el-table-column prop="id" show-overflow-tooltip label="id"></el-table-column>

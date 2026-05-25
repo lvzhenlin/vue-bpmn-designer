@@ -250,7 +250,7 @@ const setCurrentComponents = (element: Element) => {
       slots.basic.push('ServiceTask')
     }
   } else if (is(element, 'bpmn:Process')) {
-    // slots.default.push('GlobalEvents')
+    slots.default.push('GlobalEvents')
     slots.basic.push('Process')
     slots.other.push('EventListener')
     // slots.other.push('DataObjects') // 隐藏数据对象配置
