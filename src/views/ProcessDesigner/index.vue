@@ -174,6 +174,24 @@ const importXml = () => {
     }
   }
 }
+const getProcessName = (xml: string): string => {
+  const nameMatch = xml.match(/<(\w+:)?process[^>]*name=(["'])([^"']+)\2/i)
+  let name = nameMatch ? nameMatch[3] : ''
+
+  if (!name) {
+    const idMatch = xml.match(/<(\w+:)?process[^>]*id=(["'])([^"']+)\2/i)
+    name = idMatch ? idMatch[3] : ''
+  }
+
+  name = name.trim()
+
+  if (!name || name === 'Process_' || name.startsWith('Process_') && name.length <= 10) {
+    return '匿名流程'
+  }
+
+  return name.replace(/[\\/:*?"<>|]/g, '_')
+}
+
 const exportXml = async () => {
   try {
     const xml = await getXml()
@@ -182,9 +200,7 @@ const exportXml = async () => {
       return
     }
 
-    // 直接从 XML 中提取流程名称，避免使用可能出错的 getRootElement
-    const nameMatch = xml.match(/<bpmn:process[^>]*name="([^"]+)"/)
-    const fileName = nameMatch ? nameMatch[1] : '匿名流程'
+    const fileName = getProcessName(xml)
 
     const blob = new Blob([xml], { type: 'text/xml' })
     const url = window.URL.createObjectURL(blob)
@@ -200,7 +216,10 @@ const exportXml = async () => {
   }
 }
 
-const exportSvg = () => {
+const exportSvg = async () => {
+  const xml = await getXml()
+  const fileName = xml ? getProcessName(xml) : '匿名流程'
+
   modeler.value?.saveSVG().then(({ svg }) => {
     const replacedSvg = svg
       .replace(/var\(--bjsl-fill-color\)/g, '#fff')
@@ -209,7 +228,7 @@ const exportSvg = () => {
     const url = window.URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `匿名流程.svg`
+    a.download = `${fileName}.svg`
     a.click()
     window.URL.revokeObjectURL(url)
   })
@@ -391,8 +410,11 @@ defineExpose({
               <el-tooltip placement="top" content="导入">
                 <el-button :icon="FolderOpened" @click="fileRef?.click()" />
               </el-tooltip>
-              <el-tooltip placement="top" content="导出">
+              <el-tooltip placement="top" content="导出xml">
                 <el-button :icon="Download" size="small" @click="exportXml" />
+              </el-tooltip>
+              <el-tooltip placement="top" content="导出svg">
+                <el-button :icon="Download" size="small" @click="exportSvg" />
               </el-tooltip>
             </el-button-group>
 
