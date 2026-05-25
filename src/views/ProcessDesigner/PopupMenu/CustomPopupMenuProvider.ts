@@ -42,21 +42,15 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
     this._modeling = modeling
     this._rules = rules
     this._connectorMenuProvider = connectorMenuProvider
-    replaceOptions.START_EVENT.splice(5, 1)
-    replaceOptions.TASK.splice(0, 1)
-    replaceOptions.TASK.splice(2, 1)
-    replaceOptions.GATEWAY.splice(3, 2)
-    replaceOptions.INTERMEDIATE_EVENT.splice(4, 1)
-    replaceOptions.INTERMEDIATE_EVENT.splice(7, 2)
-    // replaceOptions.START_EVENT.push({
-    //   label: 'Variable start event',
-    //   actionName: 'replace-with-variable-start',
-    //   className: 'bpmn-icon-start-event-multiple',
-    //   target: {
-    //     type: 'bpmn:StartEvent',
-    //     eventDefinitionType: 'activiti:VariableListenerEventDefinition',
-    //   },
-    // })
+    replaceOptions.START_EVENT.push({
+      label: 'Variable start event',
+      actionName: 'replace-with-variable-start',
+      className: 'bpmn-icon-start-event-multiple',
+      target: {
+        type: 'bpmn:StartEvent',
+        eventDefinitionType: 'activiti:VariableListenerEventDefinition',
+      },
+    })
     replaceOptions.INTERMEDIATE_EVENT.push({
       label: 'Variable intermediate event',
       actionName: 'replace-with-variable-intermediate-catch',
@@ -115,6 +109,10 @@ export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
         cancelActivity: false,
       },
     })
+    replaceOptions.GATEWAY.splice(3, 2) // 移除 复杂网关 和 事件网关
+    replaceOptions.INTERMEDIATE_EVENT.splice(0, 1) // 移除 开始事件
+    replaceOptions.INTERMEDIATE_EVENT.splice(1, 1) // 移除 结束事件
+    console.log(replaceOptions, '<<<===replaceOptions')
   }
 
   getPopupMenuHeaderEntries(target: PopupMenuTarget): PopupMenuHeaderEntries {

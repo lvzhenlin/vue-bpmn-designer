@@ -68,6 +68,7 @@ export default class CustomContextPadProvider extends ContextPadProvider {
 
   getContextPadEntries(element: Element): ContextPadEntries {
     const actions: ContextPadEntries = super.getContextPadEntries(element)
+    console.log(actions, element, '<<<===getContextPadEntries:actions,element')
     const previewAppend = (type: string) => {
       return (_: Event, target: ContextPadTarget) => {
         if (this.autoPlace) {
@@ -130,11 +131,11 @@ export default class CustomContextPadProvider extends ContextPadProvider {
     }
     delete actions['append.compensation-activity']
     delete actions['append.intermediate-event']
-    if (!element.type?.includes('Gateway')) {
+    if (['bpmn:StartEvent', 'bpmn:EndEvent', 'bpmn:UserTask'].includes(element.type)) {
       delete actions['replace'] // 移除扳手
     }
-    // 将文本注释合并到连接工具的分组
     if (actions['connect'] && actions['append.text-annotation']) {
+      // 将文本注释合并到连接工具的分组
       actions['append.text-annotation'].group = actions['connect'].group
     }
     return actions

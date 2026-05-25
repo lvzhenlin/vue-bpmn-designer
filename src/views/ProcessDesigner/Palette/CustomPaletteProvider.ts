@@ -65,7 +65,7 @@ export default class CustomPaletteProvider extends PaletteProvider {
     delete actions['create.group']
     delete actions['create.data-object']
     delete actions['create.data-store']
-    delete actions['create.intermediate-event']
+    // delete actions['create.intermediate-event']
     delete actions['create.participant-expanded']
     delete actions['create.service-task']
     delete actions['create.subprocess-expanded']
