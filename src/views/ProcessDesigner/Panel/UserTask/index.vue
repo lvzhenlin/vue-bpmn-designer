@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
 import { useBpmnContextService } from '@/hooks/useService.ts'
+import { is } from 'bpmn-js/lib/util/ModelUtil'
 import type EventBus from 'diagram-js/lib/core/EventBus'
 import { onMounted } from 'vue'
 
 defineOptions({
   name: 'UserTaskPanel',
 })
-const { getService } = useBpmnContextService()
+const { getService, selectedElement } = useBpmnContextService()
 const eventBus = getService<EventBus>('eventBus')
 const assignee = useCustomRef('assignee')
 const candidateUsers = useCustomRef<string[]>('candidateUsers')
 const candidateGroups = useCustomRef<string[]>('candidateGroups')
 const dueDate = useCustomRef('dueDate')
-const priority = useCustomRef<number>('priority')
+// const priority = useCustomRef<number>('priority')
+// 判断是否为UserTask节点
+const isUserTask = computed(() => is(selectedElement, 'bpmn:UserTask'))
+const taskType = useCustomRef('taskType', 'any')
 onMounted(() => {
   eventBus?.on('elementVariableChanged', (event: any) => {
     assignee.value = `\${${event.elementVariable}}`
@@ -22,7 +26,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-collapse-item name="arg1" title="处理人">
+  <el-collapse-item name="arg1" title="节点配置">
     <el-form-item prop="assignee" label="办理人">
       <el-select v-model="assignee" filterable allow-create clearable placeholder="请选择办理人">
         <el-option label="张三" value="zhangsan" />
@@ -48,6 +52,12 @@ onMounted(() => {
         <el-option label="部门C" value="deptC" />
         <el-option label="部门D" value="deptD" />
         <el-option label="部门E" value="deptE" />
+      </el-select>
+    </el-form-item>
+    <el-form-item v-if="isUserTask" prop="taskType" label="节点类型">
+      <el-select v-model="taskType" placeholder="请选择节点类型">
+        <el-option label="或签" value="any" />
+        <el-option label="会签" value="all" />
       </el-select>
     </el-form-item>
     <!-- <el-form-item prop="priority" label="优先级">
