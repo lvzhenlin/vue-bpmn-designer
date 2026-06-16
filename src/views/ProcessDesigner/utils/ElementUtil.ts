@@ -112,13 +112,14 @@ export const findRootElementById = (businessObject: ModdleElement, type: string,
   return elements.find((element) => element.id === id)
 }
 
-export const useCustomRef = <T = string>(key: string) => {
+export const useCustomRef = <T = string>(key: string, defaultValue?: T) => {
   const { selectedElement, updateProperties } = useBpmnContextService()
   return customRef<T>((track, trigger) => {
     return {
       get() {
         track()
-        return selectedElement?.businessObject?.get(key)
+        const value = selectedElement?.businessObject?.get(key)
+        return value !== undefined ? value : defaultValue
       },
       set(newValue: T) {
         updateProperties({
