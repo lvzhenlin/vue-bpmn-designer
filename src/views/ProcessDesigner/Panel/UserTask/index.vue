@@ -1,68 +1,73 @@
 <script setup lang="ts">
-import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
-import { useBpmnContextService } from '@/hooks/useService.ts'
-import { is } from 'bpmn-js/lib/util/ModelUtil'
-import type EventBus from 'diagram-js/lib/core/EventBus'
-import { onMounted } from 'vue'
-
+import { ref, computed, onMounted } from 'vue';
+import { useCustomRef, useCustomRefList } from '@/views/ProcessDesigner/utils/ElementUtil.ts';
+import { useBpmnContextService } from '@/hooks/useService.ts';
+import { is } from 'bpmn-js/lib/util/ModelUtil';
+import type EventBus from 'diagram-js/lib/core/EventBus';
+import SelectModal from './components/SelectModal.vue';
 defineOptions({
   name: 'UserTaskPanel',
-})
-const { getService, selectedElement } = useBpmnContextService()
-const eventBus = getService<EventBus>('eventBus')
-const assignee = useCustomRef('assignee')
-const candidateUsers = useCustomRef<string[]>('candidateUsers')
-const candidateGroups = useCustomRef<string[]>('candidateGroups')
-const dueDate = useCustomRef('dueDate')
-// const priority = useCustomRef<number>('priority')
-// 判断是否为UserTask节点
-const isUserTask = computed(() => is(selectedElement, 'bpmn:UserTask'))
-const taskType = useCustomRef('taskType', 'any')
+});
+const { getService, selectedElement } = useBpmnContextService();
+const eventBus = getService<EventBus>('eventBus');
+const assignee = useCustomRef('assignee');
+const candidateUsers = useCustomRefList('candidateUsers');
+const candidateGroups = useCustomRefList('candidateGroups');
+const dueDate = useCustomRef('dueDate');
+const isUserTask = computed(() => is(selectedElement, 'bpmn:UserTask'));
+const taskType = useCustomRef('taskType', 'any');
 onMounted(() => {
   eventBus?.on('elementVariableChanged', (event: any) => {
-    assignee.value = `\${${event.elementVariable}}`
-  })
-})
+    assignee.value = `\${${event.elementVariable}}`;
+  });
+});
+const assigneeModalVisible = ref(false);
+const candidateUsersModalVisible = ref(false);
+const candidateGroupsModalVisible = ref(false);
 </script>
 
 <template>
   <el-collapse-item name="arg1" title="节点配置">
     <el-form-item prop="assignee" label="办理人">
-      <el-select v-model="assignee" filterable allow-create clearable placeholder="请选择办理人">
-        <el-option label="张三" value="zhangsan" />
-        <el-option label="李四" value="lisi" />
-        <el-option label="王五" value="wangwu" />
-        <el-option label="毛六" value="maoliu" />
-        <el-option label="钱七" value="qianqi" />
-      </el-select>
+      <SelectModal
+        title="选择办理人"
+        v-model="assignee"
+        :visible="assigneeModalVisible"
+        apiType="user"
+        :multiple="false"
+        @update:visible="(val) => (assigneeModalVisible = val)"
+      />
     </el-form-item>
+
     <el-form-item prop="candidateUsers" label="候选人">
-      <el-select v-model="candidateUsers" multiple clearable placeholder="请选择候选人">
-        <el-option label="张三" value="zhangsan" />
-        <el-option label="李四" value="lisi" />
-        <el-option label="王五" value="wangwu" />
-        <el-option label="毛六" value="maoliu" />
-        <el-option label="钱七" value="qianqi" />
-      </el-select>
+      <SelectModal
+        title="选择候选人"
+        v-model="candidateUsers"
+        :visible="candidateUsersModalVisible"
+        apiType="user"
+        :multiple="true"
+        @update:visible="(val) => (candidateUsersModalVisible = val)"
+      />
     </el-form-item>
+
     <el-form-item prop="candidateGroups" label="候选组">
-      <el-select v-model="candidateGroups" multiple clearable placeholder="请选择候选组">
-        <el-option label="部门A" value="deptA" />
-        <el-option label="部门B" value="deptB" />
-        <el-option label="部门C" value="deptC" />
-        <el-option label="部门D" value="deptD" />
-        <el-option label="部门E" value="deptE" />
-      </el-select>
+      <SelectModal
+        title="选择候选组"
+        v-model="candidateGroups"
+        :visible="candidateGroupsModalVisible"
+        apiType="group"
+        :multiple="true"
+        @update:visible="(val) => (candidateGroupsModalVisible = val)"
+      />
     </el-form-item>
+
     <el-form-item v-if="isUserTask" prop="taskType" label="节点类型">
       <el-select v-model="taskType" placeholder="请选择节点类型">
         <el-option label="或签" value="any" />
         <el-option label="会签" value="all" />
       </el-select>
     </el-form-item>
-    <!-- <el-form-item prop="priority" label="优先级">
-      <el-input-number v-model="priority" placeholder="优先级" :min="0" :max="10" />
-    </el-form-item> -->
+
     <el-form-item prop="dueDate" label="到期时间">
       <template #label>
         <span>到期时间</span>
@@ -85,5 +90,4 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-// 到期时间问号图标样式
 </style>

@@ -150,7 +150,6 @@ th.el-table__cell {
     outline: none;
   }
 }
-
 .el-drawer {
   .el-drawer__header {
     margin-bottom: 0;
@@ -164,7 +163,9 @@ th.el-table__cell {
     padding: calc(var(--el-drawer-padding-primary) - 5px);
   }
 }
-
+.el-popper {
+  z-index: 20000 !important;
+}
 .el-dialog:not(.is-fullscreen) {
   padding: 0;
 

@@ -131,6 +131,35 @@ export const useCustomRef = <T = string>(key: string, defaultValue?: T) => {
   })
 }
 
+export const useCustomRefList = (key: string, defaultValue: string[] = []) => {
+  const { selectedElement, updateProperties } = useBpmnContextService()
+  return customRef<string[]>((track, trigger) => {
+    return {
+      get() {
+        track()
+        const value = selectedElement?.businessObject?.get(key)
+        if (value === undefined) {
+          return defaultValue
+        }
+        if (Array.isArray(value)) {
+          return value
+        }
+        if (typeof value === 'string') {
+          return value.split(',').filter((v) => v.trim())
+        }
+        return defaultValue
+      },
+      set(newValue: string[]) {
+        const value = newValue.length > 0 ? newValue.join(',') : undefined
+        updateProperties({
+          [key]: value,
+        })
+        trigger()
+      },
+    }
+  })
+}
+
 export const useFieldRef = <T = string>(key: string) => {
   const { selectedElement, updateProperties } = useBpmnContextService()
   return customRef<T>((track, trigger) => {
