@@ -410,12 +410,14 @@ defineExpose({
               <el-tooltip placement="top" content="导入">
                 <el-button :icon="FolderOpened" @click="fileRef?.click()" />
               </el-tooltip>
-              <el-tooltip placement="top" content="导出xml">
+              <el-tooltip placement="top" content="导出">
                 <el-button :icon="Download" size="small" @click="exportXml" />
               </el-tooltip>
+              <!--
               <el-tooltip placement="top" content="导出svg">
                 <el-button :icon="Download" size="small" @click="exportSvg" />
               </el-tooltip>
+              -->
             </el-button-group>
 
             <el-button-group size="small">
@@ -479,7 +481,7 @@ defineExpose({
                 </el-button>
               </el-tooltip>
             </el-button-group>
-
+            <!--
             <el-button-group size="small">
               <el-tooltip placement="top" content="切换到 Activiti 版本">
                 <el-button
@@ -498,6 +500,7 @@ defineExpose({
                 </el-button>
               </el-tooltip>
             </el-button-group>
+            -->
           </el-space>
         </el-header>
         <el-main class="design-inner__main">
