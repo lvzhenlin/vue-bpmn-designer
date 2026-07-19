@@ -28,6 +28,7 @@ import BpmnPanel from './BpmnPanel.vue'
 import BpmnDesigner from './BpmnModeler.tsx'
 import EmptyXML from './EmptyXML'
 import type { Injector } from 'didi'
+import { saveProcess } from '@/api/process.ts'
 import { getRootElement, nextId } from './utils/ElementUtil.ts'
 import type { ElementIssue, Issues, Linting } from 'bpmn-js-bpmnlint'
 import type Canvas from 'diagram-js/lib/core/Canvas'
@@ -128,6 +129,7 @@ const pendingXml = ref('')
 const skipRestart = ref(false) // 标志：版本切换时跳过 restart
 const labelPosition = ref('top')
 const formSize = ref('default')
+const isSaving = ref(false)
 const importXml = () => {
   const file = fileRef.value?.files?.[0]
   if (file) {
@@ -157,7 +159,9 @@ const importXml = () => {
           currentVersion.value = detectedVersion
           versionStore.setVersion(detectedVersion)
 
-          ElMessage.success(`已自动切换到${detectedVersion === 'flowable' ? 'Flowable' : 'Activiti'}版本`)
+          ElMessage.success(
+            `已自动切换到${detectedVersion === 'flowable' ? 'Flowable' : 'Activiti'}版本`,
+          )
         } else {
           // 版本相同或无法检测，直接导入
           const xmlResult = await modeler.value?.importXML(result)
@@ -185,11 +189,39 @@ const getProcessName = (xml: string): string => {
 
   name = name.trim()
 
-  if (!name || name === 'Process_' || name.startsWith('Process_') && name.length <= 10) {
+  if (!name || name === 'Process_' || (name.startsWith('Process_') && name.length <= 10)) {
     return '匿名流程'
   }
 
   return name.replace(/[\\/:*?"<>|]/g, '_')
+}
+
+const saveXml = async () => {
+  if (isSaving.value) return
+
+  const xml = await getXml()
+  if (!xml) {
+    ElMessage.warning('画布内容为空，无法保存')
+    return
+  }
+
+  isSaving.value = true
+  const processName = getProcessName(xml)
+  try {
+    const response = await saveProcess({
+      xmlContent: xml,
+      processName,
+    })
+    if (response.code === 200) {
+      ElMessage.success(response.message)
+    } else {
+      ElMessage.error(response.message || '保存失败')
+    }
+  } catch (error) {
+    ElMessage.error('保存失败，请稍后重试')
+  } finally {
+    isSaving.value = false
+  }
 }
 
 const exportXml = async () => {
@@ -347,9 +379,7 @@ const switchVersion = async (version: BpmnVersion) => {
 provide('ProcessDesigner', {
   modeler: modeler,
 })
-onMounted(() => {
-
-})
+onMounted(() => {})
 defineExpose({
   loadXml,
   getXml,
@@ -400,6 +430,10 @@ defineExpose({
         >
           <Iconify class="el-icon--left" icon="ri:gitee-fill" width="25px" />
         </el-link> -->
+        <el-button type="primary" @click="saveXml" :loading="isSaving">
+          <Iconify icon="ri:save-3-fill" width="18px" style="margin-right: 4px" />
+          保存
+        </el-button>
       </el-space>
     </el-header>
     <el-container style="overflow-y: auto">
