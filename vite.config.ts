@@ -9,10 +9,13 @@ import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
+import dts from 'vite-plugin-dts'
 
 // https://vite.dev/config/
 export default defineConfig({
   base: '/vue-bpmn-designer',
+  publicDir: false,
   plugins: [
     vue(),
     vueJsx(),
@@ -41,6 +44,14 @@ export default defineConfig({
       dts: 'src/typings/components.d.ts',
     }),
     vueDevTools(),
+    cssInjectedByJsPlugin(),
+    dts({
+      entryRoot: 'src',
+      outDir: 'dist',
+      tsconfigPath: './tsconfig.app.json',
+      cleanVueFileName: true,
+      insertTypesEntry: true,
+    }),
   ],
   resolve: {
     alias: {
@@ -53,10 +64,84 @@ export default defineConfig({
     },
   },
   build: {
+    lib: {
+      entry: resolve(__dirname, 'src/components/index.ts'),
+      name: 'VueBpmnDesigner',
+      fileName: (format) => `vue-bpmn-designer.${format}.js`,
+      formats: ['es', 'umd'],
+    },
     rollupOptions: {
+      external: [
+        'vue',
+        'pinia',
+        'vue-i18n',
+        'element-plus',
+        '@element-plus/icons-vue',
+        '@vueuse/core',
+        'bpmn-js',
+        'bpmn-js-bpmnlint',
+        'bpmn-js-color-picker',
+        'bpmn-js-create-append-anything',
+        'bpmn-js-token-simulation',
+        'bpmn-auto-layout',
+        'diagram-js',
+        'diagram-js-minimap',
+        'diagram-js-grid',
+        'diagram-js-grid-bg',
+        'bpmnlint',
+        'didi',
+        'lodash-es',
+        'tiny-svg',
+        'ids',
+        'codemirror',
+        '@codemirror/autocomplete',
+        '@codemirror/commands',
+        '@codemirror/lang-javascript',
+        '@codemirror/lang-json',
+        '@codemirror/language',
+        '@codemirror/legacy-modes',
+        '@codemirror/lint',
+        '@codemirror/state',
+        '@codemirror/view',
+        '@lezer/highlight',
+      ],
       output: {
+        exports: 'named',
+        globals: {
+          vue: 'Vue',
+          pinia: 'Pinia',
+          'vue-i18n': 'VueI18n',
+          'element-plus': 'ElementPlus',
+          '@element-plus/icons-vue': 'ElementPlusIconsVue',
+          '@vueuse/core': 'VueUse',
+          'bpmn-js': 'BpmnJS',
+          'bpmn-js-bpmnlint': 'BpmnJSBpmnlint',
+          'bpmn-js-color-picker': 'BpmnJSColorPicker',
+          'bpmn-js-create-append-anything': 'BpmnJSCreateAppendAnything',
+          'bpmn-js-token-simulation': 'BpmnJSTokenSimulation',
+          'bpmn-auto-layout': 'BpmnAutoLayout',
+          'diagram-js': 'DiagramJS',
+          'diagram-js-minimap': 'DiagramJSMinimap',
+          'diagram-js-grid': 'DiagramJSGrid',
+          'diagram-js-grid-bg': 'DiagramJSGridBg',
+          bpmnlint: 'Bpmnlint',
+          didi: 'Didi',
+          'lodash-es': 'LodashEs',
+          'tiny-svg': 'TinySvg',
+          ids: 'Ids',
+          codemirror: 'Codemirror',
+          '@codemirror/autocomplete': 'CodemirrorAutocomplete',
+          '@codemirror/commands': 'CodemirrorCommands',
+          '@codemirror/lang-javascript': 'CodemirrorLangJavascript',
+          '@codemirror/lang-json': 'CodemirrorLangJson',
+          '@codemirror/language': 'CodemirrorLanguage',
+          '@codemirror/legacy-modes': 'CodemirrorLegacyModes',
+          '@codemirror/lint': 'CodemirrorLint',
+          '@codemirror/state': 'CodemirrorState',
+          '@codemirror/view': 'CodemirrorView',
+          '@lezer/highlight': 'LezerHighlight',
+        },
         chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
         assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
         sanitizeFileName(name) {
           const match = /^[a-z]:/i.exec(name)

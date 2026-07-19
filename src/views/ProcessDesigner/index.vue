@@ -36,6 +36,7 @@ import type { Minimap } from 'diagram-js-minimap'
 import { layoutProcess } from 'bpmn-auto-layout'
 import { ElMessage } from 'element-plus'
 import { useBpmnVersionStore, type BpmnVersion } from '@/stores/bpmnVersion'
+import { Icon as Iconify } from '@iconify/vue'
 
 defineOptions({
   name: 'ProcessDesigner',

@@ -15,6 +15,7 @@ import RerenderPalette from '@/views/ProcessDesigner/Palette'
 import BpmnColorPickerModule from 'bpmn-js-color-picker'
 import bpmnlint from './Lint'
 import type { BpmnVersion } from '@/stores/bpmnVersion'
+import { activitiConfig, flowableConfig } from './utils/moddleConfig'
 
 export default defineComponent({
   props: {
@@ -43,12 +44,10 @@ export default defineComponent({
     let isInitializing = false
 
     const initModeler = async (bpmnVersion: BpmnVersion, xml?: string) => {
-      // 动态加载对应的 moddle 配置
-      const moddleConfig = await import(
-        bpmnVersion === 'activiti'
-          ? './activiti.json'
-          : './flowable.json'
-      )
+      // 加载对应的 moddle 配置
+      const moddleConfig = bpmnVersion === 'activiti'
+        ? activitiConfig
+        : flowableConfig
 
       // 销毁旧的 modeler
       if (modeler.value) {

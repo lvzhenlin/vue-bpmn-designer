@@ -1,8 +1,22 @@
 {
-  "name": "vue-bpmn-designer",
+  "name": "@tiancom/vue-bpmn-designer",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "type": "module",
+  "main": "./dist/vue-bpmn-designer.umd.js",
+  "module": "./dist/vue-bpmn-designer.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/vue-bpmn-designer.es.js",
+      "require": "./dist/vue-bpmn-designer.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -26,6 +40,10 @@
     "@codemirror/state": "^6.5.2",
     "@codemirror/view": "^6.36.8",
     "@element-plus/icons-vue": "^2.3.1",
+    "@iconify-json/ic": "^1.2.4",
+    "@iconify-json/ri": "^1.2.10",
+    "@iconify-json/solar": "^1.2.5",
+    "@iconify-json/tabler": "^1.2.36",
     "@iconify/vue": "^4.3.0",
     "@lezer/highlight": "^1.2.1",
     "@vueuse/core": "^13.0.0",
@@ -72,6 +90,8 @@
     "unplugin-auto-import": "^19.3.0",
     "unplugin-vue-components": "^28.7.0",
     "vite": "^6.2.1",
+    "vite-plugin-css-injected-by-js": "^3.5.1",
+    "vite-plugin-dts": "^5.0.3",
     "vite-plugin-svg-icons": "^2.0.1",
     "vite-plugin-vue-devtools": "^7.7.2",
     "vue-tsc": "^2.2.8"

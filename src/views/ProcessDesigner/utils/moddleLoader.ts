@@ -1,12 +1,12 @@
 import type { BpmnVersion } from '@/stores/bpmnVersion'
+import { activitiConfig, flowableConfig } from './moddleConfig'
 
-export const loadModdleConfig = async (version: BpmnVersion): Promise<any> => {
+export const loadModdleConfig = (version: BpmnVersion): any => {
   switch (version) {
     case 'flowable':
-      return import('@/views/ProcessDesigner/flowable.json')
+      return flowableConfig
     case 'activiti':
-      return import('@/views/ProcessDesigner/activiti.json')
     default:
-      return import('@/views/ProcessDesigner/activiti.json')
+      return activitiConfig
   }
 }
