@@ -28,8 +28,8 @@ export const saveProcess = async (params: SaveProcessRequest): Promise<SaveProce
 }
 
 export interface Option {
-  label: string
-  value: string
+  name: string
+  id: string
 }
 
 export interface PageResponse {
@@ -52,18 +52,18 @@ export const getUserList = async (params: PageParams): Promise<PageResponse> => 
 
   const mockData: Option[] = []
   const baseUsers = [
-    { label: '张三', value: 'zhangsan' },
-    { label: '李四', value: 'lisi' },
-    { label: '王五', value: 'wangwu' },
-    { label: '毛六', value: 'maoliu' },
-    { label: '钱七', value: 'qianqi' },
-    { label: '赵八', value: 'zhaoba' },
-    { label: '孙九', value: 'sunjiu' },
-    { label: '周十', value: 'zhoushi' },
-    { label: '吴十一', value: 'wushiyi' },
-    { label: '郑十二', value: 'zhengshier' },
-    { label: '王管理员', value: 'admin' },
-    { label: '李审批员', value: 'approver' },
+    { name: '张三', id: 'zhangsan' },
+    { name: '李四', id: 'lisi' },
+    { name: '王五', id: 'wangwu' },
+    { name: '毛六', id: 'maoliu' },
+    { name: '钱七', id: 'qianqi' },
+    { name: '赵八', id: 'zhaoba' },
+    { name: '孙九', id: 'sunjiu' },
+    { name: '周十', id: 'zhoushi' },
+    { name: '吴十一', id: 'wushiyi' },
+    { name: '郑十二', id: 'zhengshier' },
+    { name: '王管理员', id: 'admin' },
+    { name: '李审批员', id: 'approver' },
   ]
 
   for (let i = 0; i < pageSize && start + i < total; i++) {
@@ -71,8 +71,8 @@ export const getUserList = async (params: PageParams): Promise<PageResponse> => 
     const suffix = Math.floor((start + i) / baseUsers.length)
     const base = baseUsers[baseIndex]
     mockData.push({
-      label: `${base.label}${suffix > 0 ? suffix : ''}`,
-      value: `${base.value}${suffix > 0 ? suffix : ''}`,
+      name: `${base.name}${suffix > 0 ? suffix : ''}`,
+      id: `${base.id}${suffix > 0 ? suffix : ''}`,
     })
   }
 
@@ -90,16 +90,16 @@ export const getGroupList = async (params: PageParams): Promise<PageResponse> =>
 
   const mockData: Option[] = []
   const baseGroups = [
-    { label: '部门A', value: 'deptA' },
-    { label: '部门B', value: 'deptB' },
-    { label: '部门C', value: 'deptC' },
-    { label: '部门D', value: 'deptD' },
-    { label: '部门E', value: 'deptE' },
-    { label: '财务部', value: 'finance' },
-    { label: '人力资源部', value: 'hr' },
-    { label: '技术部', value: 'tech' },
-    { label: '市场部', value: 'marketing' },
-    { label: '运营部', value: 'operations' },
+    { name: '部门A', id: 'deptA' },
+    { name: '部门B', id: 'deptB' },
+    { name: '部门C', id: 'deptC' },
+    { name: '部门D', id: 'deptD' },
+    { name: '部门E', id: 'deptE' },
+    { name: '财务部', id: 'finance' },
+    { name: '人力资源部', id: 'hr' },
+    { name: '技术部', id: 'tech' },
+    { name: '市场部', id: 'marketing' },
+    { name: '运营部', id: 'operations' },
   ]
 
   for (let i = 0; i < pageSize && start + i < total; i++) {
@@ -107,8 +107,8 @@ export const getGroupList = async (params: PageParams): Promise<PageResponse> =>
     const suffix = Math.floor((start + i) / baseGroups.length)
     const base = baseGroups[baseIndex]
     mockData.push({
-      label: `${base.label}${suffix > 0 ? suffix : ''}`,
-      value: `${base.value}${suffix > 0 ? suffix : ''}`,
+      name: `${base.name}${suffix > 0 ? suffix : ''}`,
+      id: `${base.id}${suffix > 0 ? suffix : ''}`,
     })
   }
 

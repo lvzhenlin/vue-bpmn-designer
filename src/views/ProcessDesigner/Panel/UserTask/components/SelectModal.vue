@@ -32,7 +32,7 @@ const leftSelected = ref<string[]>([])
 const rightSelected = ref<string[]>([])
 const radioSelected = ref<string>('')
 
-const formatOption = (opt: Option): string => `${opt.label}_${opt.value}`
+const formatOption = (opt: Option): string => `${opt.id}_${opt.name}`
 
 const parseOption = (val: string): Option | null => {
   const lastIndex = val.lastIndexOf('_')
@@ -40,8 +40,8 @@ const parseOption = (val: string): Option | null => {
     return null
   }
   return {
-    label: val.substring(0, lastIndex),
-    value: val.substring(lastIndex + 1),
+    name: val.substring(0, lastIndex),
+    id: val.substring(lastIndex + 1),
   }
 }
 
@@ -178,7 +178,7 @@ const removeSelected = () => {
 }
 
 const removeAll = () => {
-  selectedValues.value = []
+  handleClear()
 }
 
 const selectedLabel = computed(() => {
@@ -232,7 +232,7 @@ const hasValue = computed(() => {
                 <div class="transfer-panel-body">
                   <label
                     v-for="option in unselectedOptions"
-                    :key="option.value"
+                    :key="option.id"
                     class="transfer-option"
                   >
                     <input
@@ -261,7 +261,8 @@ const hasValue = computed(() => {
                     :page-sizes="[10, 20, 50, 100, 200]"
                     :total="total"
                     :pager-count="3"
-                    layout="total, sizes, prev, pager, next, jumper"
+                    background
+                    layout="total, sizes, prev, pager, next"
                     @size-change="handleSizeChange"
                     @current-change="handlePageChange"
                   />
@@ -305,7 +306,7 @@ const hasValue = computed(() => {
                 <div class="transfer-panel-body">
                   <label
                     v-for="option in selectedOptions"
-                    :key="option.value"
+                    :key="option.id"
                     class="transfer-option"
                   >
                     <input
@@ -324,7 +325,7 @@ const hasValue = computed(() => {
           </template>
         </div>
         <div class="select-modal-footer">
-          <button type="button" class="select-modal-btn-cancel" @click="handleClear">清除</button>
+          <!-- <button type="button" class="select-modal-btn-cancel" @click="handleClear">清除</button> -->
           <button type="button" class="select-modal-btn-cancel" @click="handleClose">取消</button>
           <button type="button" class="select-modal-btn-confirm" @click="handleConfirm">确定</button>
         </div>

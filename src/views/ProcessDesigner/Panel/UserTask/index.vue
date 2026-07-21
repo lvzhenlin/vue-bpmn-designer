@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { useCustomRef, useCustomRefList } from '@/views/ProcessDesigner/utils/ElementUtil.ts';
 import { useBpmnContextService } from '@/hooks/useService.ts';
 import { is } from 'bpmn-js/lib/util/ModelUtil';
@@ -13,12 +13,43 @@ const eventBus = getService<EventBus>('eventBus');
 const assignee = useCustomRef('assignee');
 const candidateUsers = useCustomRefList('candidateUsers');
 const candidateGroups = useCustomRefList('candidateGroups');
-const dueDate = useCustomRef('dueDate');
 const isUserTask = computed(() => is(selectedElement, 'bpmn:UserTask'));
 const taskType = useCustomRef('taskType', 'any');
+const assigneeType = ref<'assignee' | 'candidateUsers' | 'candidateGroups'>('assignee');
+const isInitializing = ref(false);
+const initAssigneeType = () => {
+  isInitializing.value = true;
+  if (assignee.value) {
+    assigneeType.value = 'assignee';
+  } else if (candidateUsers.value.length > 0) {
+    assigneeType.value = 'candidateUsers';
+  } else if (candidateGroups.value.length > 0) {
+    assigneeType.value = 'candidateGroups';
+  } else {
+    assigneeType.value = 'assignee';
+  }
+  isInitializing.value = false;
+};
+watch(() => selectedElement, () => {
+  initAssigneeType();
+}, { immediate: true });
+watch(assigneeType, (newType) => {
+  if (isInitializing.value) return;
+  if (newType !== 'assignee') {
+    assignee.value = undefined as any;
+  }
+  if (newType !== 'candidateUsers') {
+    candidateUsers.value = [];
+  }
+  if (newType !== 'candidateGroups') {
+    candidateGroups.value = [];
+  }
+});
 onMounted(() => {
   eventBus?.on('elementVariableChanged', (event: any) => {
-    assignee.value = `\${${event.elementVariable}}`;
+    if (assigneeType.value === 'assignee') {
+      assignee.value = `\${${event.elementVariable}}`;
+    }
   });
 });
 const assigneeModalVisible = ref(false);
@@ -28,9 +59,18 @@ const candidateGroupsModalVisible = ref(false);
 
 <template>
   <el-collapse-item name="arg1" title="节点配置">
-    <el-form-item prop="assignee" label="办理人">
+
+    <el-form-item label="办理人设置">
+      <el-select v-model="assigneeType" placeholder="请选择办理人">
+        <el-option label="指定人" value="assignee" />
+        <el-option label="候选人" value="candidateUsers" />
+        <el-option label="候选组" value="candidateGroups" />
+      </el-select>
+    </el-form-item>
+
+    <el-form-item v-if="assigneeType === 'assignee'" prop="assignee" label="指定人">
       <SelectModal
-        title="选择办理人"
+        title="选择指定人"
         v-model="assignee"
         :visible="assigneeModalVisible"
         apiType="user"
@@ -39,7 +79,7 @@ const candidateGroupsModalVisible = ref(false);
       />
     </el-form-item>
 
-    <el-form-item prop="candidateUsers" label="候选人">
+    <el-form-item v-if="assigneeType === 'candidateUsers'" prop="candidateUsers" label="候选人">
       <SelectModal
         title="选择候选人"
         v-model="candidateUsers"
@@ -50,7 +90,7 @@ const candidateGroupsModalVisible = ref(false);
       />
     </el-form-item>
 
-    <el-form-item prop="candidateGroups" label="候选组">
+    <el-form-item v-if="assigneeType === 'candidateGroups'" prop="candidateGroups" label="候选组">
       <SelectModal
         title="选择候选组"
         v-model="candidateGroups"
@@ -61,31 +101,13 @@ const candidateGroupsModalVisible = ref(false);
       />
     </el-form-item>
 
-    <el-form-item v-if="isUserTask" prop="taskType" label="节点类型">
-      <el-select v-model="taskType" placeholder="请选择节点类型">
+    <el-form-item v-if="isUserTask" prop="taskType" label="会签类型">
+      <el-select v-model="taskType" placeholder="请选择会签类型">
         <el-option label="或签" value="any" />
-        <el-option label="会签" value="all" />
+        <el-option label="并签" value="all" />
       </el-select>
     </el-form-item>
 
-    <el-form-item prop="dueDate" label="到期时间">
-      <template #label>
-        <span>到期时间</span>
-        <HelpTooltip content="支持ISO 8601时间格式：P[n]Y[n]M[n]DT[n]H[n]M[n]S
-
-语法规则：
-• P：必须放在开头，代表“周期”（Period）的开始。
-• T：时间分隔符。如果你要定义时、分、秒，必须在它们前面加上 T。
-• Y/M/D：分别代表年、月、日。
-• H/M/S：分别代表时、分、秒。
-
-示例：
-• P5D - 5天后
-• PT2H30M - 2小时30分后
-• P1DT6H - 1天6小时后" />
-      </template>
-      <el-input v-model="dueDate" placeholder="请输入到期时间" />
-    </el-form-item>
   </el-collapse-item>
 </template>
 
