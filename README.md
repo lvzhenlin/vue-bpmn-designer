@@ -88,18 +88,18 @@ pnpm add vue@^3.5.13 \
 pinia@^3.0.1 \
 vue-i18n@^11.2.8 \
 element-plus@^2.11.7 \
-         @element-plus/icons-vue@^2.3.1 \
+@element-plus/icons-vue@^2.3.1 \
 @iconify/vue@^4.3.0 @vueuse/core@^13.0.0 \
-         bpmn-js@^18.6.2 bpmn-js-bpmnlint@^0.23.0 bpmn-js-color-picker@^0.7.1 \
-         bpmn-js-create-append-anything@^0.6.0 bpmn-js-token-simulation@^0.38.1 \
-         bpmn-auto-layout@^1.0.0 diagram-js@^15.2.4 diagram-js-minimap@^5.2.0 \
-         diagram-js-grid@^1.1.0 diagram-js-grid-bg@^1.1.0 bpmnlint@^11.4.2 \
-         didi@^10.2.2 lodash-es@^4.17.21 min-dash@^4.2.3 tiny-svg@^4.1.3 \
-         ids@^1.0.5 codemirror@^6.0.1 @codemirror/autocomplete@^6.18.6 \
-         @codemirror/commands@^6.8.1 @codemirror/lang-javascript@^6.2.4 \
-         @codemirror/lang-json@^6.0.1 @codemirror/language@^6.11.0 \
-         @codemirror/legacy-modes@^6.5.1 @codemirror/lint@^6.8.5 \
-         @codemirror/state@^6.5.2 @codemirror/view@^6.36.8 @lezer/highlight@^1.2.1
+bpmn-js@^18.6.2 bpmn-js-bpmnlint@^0.23.0 bpmn-js-color-picker@^0.7.1 \
+bpmn-js-create-append-anything@^0.6.0 bpmn-js-token-simulation@^0.38.1 \
+bpmn-auto-layout@^1.0.0 diagram-js@^15.2.4 diagram-js-minimap@^5.2.0 \
+diagram-js-grid@^1.1.0 diagram-js-grid-bg@^1.1.0 bpmnlint@^11.4.2 \
+didi@^10.2.2 lodash-es@^4.17.21 min-dash@^4.2.3 tiny-svg@^4.1.3 \
+ids@^1.0.5 codemirror@^6.0.1 @codemirror/autocomplete@^6.18.6 \
+@codemirror/commands@^6.8.1 @codemirror/lang-javascript@^6.2.4 \
+@codemirror/lang-json@^6.0.1 @codemirror/language@^6.11.0 \
+@codemirror/legacy-modes@^6.5.1 @codemirror/lint@^6.8.5 \
+@codemirror/state@^6.5.2 @codemirror/view@^6.36.8 @lezer/highlight@^1.2.1
 ```
 
 ---
@@ -158,6 +158,71 @@ export default defineConfig({
 ```typescript
 // main.ts
 import 'virtual:svg-icons-register'
+```
+
+### 3. 自定义 API（可选）
+
+组件库默认使用 Mock 数据，如果需要连接真实后端接口，可通过 `setApiConfig` 配置自定义 API：
+
+```typescript
+// main.ts
+import { setApiConfig } from '@tiancom/vue-bpmn-designer'
+import axios from 'axios'
+
+setApiConfig({
+  saveProcess: async (params) => {
+    const response = await axios.post('/api/process/save', params)
+    return response.data
+  },
+  getUserList: async (params) => {
+    const response = await axios.get('/api/users', { params })
+    return response.data
+  },
+  getGroupList: async (params) => {
+    const response = await axios.get('/api/groups', { params })
+    return response.data
+  },
+})
+```
+
+**API 类型定义：**
+
+```typescript
+interface ApiConfig {
+  saveProcess?: (params: SaveProcessRequest) => Promise<SaveProcessResponse>
+  getUserList?: (params: PageParams) => Promise<PageResponse>
+  getGroupList?: (params: PageParams) => Promise<PageResponse>
+}
+
+interface SaveProcessRequest {
+  xmlContent: string
+  processName?: string
+}
+
+interface SaveProcessResponse {
+  code: number
+  message: string
+  data?: { id: string; processName: string }
+}
+
+interface PageParams {
+  page: number
+  pageSize: number
+  keyword?: string
+  excludeIds?: string[]
+}
+
+interface PageResponse {
+  code: number
+  data: Option[]
+  total: number
+  message?: string
+}
+
+interface Option {
+  name: string
+  id: string
+}
 ```
 
 ---

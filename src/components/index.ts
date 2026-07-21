@@ -21,6 +21,8 @@ addCollection(solarIcons)
 export { ProcessDesigner }
 export { useBpmnVersionStore }
 export { useAppStore }
+export { setApiConfig } from '@/api'
+export type { ApiConfig, SaveProcessRequest, SaveProcessResponse, PageParams, PageResponse } from '@/api'
 export type { BpmnVersion }
 export type { LanguageType }
 

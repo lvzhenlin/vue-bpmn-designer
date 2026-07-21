@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { getUserList, getGroupList, type Option, type PageResponse } from '@/api/processDesigner'
+import { getUserList, getGroupList, type Option, type PageResponse } from '@/api'
 
 interface Props {
   title: string
