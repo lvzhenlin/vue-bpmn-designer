@@ -27,6 +27,7 @@ const loading = ref(false)
 const total = ref(0)
 const currentPage = ref(1)
 const pageSize = ref(10)
+const keyword = ref('')
 
 const leftSelected = ref<string[]>([])
 const rightSelected = ref<string[]>([])
@@ -40,8 +41,8 @@ const parseOption = (val: string): Option | null => {
     return null
   }
   return {
-    name: val.substring(0, lastIndex),
-    id: val.substring(lastIndex + 1),
+    id: val.substring(0, lastIndex),
+    name: val.substring(lastIndex + 1),
   }
 }
 
@@ -59,14 +60,21 @@ const selectedOptions = computed(() => {
   }).filter((o): o is Option => !!o)
 })
 
+const selectedIds = computed(() => {
+  return selectedValues.value.map((val) => {
+    const parsed = parseOption(val)
+    return parsed?.id || ''
+  }).filter(Boolean)
+})
+
 const fetchOptions = async () => {
   if (!props.apiType) return
 
   loading.value = true
   try {
     const response: PageResponse = props.apiType === 'user'
-      ? await getUserList({ page: currentPage.value, pageSize: pageSize.value })
-      : await getGroupList({ page: currentPage.value, pageSize: pageSize.value })
+      ? await getUserList({ page: currentPage.value, pageSize: pageSize.value, keyword: keyword.value, excludeIds: selectedIds.value })
+      : await getGroupList({ page: currentPage.value, pageSize: pageSize.value, keyword: keyword.value, excludeIds: selectedIds.value })
     if (response.code === 200) {
       options.value = response.data
       total.value = response.total
@@ -75,6 +83,17 @@ const fetchOptions = async () => {
     console.error('Failed to fetch options:', error)
   } finally {
     loading.value = false
+  }
+}
+
+const handleSearch = () => {
+  currentPage.value = 1
+  fetchOptions()
+}
+
+const handleKeyup = (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    handleSearch()
   }
 }
 
@@ -221,13 +240,20 @@ const hasValue = computed(() => {
         <div class="select-modal-body">
           <div v-if="loading" class="select-modal-loading">加载中...</div>
           <template v-else>
+            <div class="transfer-search">
+              <input
+                type="text"
+                v-model="keyword"
+                :placeholder="`搜索${props.apiType === 'user' ? '用户名称' : '候选组名称'}`"
+                @keyup="handleKeyup"
+                class="transfer-search-input"
+              />
+              <button type="button" class="transfer-search-btn" @click="handleSearch">查询</button>
+            </div>
             <div class="transfer-container">
               <div class="transfer-panel">
                 <div class="transfer-panel-header">
-                  待选
-                  <span v-if="total" class="transfer-panel-count">
-                    {{ total }}
-                  </span>
+                  待选<!--（{{ total }}）-->
                 </div>
                 <div class="transfer-panel-body">
                   <label
@@ -259,10 +285,11 @@ const hasValue = computed(() => {
                     v-model:current-page="currentPage"
                     v-model:page-size="pageSize"
                     :page-sizes="[10, 20, 50, 100, 200]"
-                    :total="total"
                     :pager-count="3"
+                    :total="total || 0"
                     background
-                    layout="total, sizes, prev, pager, next"
+                    size="small"
+                    layout="total, sizes, prev, pager, next, jumper"
                     @size-change="handleSizeChange"
                     @current-change="handlePageChange"
                   />
@@ -298,10 +325,7 @@ const hasValue = computed(() => {
 
               <div class="transfer-panel">
                 <div class="transfer-panel-header">
-                  已选
-                  <span v-if="selectedOptions.length" class="transfer-panel-count">
-                    {{ selectedOptions.length }}
-                  </span>
+                  已选（{{ selectedOptions.length }}）
                 </div>
                 <div class="transfer-panel-body">
                   <label
@@ -438,7 +462,7 @@ const hasValue = computed(() => {
 }
 
 .transfer-panel-header {
-  padding: 8px 12px;
+  padding: 2px 12px;
   background: #f5f7fa;
   border-bottom: 1px solid #dcdfe6;
   font-size: 14px;
@@ -448,12 +472,40 @@ const hasValue = computed(() => {
   justify-content: space-between;
 }
 
-.transfer-panel-count {
+.transfer-search {
+  padding: 0 0 12px 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.transfer-search-input {
+  width: 300px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+
+  &:focus {
+    border-color: #409eff;
+  }
+}
+
+.transfer-search-btn {
+  height: 32px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 4px;
   background: #409eff;
   color: #fff;
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background: #66b1ff;
+  }
 }
 
 .transfer-panel-body {
@@ -463,7 +515,7 @@ const hasValue = computed(() => {
 }
 
 .transfer-panel-footer {
-  padding: 8px 12px;
+  padding: 2px 12px;
   border-top: 1px solid #dcdfe6;
   background: #fafafa;
 }

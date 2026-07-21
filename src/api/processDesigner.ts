@@ -13,6 +13,7 @@ export interface SaveProcessResponse {
 }
 
 export const saveProcess = async (params: SaveProcessRequest): Promise<SaveProcessResponse> => {
+  console.log('saveProcess >>', params)
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
@@ -43,6 +44,7 @@ export interface PageParams {
   page: number
   pageSize: number
   keyword?: string
+  excludeIds?: string[]
 }
 
 export const getUserList = async (params: PageParams): Promise<PageResponse> => {
@@ -75,7 +77,7 @@ export const getUserList = async (params: PageParams): Promise<PageResponse> => 
       id: `${base.id}${suffix > 0 ? suffix : ''}`,
     })
   }
-
+  console.log('getUserList >>', params)
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({ code: 200, data: mockData, total })
@@ -111,7 +113,7 @@ export const getGroupList = async (params: PageParams): Promise<PageResponse> =>
       id: `${base.id}${suffix > 0 ? suffix : ''}`,
     })
   }
-
+  console.log('getGroupList >>', params)
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({ code: 200, data: mockData, total })

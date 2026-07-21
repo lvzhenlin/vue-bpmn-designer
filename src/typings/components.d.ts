@@ -49,6 +49,7 @@ declare module 'vue' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElText: typeof import('element-plus/es')['ElText']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    ElTransfer: typeof import('element-plus/es')['ElTransfer']
     HelpTooltip: typeof import('./../components/HelpTooltip/index.vue')['default']
     SvgIcon: typeof import('./../components/SvgIcon/index.vue')['default']
   }
