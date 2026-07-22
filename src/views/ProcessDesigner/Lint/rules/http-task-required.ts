@@ -1,7 +1,7 @@
 import type { Reporter, RuleDefinition } from 'bpmnlint/lib/types'
-import type { ModdleElement } from 'bpmn-js/lib/model/Types.ts'
+import type { ModdleElement } from 'bpmn-js/lib/model/Types'
 import { is } from 'bpmn-js/lib/util/ModelUtil'
-import { getExtensionElementsList } from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+import { getExtensionElementsList } from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 
 const httpTaskRequired = (): RuleDefinition => {
   return {

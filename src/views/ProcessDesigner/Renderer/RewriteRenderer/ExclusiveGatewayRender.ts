@@ -1,5 +1,5 @@
 import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer'
-import type { Shape } from 'bpmn-js/lib/model/Types.ts'
+import type { Shape } from 'bpmn-js/lib/model/Types'
 import { getDi, is } from 'bpmn-js/lib/util/ModelUtil'
 import type EventBus from 'diagram-js/lib/core/EventBus'
 

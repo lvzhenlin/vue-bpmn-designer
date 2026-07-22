@@ -3,9 +3,9 @@ import { customRef } from 'vue'
 import {
   addExtensionElements,
   getExtensionElement,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
-import { useBpmnContextService } from '@/hooks/useService.ts'
-import { createElement } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
+import { useBpmnContextService } from '@/hooks/useService'
+import { createElement } from '@/views/ProcessDesigner/utils/ElementUtil'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 
 const { selectedElement, getService, updateProperties } = useBpmnContextService()

@@ -1,6 +1,6 @@
 import type { Reporter, RuleDefinition } from 'bpmnlint/lib/types'
-import type { ModdleElement } from 'bpmn-js/lib/model/Types.ts'
-import { getEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import type { ModdleElement } from 'bpmn-js/lib/model/Types'
+import { getEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 
 const messageEventRequired = (): RuleDefinition => {
   return {

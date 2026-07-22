@@ -2,15 +2,15 @@
 import { onMounted, ref } from 'vue'
 import type { ExecutionListener, Field } from '@/types'
 import { Delete, EditPen, Plus } from '@element-plus/icons-vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import {
   addExtensionElements,
   getExtensionElementsList,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 import ListenerDrawer from '@/views/ProcessDesigner/Panel/BaseActivity/ListenerDrawer.vue'
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
+import type { Element } from 'bpmn-js/lib/model/Types'
 
 const listeners = ref<ExecutionListener[]>([])
 const listenerDrawerRef = ref<InstanceType<typeof ListenerDrawer>>()

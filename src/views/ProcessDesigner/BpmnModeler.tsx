@@ -5,8 +5,8 @@ import MinimapModule from 'diagram-js-minimap'
 import LintModule from 'bpmn-js-bpmnlint'
 import TokenSimulationModule from 'bpmn-js-token-simulation'
 import Translate from './Translate'
-import httpTaskRenderer from './Renderer/index.ts'
-import CustomModeling from './Modeling/index.ts'
+import httpTaskRenderer from './Renderer/index'
+import CustomModeling from './Modeling/index'
 import CustomContextPad from './ContextPad'
 import CustomPopupMenu from './PopupMenu'
 import CustomReplace from './Replace'
@@ -79,7 +79,7 @@ export default defineComponent({
           BpmnColorPickerModule,
         ],
         moddleExtensions: {
-          [bpmnVersion]: moddleConfig.default || moddleConfig,
+          [bpmnVersion]: moddleConfig,
         },
         connectorIconRenderer: {
           iconProperty: `${bpmnVersion}:connectorIcon`,

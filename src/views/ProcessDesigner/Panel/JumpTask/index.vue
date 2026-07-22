@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useFieldRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { useFieldRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'
 import juelSupport from '@/components/CodemirrorEditor/language/juel'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { onMounted, ref } from 'vue'
 import { filter } from 'min-dash'
 import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil'

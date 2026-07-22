@@ -6,7 +6,7 @@ import { getFillColor, getStrokeColor } from 'bpmn-js/lib/draw/BpmnRenderUtil'
 import type { Shape } from 'bpmn-js/lib/model/Types'
 import { append as svgAppend, create as svgCreate } from 'tiny-svg'
 import type PathMap from 'bpmn-js/lib/draw/PathMap'
-import { isEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import { isEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 import { isLabel } from 'bpmn-js/lib/util/LabelUtil'
 
 export default class VariableEventRenderer extends BaseRenderer {

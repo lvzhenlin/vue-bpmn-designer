@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
-import { useCustomRef, useCustomRefList } from '@/views/ProcessDesigner/utils/ElementUtil.ts';
-import { useBpmnContextService } from '@/hooks/useService.ts';
+import { useCustomRef, useCustomRefList } from '@/views/ProcessDesigner/utils/ElementUtil';
+import { useBpmnContextService } from '@/hooks/useService';
 import { is } from 'bpmn-js/lib/util/ModelUtil';
 import type EventBus from 'diagram-js/lib/core/EventBus';
 import SelectModal from './components/SelectModal.vue';

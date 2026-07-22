@@ -2,15 +2,15 @@
 import {
   findRootElementById,
   findRootElementsByType,
-} from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+} from '@/views/ProcessDesigner/utils/ElementUtil'
 import { customRef, onMounted, ref } from 'vue'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import type { EscalationEvent } from '@/types'
 import {
   createOrUpdateEventDefinition,
   getEscalationEventDefinition,
-} from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+} from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 import { Plus } from '@element-plus/icons-vue'
 import EscalationEventDrawer from '@/views/ProcessDesigner/Panel/Process/EscalationEventDrawer.vue'
 

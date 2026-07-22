@@ -1,10 +1,10 @@
 import type { Translate } from 'bpmn-js/lib/features/palette/PaletteProvider'
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
+import type { Element } from 'bpmn-js/lib/model/Types'
 import type {
   PopupMenuEntries,
   PopupMenuEntry,
 } from 'diagram-js/lib/features/popup-menu/PopupMenuProvider'
-import type { Connector } from '@/types/connector.ts'
+import type { Connector } from '@/types/connector'
 import { filter } from 'min-dash'
 import type EventBus from 'diagram-js/lib/core/EventBus'
 import { getBusinessObject, isAny } from 'bpmn-js/lib/util/ModelUtil'

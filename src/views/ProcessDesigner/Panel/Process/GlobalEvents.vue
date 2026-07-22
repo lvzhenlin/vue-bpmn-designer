@@ -9,8 +9,8 @@ import {
   createOrUpdateRootElement,
   findRootElementsByType,
   removeRootElement,
-} from '@/views/ProcessDesigner/utils/ElementUtil.ts'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+} from '@/views/ProcessDesigner/utils/ElementUtil'
+import { useBpmnContextService } from '@/hooks/useService'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
 import type { ErrorEvent, EscalationEvent, MessageEvent, SignalEvent } from '@/types'
 

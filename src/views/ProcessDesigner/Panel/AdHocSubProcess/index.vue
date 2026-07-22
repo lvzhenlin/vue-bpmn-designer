@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import { customRef } from 'vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
-import type { Moddle } from 'bpmn-js/lib/model/Types.ts'
+import type { Moddle } from 'bpmn-js/lib/model/Types'
 import juelSupport from '@/components/CodemirrorEditor/language/juel'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'
 

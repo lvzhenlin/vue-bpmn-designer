@@ -1,4 +1,4 @@
-import type { Connector } from '@/types/connector.ts'
+import type { Connector } from '@/types/connector'
 // dmn
 export const TASK_CONNECTOR: Connector[] = [
   {

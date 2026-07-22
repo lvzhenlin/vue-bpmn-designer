@@ -1,8 +1,8 @@
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import type { Element } from 'bpmn-js/lib/model/Types'
+import { useBpmnContextService } from '@/hooks/useService'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil'
-import { createElement } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { createElement } from '@/views/ProcessDesigner/utils/ElementUtil'
 
 export const getOrCreateExtensionElements = (element: Element) => {
   const businessObject = getBusinessObject(element)

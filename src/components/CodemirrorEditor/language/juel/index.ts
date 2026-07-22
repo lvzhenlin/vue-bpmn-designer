@@ -6,8 +6,8 @@ import {
   type CompletionResult,
   ifNotIn,
 } from '@codemirror/autocomplete'
-import JuelCompletions from './juelCompletions.ts'
-import { juelLinter } from '../juel/lint.ts'
+import JuelCompletions from './juelCompletions'
+import { juelLinter } from '../juel/lint'
 import {
   defaultHighlightStyle,
   LanguageSupport,

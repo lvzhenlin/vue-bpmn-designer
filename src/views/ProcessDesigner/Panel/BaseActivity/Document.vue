@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { customRef } from 'vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 

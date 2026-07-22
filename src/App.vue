@@ -3,7 +3,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import en from 'element-plus/es/locale/lang/en'
 import ProcessDesigner from '@/views/ProcessDesigner/index.vue'
 import type { Language } from 'element-plus/es/locale'
-import useAppStore, { type LanguageType } from '@/stores/modules/app.ts'
+import useAppStore, { type LanguageType } from '@/stores/modules/app'
 
 const { language } = useAppStore()
 const languages: Record<LanguageType, Language> = {

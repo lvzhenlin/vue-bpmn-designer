@@ -4,12 +4,12 @@ import { Delete, Plus } from '@element-plus/icons-vue'
 import type { ErrorEvent, MapException } from '@/types'
 import { type FormInstance, type FormItemRule, useFormSize } from 'element-plus'
 import { useCloned } from '@vueuse/core'
-import { isClassValid } from '@/views/ProcessDesigner/utils/ValidationUtil.ts'
+import { isClassValid } from '@/views/ProcessDesigner/utils/ValidationUtil'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
-import { findRootElementsByType } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { findRootElementsByType } from '@/views/ProcessDesigner/utils/ElementUtil'
+import { useBpmnContextService } from '@/hooks/useService'
 import ErrorEventDrawer from '@/views/ProcessDesigner/Panel/Process/ErrorEventDrawer.vue'
-import { createOrUpdateEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import { createOrUpdateEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 
 const emits = defineEmits<{
   (e: 'confirm', exceptions: MapException[]): void

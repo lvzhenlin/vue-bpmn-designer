@@ -1,5 +1,5 @@
 import type { ModuleDeclaration } from 'didi'
-import CustomBpmnReplace from './CustomBpmnReplace.ts'
+import CustomBpmnReplace from './CustomBpmnReplace'
 
 const customReplace: ModuleDeclaration = {
   __init__: ['replace'],

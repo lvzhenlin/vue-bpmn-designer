@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 
 const terminateAll = useCustomRef('terminateAll')
 </script>

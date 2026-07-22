@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { customRef, onMounted, ref, toRaw } from 'vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
-import { createElement, useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { createElement, useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import { Delete, EditPen, Plus } from '@element-plus/icons-vue'
 import FieldDrawer from './FieldDrawer.vue'
 import type { Field, MapException } from '@/types'
@@ -11,9 +11,9 @@ import {
   addExtensionElements,
   getExtensionElementsList,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 import MapExceptionDrawer from './MapExceptionDrawer.vue'
-import { juelLinter } from '@/components/CodemirrorEditor/language/juel/lint.ts'
+import { juelLinter } from '@/components/CodemirrorEditor/language/juel/lint'
 import { closeBrackets } from '@codemirror/autocomplete'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'
 

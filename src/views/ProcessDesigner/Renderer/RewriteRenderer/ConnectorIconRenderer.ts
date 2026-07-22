@@ -1,7 +1,7 @@
 import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer'
 import BpmnRenderer, { type BpmnRendererConfig } from 'bpmn-js/lib/draw/BpmnRenderer'
 import type EventBus from 'diagram-js/lib/core/EventBus'
-import type { Shape } from 'bpmn-js/lib/model/Types.ts'
+import type { Shape } from 'bpmn-js/lib/model/Types'
 import { getBusinessObject, is, isAny } from 'bpmn-js/lib/util/ModelUtil'
 import { isLabel } from 'bpmn-js/lib/util/LabelUtil'
 import { append as svgAppend, attr as svgAttr, create as svgCreate } from 'tiny-svg'

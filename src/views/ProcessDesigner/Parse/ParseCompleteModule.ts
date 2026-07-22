@@ -1,6 +1,6 @@
 import type EventBus from 'diagram-js/lib/core/EventBus'
 import type { BpmnRendererConfig } from 'bpmn-js/lib/draw/BpmnRenderer'
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
+import type { Element } from 'bpmn-js/lib/model/Types'
 import { is } from 'bpmn-js/lib/util/ModelUtil'
 
 export default class ParseCompleteModule {

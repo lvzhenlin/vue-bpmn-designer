@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { customRef, onMounted, ref } from 'vue'
 import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import type { Event } from '@/types'
 import type { Element } from 'bpmn-js/lib/model/Types'
-import { getCompensateEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import { getCompensateEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 import { find } from 'min-dash'
 import type ElementRegistry from 'diagram-js/lib/core/ElementRegistry'
 

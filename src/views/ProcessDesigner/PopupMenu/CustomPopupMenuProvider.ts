@@ -17,10 +17,10 @@ import { isDifferentType } from 'bpmn-js/lib/features/popup-menu/util/TypeUtil'
 import { getBusinessObject, is, isAny } from 'bpmn-js/lib/util/ModelUtil'
 import type { ReplaceOption } from 'bpmn-js/lib/features/replace/ReplaceOptions'
 import * as replaceOptions from 'bpmn-js/lib/features/replace/ReplaceOptions'
-import * as connectorOptions from '../Connector/ConnectorOptions.ts'
+import * as connectorOptions from '../Connector/ConnectorOptions'
 import { isEventSubProcess, isExpanded } from 'bpmn-js/lib/util/DiUtil'
-import type ConnectorMenuProvider from '../Connector/ConnectorMenuProvider.ts'
-import { isEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import type ConnectorMenuProvider from '../Connector/ConnectorMenuProvider'
+import { isEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 
 export default class CustomPopupMenuProvider extends ReplaceMenuProvider {
   private readonly _modeling: Modeling

@@ -11,6 +11,17 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import dts from 'vite-plugin-dts'
+import { readFileSync } from 'fs'
+
+const idsFixPlugin = () => ({
+  name: 'ids-fix',
+  transform(code, id) {
+    if (id.includes('bpmn-js-token-simulation') && id.endsWith('.js')) {
+      return code.replace(/import Ids from 'ids'/g, "import { Ids } from 'ids'")
+    }
+    return null
+  },
+})
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -18,6 +29,7 @@ export default defineConfig({
   publicDir: false,
   plugins: [
     vue(),
+    idsFixPlugin(),
     vueJsx(),
     createSvgIconsPlugin({
       iconDirs: [resolve(process.cwd(), 'src/assets/icons')],
@@ -71,40 +83,42 @@ export default defineConfig({
       formats: ['es', 'umd'],
     },
     rollupOptions: {
-      external: [
-        'vue',
-        'pinia',
-        'vue-i18n',
-        'element-plus',
-        '@element-plus/icons-vue',
-        '@vueuse/core',
-        'bpmn-js',
-        'bpmn-js-bpmnlint',
-        'bpmn-js-color-picker',
-        'bpmn-js-create-append-anything',
-        'bpmn-js-token-simulation',
-        'bpmn-auto-layout',
-        'diagram-js',
-        'diagram-js-minimap',
-        'diagram-js-grid',
-        'diagram-js-grid-bg',
-        'bpmnlint',
-        'didi',
-        'lodash-es',
-        'tiny-svg',
-        'ids',
-        'codemirror',
-        '@codemirror/autocomplete',
-        '@codemirror/commands',
-        '@codemirror/lang-javascript',
-        '@codemirror/lang-json',
-        '@codemirror/language',
-        '@codemirror/legacy-modes',
-        '@codemirror/lint',
-        '@codemirror/state',
-        '@codemirror/view',
-        '@lezer/highlight',
-      ],
+      plugins: [idsFixPlugin()],
+      external: (id: string) => {
+        const externals = [
+          'vue',
+          'pinia',
+          'vue-i18n',
+          'element-plus',
+          '@element-plus/icons-vue',
+          '@vueuse/core',
+          'bpmn-js',
+          'bpmn-js-bpmnlint',
+          'bpmn-js-color-picker',
+          'bpmn-js-create-append-anything',
+          'bpmn-auto-layout',
+          'diagram-js',
+          'diagram-js-minimap',
+          'diagram-js-grid',
+          'diagram-js-grid-bg',
+          'bpmnlint',
+          'didi',
+          'lodash-es',
+          'tiny-svg',
+          'codemirror',
+          '@codemirror/autocomplete',
+          '@codemirror/commands',
+          '@codemirror/lang-javascript',
+          '@codemirror/lang-json',
+          '@codemirror/language',
+          '@codemirror/legacy-modes',
+          '@codemirror/lint',
+          '@codemirror/state',
+          '@codemirror/view',
+          '@lezer/highlight',
+        ]
+        return externals.some((ext) => id === ext || id.startsWith(ext + '/'))
+      },
       output: {
         exports: 'named',
         globals: {
@@ -118,7 +132,6 @@ export default defineConfig({
           'bpmn-js-bpmnlint': 'BpmnJSBpmnlint',
           'bpmn-js-color-picker': 'BpmnJSColorPicker',
           'bpmn-js-create-append-anything': 'BpmnJSCreateAppendAnything',
-          'bpmn-js-token-simulation': 'BpmnJSTokenSimulation',
           'bpmn-auto-layout': 'BpmnAutoLayout',
           'diagram-js': 'DiagramJS',
           'diagram-js-minimap': 'DiagramJSMinimap',
@@ -128,7 +141,6 @@ export default defineConfig({
           didi: 'Didi',
           'lodash-es': 'LodashEs',
           'tiny-svg': 'TinySvg',
-          ids: 'Ids',
           codemirror: 'Codemirror',
           '@codemirror/autocomplete': 'CodemirrorAutocomplete',
           '@codemirror/commands': 'CodemirrorCommands',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { customRef, provide, nextTick, ref } from 'vue'
+import { customRef, provide, nextTick, ref, watch } from 'vue'
 import 'bpmn-js/dist/assets/diagram-js.css'
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
 import 'bpmn-js/dist/assets/bpmn-js.css'
@@ -29,7 +29,7 @@ import BpmnDesigner from './BpmnModeler.tsx'
 import EmptyXML from './EmptyXML'
 import type { Injector } from 'didi'
 import { saveProcess } from '@/api'
-import { getRootElement, nextId } from './utils/ElementUtil.ts'
+import { getRootElement, nextId } from './utils/ElementUtil'
 import type { ElementIssue, Issues, Linting } from 'bpmn-js-bpmnlint'
 import type Canvas from 'diagram-js/lib/core/Canvas'
 import type { Minimap } from 'diagram-js-minimap'
@@ -266,6 +266,7 @@ const exportSvg = async () => {
     window.URL.revokeObjectURL(url)
   })
 }
+
 const redo = () => {
   modeler.value?.get<CommandStack>('commandStack').redo()
 }
@@ -321,12 +322,21 @@ const modelerReady = async (bpmnModeler: BpmnModeler) => {
   // 如果有待加载的 XML（版本切换时），跳过 restart
   if (isVersionSwitch) {
     skipRestart.value = true
-    // 清空 pendingXml
     pendingXml.value = ''
   }
 
   restart()
 }
+
+watch(
+  () => props.xml,
+  (newXml) => {
+    if (newXml && modeler.value) {
+      modeler.value.importXML(newXml)
+      modeler.value.get<Canvas>('canvas')?.zoom('fit-viewport')
+    }
+  }
+)
 const validate = async () => {
   const errors = issuesList.value.filter((issue) => issue.category === 'error')
   if (errors.length) {
@@ -380,7 +390,7 @@ const switchVersion = async (version: BpmnVersion) => {
 provide('ProcessDesigner', {
   modeler: modeler,
 })
-onMounted(() => {})
+
 defineExpose({
   loadXml,
   getXml,

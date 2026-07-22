@@ -16,7 +16,7 @@ import {
 } from '@codemirror/autocomplete'
 import { keymap } from '@codemirror/view'
 import { indentWithTab } from '@codemirror/commands'
-import javascriptCompletions from '@/components/CodemirrorEditor/language/javascript/javascriptCompletions.ts'
+import javascriptCompletions from '@/components/CodemirrorEditor/language/javascript/javascriptCompletions'
 
 const dontComplete = [
   'TemplateString',

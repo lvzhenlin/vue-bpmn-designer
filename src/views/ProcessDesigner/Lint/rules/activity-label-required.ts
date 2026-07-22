@@ -1,4 +1,4 @@
-import type { ModdleElement } from 'bpmn-js/lib/model/Types.ts'
+import type { ModdleElement } from 'bpmn-js/lib/model/Types'
 import type { Reporter, RuleDefinition } from 'bpmnlint/lib/types'
 import { is } from 'bpmn-js/lib/util/ModelUtil'
 

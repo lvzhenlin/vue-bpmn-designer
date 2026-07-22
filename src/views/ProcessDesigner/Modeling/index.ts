@@ -1,4 +1,4 @@
-import CustomBpmnFactory from './CustomBpmnFactory.ts'
+import CustomBpmnFactory from './CustomBpmnFactory'
 
 const customModeling = {
   __init__: ['bpmnFactory'],

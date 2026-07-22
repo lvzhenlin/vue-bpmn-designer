@@ -1,6 +1,6 @@
 import type { ModdleElement } from 'bpmn-js/lib/model/Types'
 import type { Reporter, RuleDefinition } from 'bpmnlint/lib/types'
-import { getEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import { getEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 
 const conditionalEventRequired = (): RuleDefinition => {
   return {

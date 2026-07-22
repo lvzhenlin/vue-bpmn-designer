@@ -1,15 +1,15 @@
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { getBusinessObject, getDi, is, isAny } from 'bpmn-js/lib/util/ModelUtil'
 import type { Element, ModdleElement } from 'bpmn-js/lib/model/Types'
 import { customRef } from 'vue'
-import Ids from 'ids'
+import { Ids } from '@/utils/ids-wrapper'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import type Canvas from 'diagram-js/lib/core/Canvas'
 import {
   addExtensionElements,
   getExtensionElementsList,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
-import { isDelegateExprValid } from '@/views/ProcessDesigner/utils/ValidationUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
+import { isDelegateExprValid } from '@/views/ProcessDesigner/utils/ValidationUtil'
 import type BpmnModeler from 'bpmn-js/lib/Modeler'
 import type ElementRegistry from 'diagram-js/lib/core/ElementRegistry'
 import type GraphicsFactory from 'diagram-js/lib/core/GraphicsFactory'

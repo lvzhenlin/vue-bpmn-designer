@@ -2,11 +2,11 @@
 import {
   getExtensionElementsList,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 import { onMounted, ref } from 'vue'
 import { Delete, Plus } from '@element-plus/icons-vue'
-import { useFieldRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useFieldRef } from '@/views/ProcessDesigner/utils/ElementUtil'
+import { useBpmnContextService } from '@/hooks/useService'
 import { useFormItem } from 'element-plus'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'
 import shellSupport from '@/components/CodemirrorEditor/language/shell'

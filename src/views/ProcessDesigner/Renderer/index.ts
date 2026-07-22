@@ -1,6 +1,6 @@
-import VariableEventRenderer from './RewriteRenderer/VariableEventRenderer.ts'
+import VariableEventRenderer from './RewriteRenderer/VariableEventRenderer'
 import ConnectorIconRenderer from './RewriteRenderer/ConnectorIconRenderer'
-import ExclusiveGatewayRender from '@/views/ProcessDesigner/Renderer/RewriteRenderer/ExclusiveGatewayRender.ts'
+import ExclusiveGatewayRender from '@/views/ProcessDesigner/Renderer/RewriteRenderer/ExclusiveGatewayRender'
 
 const httpTaskRenderer = {
   __init__: [

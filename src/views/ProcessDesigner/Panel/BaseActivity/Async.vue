@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import { customRef } from 'vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import {
   addExtensionElements,
   getExtensionElement,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
 import { useFormItem } from 'element-plus'
 

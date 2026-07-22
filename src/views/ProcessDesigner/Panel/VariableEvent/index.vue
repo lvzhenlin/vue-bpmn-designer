@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { customRef } from 'vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
-import { getVariableEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import { useBpmnContextService } from '@/hooks/useService'
+import { getVariableEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 
 defineOptions({
   name: 'VariableEvent',

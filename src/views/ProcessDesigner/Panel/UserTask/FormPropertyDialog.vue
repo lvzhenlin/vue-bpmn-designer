@@ -1,7 +1,7 @@
 ﻿<script setup lang="ts">
 import { useCloned } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
-import { nextId } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { nextId } from '@/views/ProcessDesigner/utils/ElementUtil'
 import type { FormProperty } from '@/types'
 import { type FormInstance, type FormRules, useFormSize } from 'element-plus'
 

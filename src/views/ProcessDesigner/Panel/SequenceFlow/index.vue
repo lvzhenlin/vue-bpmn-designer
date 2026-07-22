@@ -2,10 +2,10 @@
 import { customRef } from 'vue'
 import type { Element } from 'bpmn-js/lib/model/Types'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import type Modeling from 'bpmn-js/lib/features/modeling/Modeling'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
-import { createElement, isConditionalSource } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { createElement, isConditionalSource } from '@/views/ProcessDesigner/utils/ElementUtil'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'
 import juelSupport from '@/components/CodemirrorEditor/language/juel'
 

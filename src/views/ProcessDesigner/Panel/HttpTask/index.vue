@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useFieldRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { useFieldRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import { useFormItem } from 'element-plus'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'
 import jsonSupport from '@/components/CodemirrorEditor/language/json'

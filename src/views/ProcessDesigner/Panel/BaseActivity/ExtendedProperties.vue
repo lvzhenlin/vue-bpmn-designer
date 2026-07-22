@@ -3,15 +3,15 @@ import { Delete, EditPen, Plus } from '@element-plus/icons-vue'
 import { onMounted, ref } from 'vue'
 import type { Properties } from '@/types'
 import PropertiesDrawer from './PropertiesDrawer.vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
-import { createElement } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { createElement } from '@/views/ProcessDesigner/utils/ElementUtil'
 import {
   addExtensionElements,
   getExtensionElement,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
+import type { Element } from 'bpmn-js/lib/model/Types'
 
 const { selectedElement, updateProperties, getService } = useBpmnContextService()
 const bpmnFactory = getService<BpmnFactory>('bpmnFactory')

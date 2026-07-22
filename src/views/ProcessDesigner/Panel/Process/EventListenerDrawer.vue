@@ -4,13 +4,13 @@ import { useCloned } from '@vueuse/core'
 import { type FormInstance, type FormItemRule, useFormSize } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import type { AnyEventListener, Event } from '@/types'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import {
   getErrorEvents,
   getMessageEvents,
   getSignalEvents,
-} from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
+} from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
+import type { Element } from 'bpmn-js/lib/model/Types'
 
 const emits = defineEmits<{
   (e: 'confirm', data: AnyEventListener): void

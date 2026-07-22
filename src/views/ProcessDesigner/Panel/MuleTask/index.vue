@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useFieldRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { useFieldRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'
 import { ref } from 'vue'
 import juelSupport from '@/components/CodemirrorEditor/language/juel'

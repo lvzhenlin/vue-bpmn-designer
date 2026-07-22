@@ -1,6 +1,6 @@
 import type EventBus from 'diagram-js/lib/core/EventBus'
-import type { Connector } from '@/types/connector.ts'
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
+import type { Connector } from '@/types/connector'
+import type { Element } from 'bpmn-js/lib/model/Types'
 import type BpmnReplace from 'bpmn-js/lib/features/replace/BpmnReplace'
 import type CommandStack from 'diagram-js/lib/command/CommandStack'
 import { getBusinessObject, isAny } from 'bpmn-js/lib/util/ModelUtil'
@@ -9,7 +9,7 @@ import {
   getExtensionElement,
   getExtensionElementsList,
   getOrCreateExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import { assign, without } from 'min-dash'
 import type Modeling from 'bpmn-js/lib/features/modeling/Modeling'

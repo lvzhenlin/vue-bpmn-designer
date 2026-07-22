@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'
 import javascriptSupport from '@/components/CodemirrorEditor/language/javascript'
 import { ref } from 'vue'

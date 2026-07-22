@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { createElement, useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { createElement, useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import { Delete, EditPen, Plus } from '@element-plus/icons-vue'
 import ParamsDrawer, { type Params } from './ParamsDrawer.vue'
 import { onMounted, ref, toRaw } from 'vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import {
   addExtensionElements,
   getExtensionElementsList,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 import { useFormItem } from 'element-plus'
 
 defineOptions({

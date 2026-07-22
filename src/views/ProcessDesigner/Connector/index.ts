@@ -1,6 +1,6 @@
 import type { ModuleDeclaration } from 'didi'
-import ConnectorMenuProvider from './ConnectorMenuProvider.ts'
-import ConnectorChooser from './ConnectorChooser.ts'
+import ConnectorMenuProvider from './ConnectorMenuProvider'
+import ConnectorChooser from './ConnectorChooser'
 
 const connectorTemplate: ModuleDeclaration = {
   __init__: ['connectorMenuProvider', 'connectorChooser'],

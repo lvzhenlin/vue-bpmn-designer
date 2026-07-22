@@ -1,12 +1,12 @@
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
+import type { Element } from 'bpmn-js/lib/model/Types'
 import { getBusinessObject, is, isAny } from 'bpmn-js/lib/util/ModelUtil'
 import { find } from 'min-dash'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import type Canvas from 'diagram-js/lib/core/Canvas'
-import { createElement, findRootElementsByType } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { createElement, findRootElementsByType } from '@/views/ProcessDesigner/utils/ElementUtil'
 import type BpmnModeler from 'bpmn-js/lib/Modeler'
-import { getExtensionElementsList } from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+import { getExtensionElementsList } from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 
 export const supportsExecutionListener = () => {
   const { selectedElement } = useBpmnContextService()

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import useCodemirror, {
   type CodemirrorOptions,
-} from '@/components/CodemirrorEditor/useCodemirror.ts'
+} from '@/components/CodemirrorEditor/useCodemirror'
 import { computed, ref } from 'vue'
 import { minimalSetup } from 'codemirror'
-import theme from './theme.ts'
+import theme from './theme'
 import { useFormSize } from 'element-plus'
 import type { Diagnostic } from '@codemirror/lint'
 import SvgIcon from '@/components/SvgIcon/index.vue'

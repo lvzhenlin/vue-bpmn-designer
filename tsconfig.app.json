@@ -1,10 +1,23 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
-  "exclude": ["src/**/__tests__/*"],
+  "include": ["env.d.ts", "src/components/**/*", "src/views/**/*", "src/stores/**/*", "src/api/**/*", "src/types/**/*", "src/utils/**/*", "src/languages/**/*", "src/styles/**/*", "src/assets/**/*"],
+  "exclude": ["src/**/__tests__/*", "src/main.ts"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": false,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client", "node", "element-plus/global"],
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "paths": {
       "@/*": ["./src/*"]
     }

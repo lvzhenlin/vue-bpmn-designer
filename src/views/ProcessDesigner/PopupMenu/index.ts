@@ -1,5 +1,5 @@
 import type { ModuleDeclaration } from 'didi'
-import CustomPopupMenuProvider from './CustomPopupMenuProvider.ts'
+import CustomPopupMenuProvider from './CustomPopupMenuProvider'
 import ConnectorModule from '../Connector'
 
 const customPopupMenu: ModuleDeclaration = {

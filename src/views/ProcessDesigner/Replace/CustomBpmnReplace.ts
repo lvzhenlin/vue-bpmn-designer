@@ -1,5 +1,5 @@
 import Replace, { type EventBus } from 'diagram-js/lib/features/replace/Replace'
-import type { ShapeLike } from 'diagram-js/lib/model/Types.ts'
+import type { ShapeLike } from 'diagram-js/lib/model/Types'
 import type Modeling from 'bpmn-js/lib/features/modeling/Modeling'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil'
@@ -7,7 +7,7 @@ import {
   getExtensionElement,
   getExtensionElementsList,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 
 export default class CustomBpmnReplace extends Replace {
   private readonly _bpmnFactory: BpmnFactory

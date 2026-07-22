@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import MultiInstance from '../MultiInstance/index.vue'
 import Document from './Document.vue'
 import Async from './Async.vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { computed } from 'vue'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
 import juelSupport from '@/components/CodemirrorEditor/language/juel'

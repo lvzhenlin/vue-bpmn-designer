@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { Delete, EditPen, Plus } from '@element-plus/icons-vue'
 import type { DataObject } from '@/types'
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
+import type { Element } from 'bpmn-js/lib/model/Types'
 import { onMounted, ref } from 'vue'
 import DataObjectDrawer from './DataObjectDrawer.vue'
-import { removeEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import { removeEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import {
   addExtensionElements,
   getExtensionElement,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 
 const { updateProperties, selectedElement, getService } = useBpmnContextService()

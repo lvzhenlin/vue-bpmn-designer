@@ -1,5 +1,5 @@
 import type { ModuleDeclaration } from 'didi'
-import CustomContextPadProvider from '@/views/ProcessDesigner/ContextPad/CustomContextPadProvider.ts'
+import CustomContextPadProvider from '@/views/ProcessDesigner/ContextPad/CustomContextPadProvider'
 
 const customContextPad: ModuleDeclaration = {
   // __init__: ['customContextPadProvider'],

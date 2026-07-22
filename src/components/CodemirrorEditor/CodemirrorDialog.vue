@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import useCodemirror from '@/components/CodemirrorEditor/useCodemirror.ts'
+import useCodemirror from '@/components/CodemirrorEditor/useCodemirror'
 import { basicSetup } from 'codemirror'
-import baseTheme from '@/components/CodemirrorEditor/theme.ts'
+import baseTheme from '@/components/CodemirrorEditor/theme'
 import type { Extension } from '@codemirror/state'
 
 const {

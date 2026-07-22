@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useCloned } from '@vueuse/core'
 import { type FormInstance, type FormRules, useFormSize } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
-import { nextId } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { nextId } from '@/views/ProcessDesigner/utils/ElementUtil'
 import type { EscalationEvent } from '@/types'
 import { Refresh } from '@element-plus/icons-vue'
 

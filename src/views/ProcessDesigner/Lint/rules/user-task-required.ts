@@ -1,5 +1,5 @@
 import type { Reporter, RuleDefinition } from 'bpmnlint/lib/types'
-import type { ModdleElement } from 'bpmn-js/lib/model/Types.ts'
+import type { ModdleElement } from 'bpmn-js/lib/model/Types'
 import { is } from 'bpmn-js/lib/util/ModelUtil'
 
 const userTaskRequired = (): RuleDefinition => {

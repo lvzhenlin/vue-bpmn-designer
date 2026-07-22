@@ -45,10 +45,10 @@ import type Canvas from 'diagram-js/lib/core/Canvas'
 import { debounce, find } from 'min-dash'
 import type { RootLike } from 'diagram-js/lib/model/Types'
 import type { Injector } from 'didi'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil'
-import { isEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
-import { isConditionalSource } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { isEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
+import { isConditionalSource } from '@/views/ProcessDesigner/utils/ElementUtil'
 
 defineOptions({
   name: 'BpmnPanel',

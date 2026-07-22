@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { customRef, onMounted, ref, toRaw } from 'vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { Delete, EditPen, Plus } from '@element-plus/icons-vue'
 import VariableAggregationDrawer from './VariableAggregationDrawer.vue'
-import { getLoopCharacteristics } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { getLoopCharacteristics } from '@/views/ProcessDesigner/utils/ElementUtil'
 import type { VariableAggregation } from '@/types'
 import { isDelegateExpression } from '@/views/ProcessDesigner/utils'
 import {
@@ -11,14 +11,14 @@ import {
   getExtensionElement,
   getExtensionElementsList,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
-import type { Element } from 'bpmn-js/lib/model/Types.ts'
+import type { Element } from 'bpmn-js/lib/model/Types'
 import { useFormItem } from 'element-plus'
 import type EventBus from 'diagram-js/lib/core/EventBus'
 import juelSupport from '@/components/CodemirrorEditor/language/juel'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'
-import { isExpressionValid } from '@/views/ProcessDesigner/utils/ValidationUtil.ts'
+import { isExpressionValid } from '@/views/ProcessDesigner/utils/ValidationUtil'
 
 defineOptions({
   name: 'MultiInstance',

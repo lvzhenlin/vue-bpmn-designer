@@ -1,7 +1,7 @@
 ﻿<script setup lang="ts">
 import type { FormProperty } from '@/types'
-import { createElement, useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { createElement, useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil'
+import { useBpmnContextService } from '@/hooks/useService'
 import { is } from 'bpmn-js/lib/util/ModelUtil'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import type { Element } from 'bpmn-js/lib/model/Types'
@@ -11,7 +11,7 @@ import {
   addExtensionElements,
   getExtensionElementsList,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 
 const { selectedElement, getService, updateProperties } = useBpmnContextService()
 const bpmnFactory = getService<BpmnFactory>('bpmnFactory')

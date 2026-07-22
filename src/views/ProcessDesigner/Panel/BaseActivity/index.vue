@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil.ts'
+import { useCustomRef } from '@/views/ProcessDesigner/utils/ElementUtil'
 import ExecuteListener from './ExecuteListener.vue'
 import ExtendedAttribute from './ExtendedProperties.vue'
 import { computed, ref } from 'vue'
-import { supportsExecutionListener } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
-import { isIdValid } from '@/views/ProcessDesigner/utils/ValidationUtil.ts'
+import { supportsExecutionListener } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
+import { isIdValid } from '@/views/ProcessDesigner/utils/ValidationUtil'
 import { ElMessage } from 'element-plus'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil'
 
 defineOptions({

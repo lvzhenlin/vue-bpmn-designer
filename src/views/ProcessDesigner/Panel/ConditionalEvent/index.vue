@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { customRef } from 'vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
-import { getConditionalEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import { useBpmnContextService } from '@/hooks/useService'
+import { getConditionalEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import juelSupport from '@/components/CodemirrorEditor/language/juel'
 import Codemirror from '@/components/CodemirrorEditor/index.vue'

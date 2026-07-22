@@ -2,7 +2,7 @@
 
 ## 1. 技术栈
 
-Vue3(SFC `<script setup lang="ts">`), Vite6, TS, Pinia, Vue Router, Element Plus, bpmn-js(含diagram-js等), SCSS.
+Vue3(SFC `<script setup lang="ts">`), Vite8, TS, Pinia, Vue Router, Element Plus, bpmn-js(含diagram-js等), SCSS.
 **工具**: pnpm(禁用npm/yarn), unplugin-auto-import, unplugin-vue-components.
 
 ## 2. 核心约束

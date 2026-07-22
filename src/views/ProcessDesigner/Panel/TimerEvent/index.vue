@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { customRef } from 'vue'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
-import { getTimerEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import { getTimerEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 
 defineOptions({
   name: 'TimerEvent',

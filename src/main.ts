@@ -4,12 +4,8 @@ import I18n from '@/languages'
 import App from './App.vue'
 import '@/styles/index.scss'
 import 'virtual:svg-icons-register'
-import 'element-plus/theme-chalk/dark/css-vars.css'
-import 'element-plus/theme-chalk/el-message-box.css'
-import 'element-plus/theme-chalk/el-overlay.css'
 import 'element-plus/dist/index.css'
 import { Icon } from '@iconify/vue'
-import DisableDevtool from 'disable-devtool'
 
 const app = createApp(App)
 app.use(pinia).component('Iconify', Icon).use(I18n).mount('#app')

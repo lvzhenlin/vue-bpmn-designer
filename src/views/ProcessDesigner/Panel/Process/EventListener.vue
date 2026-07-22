@@ -2,13 +2,13 @@
 import { Delete, EditPen, Plus } from '@element-plus/icons-vue'
 import { onMounted, ref } from 'vue'
 import type { AnyEventListener } from '@/types'
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import type BpmnFactory from 'bpmn-js/lib/features/modeling/BpmnFactory'
 import {
   addExtensionElements,
   getExtensionElementsList,
   removeExtensionElements,
-} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil.ts'
+} from '@/views/ProcessDesigner/utils/ExtensionElementsUtil'
 import EventListenerDrawer from '@/views/ProcessDesigner/Panel/Process/EventListenerDrawer.vue'
 
 const { getService, updateProperties, selectedElement } = useBpmnContextService()

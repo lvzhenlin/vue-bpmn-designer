@@ -1,4 +1,4 @@
-import { getEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil.ts'
+import { getEventDefinition } from '@/views/ProcessDesigner/utils/EventDefinitionUtil'
 import type { Reporter, RuleDefinition } from 'bpmnlint/lib/types'
 import type { ModdleElement } from 'bpmn-js/lib/model/Types'
 

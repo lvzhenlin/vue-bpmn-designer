@@ -1,4 +1,4 @@
-import ParseCompleteModule from './ParseCompleteModule.ts'
+import ParseCompleteModule from './ParseCompleteModule'
 
 const elementParse = {
   __init__: ['parseCompleteModule'],

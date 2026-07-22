@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useBpmnContextService } from '@/hooks/useService.ts'
+import { useBpmnContextService } from '@/hooks/useService'
 import { isHorizontal } from 'bpmn-js/lib/util/DiUtil'
 import type EventBus from 'diagram-js/lib/core/EventBus'
 

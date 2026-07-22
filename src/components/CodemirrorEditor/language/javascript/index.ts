@@ -13,7 +13,7 @@ import {
   type CompletionResult,
   ifNotIn,
 } from '@codemirror/autocomplete'
-import javascriptCompletions from './javascriptCompletions.ts'
+import javascriptCompletions from './javascriptCompletions'
 import { keymap } from '@codemirror/view'
 import { indentWithTab } from '@codemirror/commands'
 
