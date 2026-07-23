@@ -51,20 +51,24 @@ const unselectedOptions = computed(() => {
 })
 
 const selectedOptions = computed(() => {
-  return selectedValues.value.map((val) => {
-    const option = options.value.find((o) => formatOption(o) === val)
-    if (option) {
-      return option
-    }
-    return parseOption(val)
-  }).filter((o): o is Option => !!o)
+  return selectedValues.value
+    .map((val) => {
+      const option = options.value.find((o) => formatOption(o) === val)
+      if (option) {
+        return option
+      }
+      return parseOption(val)
+    })
+    .filter((o): o is Option => !!o)
 })
 
 const selectedIds = computed(() => {
-  return selectedValues.value.map((val) => {
-    const parsed = parseOption(val)
-    return parsed?.id || ''
-  }).filter(Boolean)
+  return selectedValues.value
+    .map((val) => {
+      const parsed = parseOption(val)
+      return parsed?.id || ''
+    })
+    .filter(Boolean)
 })
 
 const fetchOptions = async () => {
@@ -72,10 +76,21 @@ const fetchOptions = async () => {
 
   loading.value = true
   try {
-    const response: PageResponse = props.apiType === 'user'
-      ? await getUserList({ page: currentPage.value, pageSize: pageSize.value, keyword: keyword.value, excludeIds: selectedIds.value })
-      : await getGroupList({ page: currentPage.value, pageSize: pageSize.value, keyword: keyword.value, excludeIds: selectedIds.value })
-    if (response.code === 200) {
+    const response: PageResponse =
+      props.apiType === 'user'
+        ? await getUserList({
+            page: currentPage.value,
+            pageSize: pageSize.value,
+            keyword: keyword.value,
+            excludeIds: selectedIds.value,
+          })
+        : await getGroupList({
+            page: currentPage.value,
+            pageSize: pageSize.value,
+            keyword: keyword.value,
+            excludeIds: selectedIds.value,
+          })
+    if (String(response.code) === '200' || String(response.code) === '0') {
       options.value = response.data
       total.value = response.total
     }
@@ -121,7 +136,7 @@ watch(
         fetchOptions()
       }
     }
-  }
+  },
 )
 
 const initSelected = () => {
@@ -229,9 +244,7 @@ const hasValue = computed(() => {
         {{ selectedLabel }}
       </span>
 
-      <button type="button" class="select-modal-btn" @click="handleOpen">
-        选择
-      </button>
+      <button type="button" class="select-modal-btn" @click="handleOpen">选择</button>
     </div>
 
     <div v-if="visibleLocal" class="select-modal-mask">
@@ -252,9 +265,7 @@ const hasValue = computed(() => {
             </div>
             <div class="transfer-container">
               <div class="transfer-panel">
-                <div class="transfer-panel-header">
-                  待选<!--（{{ total }}）-->
-                </div>
+                <div class="transfer-panel-header">待选<!--（{{ total }}）--></div>
                 <div class="transfer-panel-body">
                   <label
                     v-for="option in unselectedOptions"
@@ -276,9 +287,7 @@ const hasValue = computed(() => {
                     />
                     {{ formatOption(option) }}
                   </label>
-                  <div v-if="unselectedOptions.length === 0" class="transfer-empty">
-                    暂无数据
-                  </div>
+                  <div v-if="unselectedOptions.length === 0" class="transfer-empty">暂无数据</div>
                 </div>
                 <div class="transfer-panel-footer">
                   <el-pagination
@@ -324,25 +333,13 @@ const hasValue = computed(() => {
               </div>
 
               <div class="transfer-panel">
-                <div class="transfer-panel-header">
-                  已选（{{ selectedOptions.length }}）
-                </div>
+                <div class="transfer-panel-header">已选（{{ selectedOptions.length }}）</div>
                 <div class="transfer-panel-body">
-                  <label
-                    v-for="option in selectedOptions"
-                    :key="option.id"
-                    class="transfer-option"
-                  >
-                    <input
-                      type="checkbox"
-                      :value="formatOption(option)"
-                      v-model="rightSelected"
-                    />
+                  <label v-for="option in selectedOptions" :key="option.id" class="transfer-option">
+                    <input type="checkbox" :value="formatOption(option)" v-model="rightSelected" />
                     {{ formatOption(option) }}
                   </label>
-                  <div v-if="selectedOptions.length === 0" class="transfer-empty">
-                    暂无数据
-                  </div>
+                  <div v-if="selectedOptions.length === 0" class="transfer-empty">暂无数据</div>
                 </div>
               </div>
             </div>
@@ -351,7 +348,9 @@ const hasValue = computed(() => {
         <div class="select-modal-footer">
           <!-- <button type="button" class="select-modal-btn-cancel" @click="handleClear">清除</button> -->
           <button type="button" class="select-modal-btn-cancel" @click="handleClose">取消</button>
-          <button type="button" class="select-modal-btn-confirm" @click="handleConfirm">确定</button>
+          <button type="button" class="select-modal-btn-confirm" @click="handleConfirm">
+            确定
+          </button>
         </div>
       </div>
     </div>
