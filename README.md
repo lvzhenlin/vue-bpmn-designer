@@ -96,7 +96,9 @@ codemirror@^6.0.2 \
 @lezer/highlight@^1.2.3
 ```
 
-> **已内置打包（无需目标项目安装）**：`@iconify/vue`、`bpmn-js-token-simulation`、`bpmn-js-differ`、`ids`、`min-dash` 已打进产物。其中 `ids` 升级到 `3.x` 后通过 `idsFixPlugin` 将 `import Ids from 'ids'` 改写为命名导入以兼容 `bpmn-js-token-simulation`。
+> **已内置打包（无需目标项目安装）**：`@iconify/vue`、`bpmn-js-token-simulation`、`bpmn-js-differ`、`ids`、`min-dash` 已打进产物。
+
+> **补丁说明**：`ids@3.0.2` 包只提供命名导出 `export { Ids }`，但 `bpmn-js-token-simulation` 使用了默认导入 `import Ids from 'ids'`。项目通过 [patches/ids@3.0.2.patch](./patches/ids@3.0.2.patch) 添加了 `export default Ids`，确保两种导入方式都能正常工作。执行 `pnpm install` 时补丁会自动应用。
 
 ***
 
@@ -185,40 +187,34 @@ setApiConfig({
 **API 类型定义：**
 
 ```typescript
-interface ApiConfig {
-  saveProcess?: (params: SaveProcessRequest) => Promise<SaveProcessResponse>
-  getUserList?: (params: PageParams) => Promise<PageResponse>
-  getGroupList?: (params: PageParams) => Promise<PageResponse>
+export interface Option {
+  id: string
+  name: string
 }
 
-interface SaveProcessRequest {
+export interface ProcessRequest {
   xmlContent: string
   processName?: string
 }
 
-interface SaveProcessResponse {
+export interface ProcessResponse {
   code: number
-  message: string
-  data?: { id: string; processName: string }
+  msg: string
+  data?: Record<string, any>
 }
 
-interface PageParams {
+export interface PageRequest {
   page: number
   pageSize: number
   keyword?: string
   excludeIds?: string[]
 }
 
-interface PageResponse {
+export interface PageResponse {
   code: number
+  msg: string
   data: Option[]
   total: number
-  message?: string
-}
-
-interface Option {
-  name: string
-  id: string
 }
 ```
 
@@ -290,20 +286,29 @@ onMounted(() => {
 
   const route = useRoute()
   const processXml = ref('')
+  const currentId = ref<string | undefined>()
 
   onMounted(() => {
     loadResource()
   })
 
   watch(
-    () => route.query?.id,
+    () => route.fullPath,
     () => {
-      loadResource()
+      // 当组件被keep-alive缓存时，即使切换到其他页面，组件仍然存在于内存中，watch会继续触发。如果其他页面的路由也有id参数，会出现误加载风险。
+      if (route.path === '/omc/workflow-designer') {
+        // 监听 route.fullPath ，只有当前路由是 workflow-designer 页面时才处理
+        const newId = route.query?.id as string
+        if (newId && newId !== currentId.value) {
+          loadResource()
+        }
+      }
     }
   )
 
   const loadResource = async () => {
     const processDefinitionId = route.query?.id as string
+    currentId.value = processDefinitionId
     if (!processDefinitionId) {
       processXml.value = generateDefaultXml()
       return
@@ -375,9 +380,9 @@ import type {
   BpmnVersion,          // 'flowable' | 'activiti'
   LanguageType,         // 'zh-CN' | 'en-US'
   ApiConfig,            // API 配置类型
-  SaveProcessRequest,   // 保存请求类型
-  SaveProcessResponse,  // 保存响应类型
-  PageParams,           // 分页参数类型
+  ProcessRequest,       // 保存流程请求类型
+  ProcessResponse,      // 保存流程响应类型
+  PageRequest,          // 分页参数类型
   PageResponse,         // 分页响应类型
 } from '@tiancom/vue-bpmn-designer'
 ```
@@ -389,7 +394,8 @@ import type {
 ```bash
 # 克隆项目
 # git clone https://github.com/tsai996/vue-bpmn-designer.git
-git clone https://github.com/lvzhenlin/vue-bpmn-designer.git
+# git clone https://github.com/lvzhenlin/vue-bpmn-designer.git
+git clone http://192.168.2.220/project/hsbank/vue-bpmn-designer.git
 
 # 进入项目目录
 cd vue-bpmn-designer

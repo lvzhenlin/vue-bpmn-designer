@@ -1,24 +1,40 @@
-export interface SaveProcessRequest {
+export interface Option {
+  id: string
+  name: string
+}
+
+export interface ProcessRequest {
   xmlContent: string
   processName?: string
 }
 
-export interface SaveProcessResponse {
+export interface ProcessResponse {
   code: number
-  message: string
-  data?: {
-    id: string
-    processName: string
-  }
+  msg: string
+  data?: Record<string, any>
 }
 
-export const saveProcess = async (params: SaveProcessRequest): Promise<SaveProcessResponse> => {
+export interface PageRequest {
+  page: number
+  pageSize: number
+  keyword?: string
+  excludeIds?: string[]
+}
+
+export interface PageResponse {
+  code: number
+  msg: string
+  data: Option[]
+  total: number
+}
+
+export const saveProcess = async (params: ProcessRequest): Promise<ProcessResponse> => {
   console.log('saveProcess >>', params)
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         code: 200,
-        message: '保存成功',
+        msg: '保存成功',
         data: {
           id: 'proc-' + Date.now(),
           processName: params.processName || '未命名流程',
@@ -28,26 +44,7 @@ export const saveProcess = async (params: SaveProcessRequest): Promise<SaveProce
   })
 }
 
-export interface Option {
-  name: string
-  id: string
-}
-
-export interface PageResponse {
-  code: number
-  data: Option[]
-  total: number
-  message?: string
-}
-
-export interface PageParams {
-  page: number
-  pageSize: number
-  keyword?: string
-  excludeIds?: string[]
-}
-
-export const getUserList = async (params: PageParams): Promise<PageResponse> => {
+export const getUserList = async (params: PageRequest): Promise<PageResponse> => {
   const total = 20000
   const { page, pageSize } = params
   const start = (page - 1) * pageSize
@@ -80,12 +77,12 @@ export const getUserList = async (params: PageParams): Promise<PageResponse> => 
   console.log('getUserList >>', params)
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({ code: 200, data: mockData, total })
+      resolve({ code: 200, msg: '操作成功', data: mockData, total })
     }, 200)
   })
 }
 
-export const getGroupList = async (params: PageParams): Promise<PageResponse> => {
+export const getGroupList = async (params: PageRequest): Promise<PageResponse> => {
   const total = 2000
   const { page, pageSize } = params
   const start = (page - 1) * pageSize
@@ -116,7 +113,7 @@ export const getGroupList = async (params: PageParams): Promise<PageResponse> =>
   console.log('getGroupList >>', params)
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({ code: 200, data: mockData, total })
+      resolve({ code: 200, msg: '操作成功', data: mockData, total })
     }, 200)
   })
 }
