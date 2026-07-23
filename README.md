@@ -228,7 +228,7 @@ interface Option {
 
 ### 基础用法
 
-```vue
+```typescript
 <script setup lang="ts">
 import { ref } from 'vue'
 import { ProcessDesigner } from '@tiancom/vue-bpmn-designer'
@@ -249,7 +249,7 @@ const processId = ref('process-1')
 
 ### 获取流程 XML
 
-```vue
+```typescript
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { ProcessDesigner } from '@tiancom/vue-bpmn-designer'
@@ -270,7 +270,85 @@ onMounted(() => {
 </template>
 ```
 
-***
+### 云平台集成案例
+
+- tc-cpas-web/src/views/omc/workflow-mgmt/pages/modules/workflow-designer.vue
+
+```typescript
+<template>
+  <ProcessDesigner v-if="processXml" :xml="processXml" />
+</template>
+
+<script setup lang="ts">
+  import { ref, onMounted, watch } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { HttpStatus } from '@/utils/http/helper'
+  import { ProcessDesigner } from '@tiancom/vue-bpmn-designer'
+  import { fetchProcessResource } from '../../api'
+
+  defineOptions({ name: 'WorkflowDesigner' })
+
+  const route = useRoute()
+  const processXml = ref('')
+
+  onMounted(() => {
+    loadResource()
+  })
+
+  watch(
+    () => route.query?.id,
+    () => {
+      loadResource()
+    }
+  )
+
+  const loadResource = async () => {
+    const processDefinitionId = route.query?.id as string
+    if (!processDefinitionId) {
+      processXml.value = generateDefaultXml()
+      return
+    }
+    try {
+      const res = await fetchProcessResource({ processDefinitionId })
+      console.log('加载流程资源成功:', res)
+      if (HttpStatus.isFailed(res, true)) {
+        return
+      }
+      console.log('流程XML:', res.data)
+      processXml.value = res.data as string
+    } catch (error) {
+      console.error('加载流程资源失败:', error)
+      processXml.value = generateDefaultXml()
+    }
+  }
+
+  const generateDefaultXml = (): string => {
+    const processId = `Process_${randomLetters(8)}`
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="${processId}" name="新建流程" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="${processId}">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="232" y="232" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>`
+  }
+
+  const randomLetters = (length: number): string => {
+    const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
+    let result = ''
+    for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    return result
+  }
+</script>
+```
 
 ## 📝 Props 说明
 
