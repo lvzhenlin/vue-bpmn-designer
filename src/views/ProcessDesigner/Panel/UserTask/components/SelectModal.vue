@@ -47,7 +47,8 @@ const parseOption = (val: string): Option | null => {
 }
 
 const unselectedOptions = computed(() => {
-  return options.value.filter((opt) => !selectedValues.value.includes(formatOption(opt)))
+  const selectedIdSet = new Set(selectedIds.value)
+  return options.value.filter((opt) => !selectedIdSet.has(String(opt.id)))
 })
 
 const selectedOptions = computed(() => {
@@ -66,7 +67,7 @@ const selectedIds = computed(() => {
   return selectedValues.value
     .map((val) => {
       const parsed = parseOption(val)
-      return parsed?.id || ''
+      return parsed?.id != null ? String(parsed.id) : ''
     })
     .filter(Boolean)
 })
