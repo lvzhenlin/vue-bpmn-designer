@@ -26,7 +26,7 @@ const options = ref<Option[]>([])
 const loading = ref(false)
 const total = ref(0)
 const currentPage = ref(1)
-const pageSize = ref(10)
+const pageSize = ref(50)
 const keyword = ref('')
 
 const leftSelected = ref<string[]>([])
@@ -243,7 +243,6 @@ const hasValue = computed(() => {
       <span v-if="hasValue" class="select-modal-label">
         {{ selectedLabel }}
       </span>
-
       <button type="button" class="select-modal-btn" @click="handleOpen">选择</button>
     </div>
 
@@ -261,7 +260,7 @@ const hasValue = computed(() => {
                 @keyup="handleKeyup"
                 class="transfer-search-input"
               />
-              <button type="button" class="transfer-search-btn" @click="handleSearch">查询</button>
+              <el-button type="primary" @click="handleSearch"> 查询 </el-button>
             </div>
             <div class="transfer-container">
               <div class="transfer-panel">
@@ -293,12 +292,11 @@ const hasValue = computed(() => {
                   <el-pagination
                     v-model:current-page="currentPage"
                     v-model:page-size="pageSize"
-                    :page-sizes="[10, 20, 50, 100, 200]"
-                    :pager-count="3"
                     :total="total || 0"
+                    :hide-on-single-page="true"
                     background
                     size="small"
-                    layout="total, sizes, prev, pager, next, jumper"
+                    layout="total, prev, pager, next, jumper"
                     @size-change="handleSizeChange"
                     @current-change="handlePageChange"
                   />
@@ -346,11 +344,9 @@ const hasValue = computed(() => {
           </template>
         </div>
         <div class="select-modal-footer">
-          <!-- <button type="button" class="select-modal-btn-cancel" @click="handleClear">清除</button> -->
-          <button type="button" class="select-modal-btn-cancel" @click="handleClose">取消</button>
-          <button type="button" class="select-modal-btn-confirm" @click="handleConfirm">
-            确定
-          </button>
+          <!-- <el-button type="info" @click="handleClear"> 清除 </el-button>-->
+          <el-button @click="handleClose"> 取消 </el-button>
+          <el-button type="primary" @click="handleConfirm"> 确定 </el-button>
         </div>
       </div>
     </div>
@@ -359,8 +355,7 @@ const hasValue = computed(() => {
 
 <style scoped lang="scss">
 .select-modal-container {
-  width: 100%;
-  max-width: 316px;
+  width: 316px;
 }
 
 .select-modal-input {
@@ -427,7 +422,7 @@ const hasValue = computed(() => {
 }
 
 .select-modal-header {
-  padding: 16px;
+  padding: 8px 16px;
   border-bottom: 1px solid #eee;
   font-weight: bold;
 }
@@ -435,7 +430,6 @@ const hasValue = computed(() => {
 .select-modal-body {
   flex: 1;
   padding: 16px;
-  overflow-y: auto;
 }
 
 .select-modal-loading {
@@ -492,21 +486,6 @@ const hasValue = computed(() => {
   }
 }
 
-.transfer-search-btn {
-  height: 32px;
-  padding: 0 20px;
-  border: none;
-  border-radius: 4px;
-  background: #409eff;
-  color: #fff;
-  cursor: pointer;
-  font-size: 14px;
-
-  &:hover {
-    background: #66b1ff;
-  }
-}
-
 .transfer-panel-body {
   flex: 1;
   padding: 8px;
@@ -514,7 +493,7 @@ const hasValue = computed(() => {
 }
 
 .transfer-panel-footer {
-  padding: 2px 12px;
+  padding: 0 12px;
   border-top: 1px solid #dcdfe6;
   background: #fafafa;
 }
@@ -582,28 +561,10 @@ const hasValue = computed(() => {
 }
 
 .select-modal-footer {
-  padding: 16px;
+  padding: 8px 16px;
   border-top: 1px solid #eee;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-}
-
-.select-modal-btn-cancel {
-  padding: 8px 16px;
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  background: #fff;
-  color: #666;
-  cursor: pointer;
-}
-
-.select-modal-btn-confirm {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  background: #409eff;
-  color: #fff;
-  cursor: pointer;
 }
 </style>
