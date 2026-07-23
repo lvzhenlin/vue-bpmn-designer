@@ -552,6 +552,7 @@ defineExpose({
           <bpmn-designer
             ref="bpmnDesignerRef"
             :version="currentVersion"
+            :initial-xml="props.xml"
             :pending-xml="pendingXml"
             @modeler-ready="modelerReady"
           />
