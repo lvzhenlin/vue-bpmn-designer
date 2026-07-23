@@ -11,7 +11,6 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import dts from 'vite-plugin-dts'
-import { readFileSync } from 'fs'
 
 const idsFixPlugin = () => ({
   name: 'ids-fix',
@@ -83,7 +82,6 @@ export default defineConfig({
       formats: ['es', 'umd'],
     },
     rollupOptions: {
-      plugins: [idsFixPlugin()],
       external: (id: string) => {
         const externals = [
           'vue',

@@ -4,8 +4,10 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  ids: 2.0.0
+patchedDependencies:
+  ids@3.0.2:
+    hash: cdohhjlbddz6juajwazcqtbspq
+    path: patches/ids@3.0.2.patch
 
 importers:
 
@@ -97,7 +99,7 @@ importers:
         version: 2.14.3(vue@3.5.40(typescript@6.0.3))
       ids:
         specifier: 3.0.2
-        version: 3.0.2
+        version: 3.0.2(patch_hash=cdohhjlbddz6juajwazcqtbspq)
       lodash-es:
         specifier: ^4.18.1
         version: 4.18.1
@@ -1661,10 +1663,6 @@ packages:
 
   htmlparser2@3.10.1:
     resolution: {integrity: sha512-IgieNijUMbkDovyoKObU1DUhm1iwNYE/fuifEoEHfd1oZKZDaONBSkal7Y01shxsM49R4XaMdGez3WnF9UfiCQ==}
-
-  ids@2.0.0:
-    resolution: {integrity: sha512-yFlGKT7MqglHjFoxVYyfsIYyyGSYKiLuY32gh4XC/3TFVtFw6WT3Dg9RKm+qpvGIqLd7QoQvKXorfkHliXRDjg==}
-    engines: {node: '>= 16'}
 
   ids@3.0.2:
     resolution: {integrity: sha512-t6YJP4mdC+GHF96Nbis/4FEANhP/8VWmYMvUuYpXvSdrhg5hpIVbq2XZlOA3UWTbtdwPCi0q7jEXOdHkAnqOnw==}
@@ -3972,7 +3970,7 @@ snapshots:
       bpmn-moddle: 10.0.0
       diagram-js: 15.22.0
       diagram-js-direct-editing: 3.5.1(diagram-js@15.22.0)
-      ids: 2.0.0
+      ids: 3.0.2(patch_hash=cdohhjlbddz6juajwazcqtbspq)
       inherits-browser: 0.1.0
       min-dash: 5.1.0
       min-dom: 5.3.0
@@ -4770,9 +4768,7 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
-  ids@2.0.0: {}
-
-  ids@3.0.2: {}
+  ids@3.0.2(patch_hash=cdohhjlbddz6juajwazcqtbspq): {}
 
   ignore@5.3.2: {}
 

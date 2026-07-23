@@ -1,0 +1,9 @@
+diff --git a/dist/index.js b/dist/index.js
+index 3212c8d6b0b08082f3361f143c2ba3718233d566..72820bfba021c323daf25f35cf884d0e12b5c8b1 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -174,3 +174,4 @@ Ids.prototype.clear = function() {
+ };
+ 
+ export { Ids };
++export default Ids;
