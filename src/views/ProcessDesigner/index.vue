@@ -209,14 +209,14 @@ const saveXml = async () => {
   isSaving.value = true
   const processName = getProcessName(xml)
   try {
-    const response = await saveProcess({
+    const res = await saveProcess({
       xmlContent: xml,
       processName,
     })
-    if (response.code === 200) {
-      ElMessage.success(response.message)
+    if (String(res.code) === '200' || String(res.code) === '0') {
+      ElMessage.success(res.msg)
     } else {
-      ElMessage.error(response.message || '保存失败')
+      ElMessage.error(res.msg || '保存失败')
     }
   } catch (error) {
     ElMessage.error('保存失败，请稍后重试')
