@@ -280,6 +280,60 @@ const layout = async () => {
     modeler.value?.importXML(diagramWithLayoutXML)
   }
 }
+/**
+ * 根据 props.id / props.name 重写 XML 中的 process 标识
+ * 当外部传入的 xml 包含原始 id/name，但 props 中指定了新的值时（如复制场景），
+ * 需要将 XML 中的 process id、name、以及相关引用替换为新值
+ */
+const resolveXml = (): string => {
+  if (!props.xml) return ''
+
+  let xml = props.xml
+  const newId = props.id
+  const newName = props.name
+
+  // 提取 XML 中原始 process id
+  const idMatch = xml.match(/<(\w+:)?process\s[^>]*?\bid=(["'])([^"']+)\2/)
+  const originalId = idMatch ? idMatch[3] : ''
+
+  // 提取 XML 中原始 process name
+  const nameMatch = xml.match(/<(\w+:)?process\s[^>]*?\bname=(["'])([^"']+)\2/)
+  const originalName = nameMatch ? nameMatch[3] : ''
+
+  const needChangeId = newId && newId !== originalId
+  const needChangeName = newName && newName !== originalName
+
+  if (!needChangeId && !needChangeName) return xml
+
+  // 替换 process id
+  if (needChangeId) {
+    xml = xml.replace(
+      new RegExp(`(<(\\w+:)?process\\s[^>]*?\\bid=)(["'])${originalId}\\3`),
+      `$1$3${newId}$3`,
+    )
+    // 替换所有 bpmnElement 中对旧 process id 的引用
+    xml = xml.replace(
+      new RegExp(`bpmnElement=(["'])${originalId}\\1`, 'g'),
+      `bpmnElement=$1${newId}$1`,
+    )
+    // 替换 flowElementRef 等对 process id 的引用
+    xml = xml.replace(
+      new RegExp(`flowElementRef=(["'])${originalId}\\1`, 'g'),
+      `flowElementRef=$1${newId}$1`,
+    )
+  }
+
+  // 替换 process name（仅 process 元素上的 name 属性）
+  if (needChangeName) {
+    xml = xml.replace(
+      new RegExp(`(<(\\w+:)?process\\s[^>]*?\\bname=)(["'])[^"']+\\3`),
+      `$1$3${newName}$3`,
+    )
+  }
+
+  return xml
+}
+
 const restart = () => {
   // 如果 skipRestart 为 true（版本切换时），不执行 restart
   if (skipRestart.value) {
@@ -290,7 +344,8 @@ const restart = () => {
 
   modeler.value?.get<CommandStack>('commandStack').clear()
   const xml = EmptyXML(props.id || nextId('Process_'), props.name || '新建流程')
-  modeler.value?.importXML(props.xml || xml)
+  const resolvedXml = resolveXml() || props.xml || xml
+  modeler.value?.importXML(resolvedXml)
   modeler.value?.get<Canvas>('canvas')?.zoom('fit-viewport')
 }
 const loadXml = (xml: string) => {
@@ -329,12 +384,15 @@ const modelerReady = async (bpmnModeler: BpmnModeler) => {
 }
 
 watch(
-  () => props.xml,
-  (newXml) => {
-    if (newXml && modeler.value) {
-      modeler.value.importXML(newXml)
-      modeler.value.get<Canvas>('canvas')?.zoom('fit-viewport')
-    }
+  () => `${props.xml}||${props.id}||${props.name}`,
+  () => {
+    if (!modeler.value) return
+    // props.xml、props.id、props.name 任一变化时，重新解析 XML 并导入
+    // resolveXml 负责根据 props.id / props.name 重写 XML 中的 process 标识
+    // 当 xml 为空时（新建模式），使用 EmptyXML 生成默认画布
+    const resolvedXml = resolveXml() || props.xml || EmptyXML(props.id || nextId('Process_'), props.name || '新建流程')
+    modeler.value.importXML(resolvedXml)
+    modeler.value.get<Canvas>('canvas')?.zoom('fit-viewport')
   }
 )
 const validate = async () => {
