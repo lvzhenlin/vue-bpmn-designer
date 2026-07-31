@@ -169,15 +169,15 @@ import { setApiConfig } from '@tiancom/vue-bpmn-designer'
 import axios from 'axios'
 
 setApiConfig({
-  saveProcess: async (params) => {
+  saveProcess: async (params: ProcessRequest) => {
     const response = await axios.post('/api/process/save', params)
     return response.data
   },
-  getUserList: async (params) => {
+  getUserList: async (params: PageRequest) => {
     const response = await axios.get('/api/users', { params })
     return response.data
   },
-  getGroupList: async (params) => {
+  getGroupList: async (params: PageRequest) => {
     const response = await axios.get('/api/groups', { params })
     return response.data
   },
@@ -272,20 +272,30 @@ onMounted(() => {
 
 ```typescript
 <template>
-  <ProcessDesigner v-if="processXml" :xml="processXml" />
+  <ProcessDesigner :id="processKey" :name="processName" :xml="processXml" />
 </template>
 
 <script setup lang="ts">
   import { ref, onMounted, watch } from 'vue'
   import { useRoute } from 'vue-router'
   import { HttpStatus } from '@/utils/http/helper'
-  import { ProcessDesigner } from '@tiancom/vue-bpmn-designer'
-  import { fetchProcessResource } from '../../api'
+  import { fetchProcessResource, fetchSaveProcess, fetchGroupList, fetchUserList } from '../../api'
+  import {
+    ProcessDesigner,
+    setApiConfig,
+    ProcessRequest,
+    ProcessResponse,
+    PageRequest,
+    PageResponse
+  } from '@tiancom/vue-bpmn-designer'
 
   defineOptions({ name: 'WorkflowDesigner' })
 
   const route = useRoute()
+
   const processXml = ref('')
+  const processName = ref('')
+  const processKey = ref('')
   const currentId = ref<string | undefined>()
 
   onMounted(() => {
@@ -295,11 +305,11 @@ onMounted(() => {
   watch(
     () => route.fullPath,
     () => {
-      // 当组件被keep-alive缓存时，即使切换到其他页面，组件仍然存在于内存中，watch会继续触发。如果其他页面的路由也有id参数，会出现误加载风险。
       if (route.path === '/omc/workflow-designer') {
-        // 监听 route.fullPath ，只有当前路由是 workflow-designer 页面时才处理
         const newId = route.query?.id as string
-        if (newId && newId !== currentId.value) {
+        const newName = route.query?.name as string
+        // 编辑模式：id变化时触发加载；新建模式：有name参数时触发加载
+        if ((newId && newId !== currentId.value) || (!newId && newName)) {
           loadResource()
         }
       }
@@ -308,50 +318,66 @@ onMounted(() => {
 
   const loadResource = async () => {
     const processDefinitionId = route.query?.id as string
+    const newKey = route.query?.key as string
+    const newName = route.query?.name as string
+    processName.value = newName
     currentId.value = processDefinitionId
+
     if (!processDefinitionId) {
-      processXml.value = generateDefaultXml()
+      // 新建模式：不生成 XML，由 ProcessDesigner 内部的 EmptyXML 自动生成默认画布
+      processKey.value = newKey || ''
       return
     }
     try {
       const res = await fetchProcessResource({ processDefinitionId })
-      console.log('加载流程资源成功:', res)
       if (HttpStatus.isFailed(res, true)) {
         return
       }
-      console.log('流程XML:', res.data)
+      // 编辑/复制模式：ProcessDesigner 内部根据 props.id / props.name 自动重写 XML
+      processKey.value = newKey || ''
       processXml.value = res.data as string
     } catch (error) {
       console.error('加载流程资源失败:', error)
-      processXml.value = generateDefaultXml()
     }
   }
 
-  const generateDefaultXml = (): string => {
-    const processId = `Process_${randomLetters(8)}`
-    return `<?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
-  <bpmn:process id="${processId}" name="新建流程" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" />
-  </bpmn:process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="${processId}">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="232" y="232" width="36" height="36"/>
-      </bpmndi:BPMNShape>
-    </bpmndi:BPMNPlane>
-  </bpmndi:BPMNDiagram>
-</bpmn:definitions>`
+  const convertToPageResponse = (res: any): PageResponse => {
+    return {
+      code: res.code,
+      msg: res.msg,
+      total: res.count || 0,
+      data: (res.data || []).map((item: any) => ({
+        id: String(item.id),
+        name: item.name
+      }))
+    }
   }
 
-  const randomLetters = (length: number): string => {
-    const chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
-    let result = ''
-    for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length))
+  setApiConfig({
+    saveProcess: async (params: ProcessRequest) => {
+      const res = await fetchSaveProcess({
+        xmlContent: params.xmlContent || '',
+        deploymentName: params.processName || ''
+      })
+      return { ...res } as ProcessResponse
+    },
+    getUserList: async (params: PageRequest) => {
+      const res = await fetchUserList({
+        page: params.page || 1,
+        limit: params.pageSize || 50,
+        name: params.keyword || ''
+      })
+      return convertToPageResponse(res)
+    },
+    getGroupList: async (params: PageRequest) => {
+      const res = await fetchGroupList({
+        page: params.page || 1,
+        limit: params.pageSize || 50,
+        name: params.keyword || ''
+      })
+      return convertToPageResponse(res)
     }
-    return result
-  }
+  })
 </script>
 ```
 
